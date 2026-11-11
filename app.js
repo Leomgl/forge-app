@@ -1,8 +1,8 @@
-/* FORGE v0.2 — GitHub Issues is the canonical source. No client-side GitHub token. */
+/* FORGE v0.3 — statuses saved directly to GitHub Issues, session-only optional editing credential. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
-var issues=[],loading=false;
+var issues=[],loading=false,sessionToken="",pendingChange=null,saving=false;
 var apps=[
  {id:"NEXUS",mark:"N",repo:"Leomgl/nexus-app",desc:"Second cerveau, contacts, rappels, budget et intégrations chiffrées."},
  {id:"GAMING",mark:"G",repo:"Leomgl/gaming-app",desc:"Jeux, stockage PS5, saisons, notifications et liens NEXUS."},
@@ -18,31 +18,44 @@ function parseMeta(item){
  var prefix=String(item.title||"").match(/^\[([A-Z]+)\]/);
  return {project:prefix?prefix[1]:"AUTRE",type:"ticket",priority:"normale"};
 }
+const WORKFLOW={todo:"À faire",doing:"En cours",done:"Terminé"};
+function workflow(item){if(item.state==="closed")return "done";return parseMeta(item).workflow==="doing"?"doing":"todo";}
+function updateWorkflowBody(item,target){
+ var body=String(item.body||""),meta=parseMeta(item);
+ meta.workflow=target;meta.format=Math.max(3,Number(meta.format)||0);
+ var marker="<!-- FORGE_META: "+JSON.stringify(meta)+" -->";
+ if(/<!-- FORGE_META:\s*\{[^\n]+\}\s*-->/.test(body))return body.replace(/<!-- FORGE_META:\s*\{[^\n]+\}\s*-->/,marker);
+ return marker+"\n\n"+body;
+}
 function age(date){try{return new Date(date).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"});}catch(e){return "—";}}
 function setStatus(text){id("loadInfo").textContent=text;}
 function render(){
  var q=id("search").value.toLocaleLowerCase("fr").trim(),project=id("projectFilter").value,status=id("statusFilter").value;
  var filtered=issues.filter(function(item){
  var meta=parseMeta(item);
- return (project==="all"||meta.project===project)&&(status==="all"||item.state===status)&&(!q||String(item.number).includes(q.replace("#",""))||[item.title,item.body,meta.project].join(" ").toLocaleLowerCase("fr").includes(q));
+ return (project==="all"||meta.project===project)&&(status==="all"||workflow(item)===status)&&(!q||String(item.number).includes(q.replace("#",""))||[item.title,item.body,meta.project].join(" ").toLocaleLowerCase("fr").includes(q));
  });
  id("issueCount").textContent=issues.length;
  if(!filtered.length){id("issues").innerHTML='<div class="empty">Aucune issue ne correspond aux filtres. Pour un nouveau signalement, utilise le formulaire ci-dessous.</div>';return;}
  id("issues").innerHTML=filtered.map(function(item){
- var m=parseMeta(item),published=item.html_url||("https://github.com/"+REPO+"/issues/"+item.number);
- return '<a class="issue" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">'
- +'<span class="issue-num">#'+Number(item.number)+'</span><div class="issue-body"><b class="issue-title">'+esc(item.title)+'</b>'
+ var m=parseMeta(item),published=item.html_url||("https://github.com/"+REPO+"/issues/"+item.number),state=workflow(item);
+ return '<article class="issue" data-issue="'+Number(item.number)+'">'
+ +'<span class="issue-num">#'+Number(item.number)+'</span><div class="issue-body">'
+ +'<a class="issue-title" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">'+esc(item.title)+'</a>'
  +'<div class="issue-preview">'+esc(clean(item.body).slice(0,230))+'</div><div class="issue-meta"><span class="pill app">'+esc(m.project||"AUTRE")+'</span>'
- +'<span class="pill '+(item.state==="closed"?"closed":"open")+'">'+(item.state==="closed"?"Clôturé":"Ouvert")+'</span>'
- +'<span class="pill">'+esc(m.type||"Ticket")+'</span><span class="age">Mis à jour '+esc(age(item.updated_at))+'</span></div></div><span class="chevron">›</span></a>';
+ +'<span class="pill">'+esc(m.type||"Ticket")+'</span><span class="age">Mis à jour '+esc(age(item.updated_at))+'</span></div>'
+ +'<div class="issue-actions"><label class="status-label">État <select class="status-picker" data-number="'+Number(item.number)+'" aria-label="État du ticket '+Number(item.number)+'" '+(saving?"disabled":"")+'>'+
+ ["todo","doing","done"].map(function(st){return '<option value="'+st+'" '+(st===state?'selected':'')+'>'+WORKFLOW[st]+'</option>';}).join("")+
+ '</select></label><a class="issue-link" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">Voir dans GitHub ↗</a></div></div></article>';
  }).join("");
+
 }
 async function load(){
  if(loading)return;loading=true;id("refresh").disabled=true;setStatus("Connexion aux issues publiques GitHub…");
  try {
   var results=[],n=1,more=true;
   while(more&&n<=4){
-   var r=await fetch(API+"?state=all&per_page=100&page="+n,{headers:{"Accept":"application/vnd.github+json"},cache:"no-store"});
+   var r=await fetch(API+"?state=all&per_page=100&page="+n,{headers:apiHeaders(false),cache:"no-store"});
    if(!r.ok)throw Error("GitHub a répondu "+r.status+(r.status===403?" (limite API possible)":""));
    var part=await r.json();
    if(!Array.isArray(part))throw Error("Réponse GitHub inattendue");
@@ -58,6 +71,86 @@ async function load(){
   else {issues=[];setStatus("Issues non accessibles pour le moment : "+err.message+". Ouvre GitHub directement.");}
  }finally{loading=false;id("refresh").disabled=false;render();}
 }
+function editMode(){
+ id("editMode").textContent=sessionToken?"Édition active · Déconnecter":"Activer l'édition";
+ id("editMode").classList.toggle("active",!!sessionToken);
+ id("editInfo").textContent=sessionToken
+  ?"Édition autorisée pour cette session seulement : aucune clé enregistrée sur l'appareil."
+  :"Lecture publique. Pour modifier un état depuis FORGE, active l'édition GitHub.";
+}
+function authOpen(){
+ id("authMessage").textContent=pendingChange?"Autorise l'édition pour enregistrer l'état du ticket #"+pendingChange.number+".":"";
+ id("authModal").hidden=false;
+ id("tokenField").value="";
+ id("tokenField").focus();
+}
+function authClose(){id("authModal").hidden=true;id("tokenField").value="";pendingChange=null;render();}
+function authSave(e){
+ e.preventDefault();
+ var token=id("tokenField").value.trim();
+ if(!/^(github_pat_|ghp_)/.test(token)||token.length<30){
+  id("authMessage").textContent="Jeton GitHub non reconnu. Utilise un jeton personnel limité au dépôt forge-app (permission Issues : lecture/écriture).";
+  return;
+ }
+ sessionToken=token;id("tokenField").value="";id("authModal").hidden=true;editMode();
+ var next=pendingChange;pendingChange=null;
+ if(next)saveWorkflow(next.number,next.target);
+ else setStatus("Mode édition activé pour cette session. Sélectionne l'état d'un ticket.");
+}
+function apiHeaders(write){
+ var h={"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};
+ if(sessionToken)h.Authorization="Bearer "+sessionToken;
+ if(write)h["Content-Type"]="application/json";
+ return h;
+}
+async function githubRequest(url,options){
+ var res=await fetch(url,Object.assign({cache:"no-store",headers:apiHeaders(false)},options||{}));
+ if(!res.ok){
+  if(res.status===401||res.status===403&&sessionToken){
+   // Don't keep rejected credentials in memory.
+   if(res.status===401)sessionToken="";
+   editMode();
+  }
+  var hint=res.status===401?" (jeton invalide ou expiré)":res.status===403?" (droits Issues ou limite API à vérifier)":res.status===422?" (données refusées par GitHub)":"";
+  throw Error("GitHub HTTP "+res.status+hint);
+ }
+ return res.json();
+}
+async function saveWorkflow(number,target){
+ if(saving)return;
+ var current=issues.find(function(x){return x.number===number;});
+ if(!current||!WORKFLOW[target]){setStatus("Impossible de retrouver le ticket.");render();return;}
+ if(workflow(current)===target){render();return;}
+ if(!sessionToken){pendingChange={number:number,target:target};authOpen();return;}
+ saving=true;render();setStatus("Enregistrement du ticket #"+number+" sur GitHub…");
+ try{
+  var url=API+"/"+number;
+  var fresh=await githubRequest(url);
+  if(fresh.updated_at!==current.updated_at||workflow(fresh)!==workflow(current)){
+   throw Error("Le ticket #"+number+" a changé sur GitHub depuis le dernier chargement. Actualise avant de modifier.");
+  }
+  var payload={body:updateWorkflowBody(fresh,target)};
+  var newState=target==="done"?"closed":"open";
+  if(fresh.state!==newState){
+   payload.state=newState;
+   payload.state_reason=newState==="closed"?"completed":"reopened";
+  }
+  var updated=await githubRequest(url,{method:"PATCH",headers:apiHeaders(true),body:JSON.stringify(payload)});
+  if(workflow(updated)!==target)throw Error("GitHub n'a pas confirmé l'état attendu. Actualise pour vérifier.");
+  issues=issues.map(function(x){return x.number===number?updated:x;})
+   .sort(function(a,b){return new Date(b.updated_at)-new Date(a.updated_at);});
+  try{localStorage.setItem(CACHE_KEY,JSON.stringify({at:Date.now(),issues:issues}));}catch(e){}
+  setStatus("Ticket #"+number+" → "+WORKFLOW[target]+" : enregistré sur GitHub et visible pour l'assistant.");
+ }catch(e){
+  setStatus("Statut non modifié : "+e.message);
+ }finally{saving=false;render();}
+}
+function onStatusChange(e){
+ if(!e.target.classList.contains("status-picker"))return;
+ var number=Number(e.target.getAttribute("data-number")),target=e.target.value;
+ if(!Number.isSafeInteger(number)||number<1||!WORKFLOW[target])return;
+ saveWorkflow(number,target);
+}
 function makeApps(){
  id("apps").innerHTML=apps.map(function(p){
  return '<article class="appcard"><span class="appmark">'+p.mark+'</span><b>'+p.id+'</b><p>'+esc(p.desc)+'</p>'
@@ -72,7 +165,7 @@ function persist(){try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draft()));}
 function restore(){try{var d=JSON.parse(localStorage.getItem(DRAFT_KEY)||"{}");fields.forEach(function(k){if(typeof d[k]==="string"&&id(k))id(k).value=d[k];});}catch(e){}}
 function issueBody(d){
  var p=apps.find(function(a){return a.id===d.tProject;});
- var meta=JSON.stringify({project:d.tProject,type:d.tType,priority:d.tPriority,version:d.tVersion||null,format:2});
+ var meta=JSON.stringify({project:d.tProject,type:d.tType,priority:d.tPriority,version:d.tVersion||null,workflow:"todo",format:3});
  return '<!-- FORGE_META: '+meta+' -->\n'
  +'## Demande / problème\n'+d.tDescription.trim()+'\n\n'
  +'## Étapes de reproduction / vérification\n'+(d.tSteps.trim()||"Non renseignées")+'\n\n'
@@ -109,7 +202,13 @@ function reset(){
  id("composeMessage").textContent="Brouillon effacé.";
 }
 function start(){
- makeApps();restore();
+ makeApps();restore();editMode();
+ id("issues").addEventListener("change",onStatusChange);
+ id("editMode").addEventListener("click",function(){if(sessionToken){sessionToken="";editMode();setStatus("Mode édition désactivé, aucune clé conservée.");render();}else authOpen();});
+ id("authForm").addEventListener("submit",authSave);
+ id("authCancel").addEventListener("click",authClose);
+ id("authModal").addEventListener("click",function(e){if(e.target===id("authModal"))authClose();});
+ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!id("authModal").hidden)authClose();});
  ["search","projectFilter","statusFilter"].forEach(function(k){id(k).addEventListener(k==="search"?"input":"change",render);});
  fields.forEach(function(k){id(k).addEventListener("input",persist);id(k).addEventListener("change",persist);});
  id("refresh").addEventListener("click",load);id("publish").addEventListener("click",publish);id("resetDraft").addEventListener("click",reset);
