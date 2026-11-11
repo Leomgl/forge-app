@@ -54,3 +54,8 @@ Le propriétaire dépose des idées, bugs et demandes d'évolutions. **L'assista
 - [VESTIAIRE](https://github.com/Leomgl/Vestiaire-app)
 
 Voir aussi `docs/TICKET-PROTOCOL.md` pour le cycle complet et `docs/DECISIONS.md` pour les choix transversaux.
+
+
+## Mise à jour V0.3 — pilotage des statuts FORGE
+
+Les états visibles dans la PWA sont `À faire`, `En cours`, `Terminé`. Les tickets restent exclusivement sur GitHub Issues. Pour déterminer l'état actuel : `closed` signifie Terminé ; sinon lire `<!-- FORGE_META: {... "workflow":"doing" ...} -->` pour En cours ; tout autre ticket `open` vaut À faire. Pour modifier : fetch de l'issue actuelle, conserver son Markdown et les métadonnées, mettre `workflow=todo|doing|done` et ouvrir/fermer l'issue en conséquence via le connecteur GitHub. Vérifier ensuite l'état confirmé par GitHub. L'assistant peut effectuer la mise à jour avec sa connexion GitHub sans demander le jeton que l'utilisateur peut saisir localement dans la PWA. Toujours respecter les tests, les contraintes de non-régression et le bilan de livraison.
