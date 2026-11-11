@@ -21,7 +21,14 @@ function setCookie(name,value,maxAge,path="/"){
  return name+"="+value+"; Path="+path+"; Max-Age="+maxAge+"; HttpOnly; Secure; SameSite=Lax";
 }
 function clearCookie(name,path="/"){return setCookie(name,"",0,path);}
-function ready(env){return !!(env.GITHUB_CLIENT_ID&&env.GITHUB_CLIENT_SECRET);}
+function setup(env){
+ const id=String(env.GITHUB_CLIENT_ID||"").trim(),secret=String(env.GITHUB_CLIENT_SECRET||"").trim();
+ const missing=[];
+ if(!id)missing.push("GITHUB_CLIENT_ID");
+ if(!secret)missing.push("GITHUB_CLIENT_SECRET");
+ return {configured:missing.length===0,missing,clientIdFormat:!id?"missing":/^(Iv1\.|Ov23)/.test(id)?"valid-looking":"check-client-id"};
+}
+function ready(env){return setup(env).configured;}
 async function cryptoKey(env){
  const material=await crypto.subtle.importKey("raw",encoder.encode(env.GITHUB_CLIENT_SECRET),"HKDF",false,["deriveKey"]);
  return crypto.subtle.deriveKey({name:"HKDF",hash:"SHA-256",salt:encoder.encode("FORGE-APP-SESSION-2026"),info:encoder.encode("cookie-encryption-v1")},
@@ -75,7 +82,7 @@ async function authCallback(req,env){
  const sep=cookie.indexOf(".");
  const state=sep>=0?cookie.slice(0,sep):"",verifier=sep>=0?cookie.slice(sep+1):"";
  if(!state||!verifier||params.get("state")!==state||!params.get("code")){
- return redirect("/?auth=error",{"Set-Cookie":clearCookie("forge_oauth","/auth")});
+ return redirect("/?auth=state",{"Set-Cookie":clearCookie("forge_oauth","/auth")});
  }
  try{
  const token=await tokenExchange(env,{code:params.get("code"),redirect_uri:ownUrl(req)+"/auth/callback",code_verifier:verifier});
@@ -89,8 +96,10 @@ async function authCallback(req,env){
  refreshUntil:Date.now()+Math.max(0,(token.refresh_token_expires_in||0)-60)*1000,
  login:profile.login,id:profile.id};
  return redirect("/?auth=ok",{"Set-Cookie":sessionCookie(await seal(session,env))});
- }catch{
- return redirect("/?auth=error",{"Set-Cookie":clearCookie("forge_oauth","/auth")});
+ }catch(e){
+ const reason=String(e?.message||"");
+ const error=reason.includes("Wrong GitHub account")?"account":reason.includes("Authentification GitHub refusée")?"exchange":"oauth";
+ return redirect("/?auth="+error,{"Set-Cookie":clearCookie("forge_oauth","/auth")});
  }
 }
 async function withSession(req,env){
@@ -174,7 +183,9 @@ export default {
  if(req.method==="GET"&&p==="/auth/callback")return authCallback(req,env);
  if(req.method==="GET"&&p==="/auth/status"){
   const {session,cookie}=await withSession(req,env);
-  return json({configured:ready(env),authenticated:!!session,login:session?.login||null},200,cookie?{"Set-Cookie":cookie}:{});
+  const state=setup(env);
+  return json({configured:state.configured,authenticated:!!session,login:session?.login||null,
+   missing:state.missing,clientIdFormat:state.clientIdFormat,authVersion:"0.4.1"},200,cookie?{"Set-Cookie":cookie}:{});
  }
  if(req.method==="POST"&&p==="/auth/logout"){
   if(!checkMutation(req))return fail("Requête non autorisée",403);
