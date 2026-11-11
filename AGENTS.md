@@ -13,3 +13,5 @@ La mission de ce dépôt est **de conserver la mémoire de travail technique** :
 Le code principal de chaque app vit dans ses propres dépôts GitHub (liens dans `docs/APP-MAP.md`).
 
 8. Statuts FORGE V0.3 : `closed` = Terminé ; `open` avec `FORGE_META.workflow=doing` = En cours ; autre `open` = À faire. Pour mettre à jour, préserver le corps existant et vérifier l'écriture distante. Ne jamais se fier à un statut local non publié.
+
+9. Depuis FORGE V0.4, aucune saisie de jeton GitHub dans la PWA : utiliser la GitHub App avec OAuth et un Worker Cloudflare à origine dédiée. La mise en route initiale de la GitHub App et des secrets est requise et ne doit jamais être déclarée validée sans recette. Détails : `docs/GITHUB-AUTH.md`.
