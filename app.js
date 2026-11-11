@@ -31,6 +31,12 @@ function age(date){try{return new Date(date).toLocaleDateString("fr-FR",{day:"nu
 function setStatus(text){id("loadInfo").textContent=text;}
 function render(){
  var q=id("search").value.toLocaleLowerCase("fr").trim(),project=id("projectFilter").value,status=id("statusFilter").value;
+ var counting=issues.filter(function(item){return project==="all"||parseMeta(item).project===project;});
+ var totals={todo:0,doing:0,done:0};
+ counting.forEach(function(item){totals[workflow(item)]++;});
+ id("workflowSummary").innerHTML=["todo","doing","done"].map(function(st){
+  return '<button type="button" class="statbox '+st+(status===st?' selected':'')+'" data-filter="'+st+'" aria-pressed="'+(status===st)+'"><span>'+WORKFLOW[st]+'</span><strong>'+totals[st]+'</strong></button>';
+ }).join("");
  var filtered=issues.filter(function(item){
  var meta=parseMeta(item);
  return (project==="all"||meta.project===project)&&(status==="all"||workflow(item)===status)&&(!q||String(item.number).includes(q.replace("#",""))||[item.title,item.body,meta.project].join(" ").toLocaleLowerCase("fr").includes(q));
@@ -204,6 +210,11 @@ function reset(){
 function start(){
  makeApps();restore();editMode();
  id("issues").addEventListener("change",onStatusChange);
+ id("workflowSummary").addEventListener("click",function(e){
+  var btn=e.target.closest("[data-filter]");if(!btn)return;
+  var next=btn.getAttribute("data-filter");if(!WORKFLOW[next])return;
+  id("statusFilter").value=id("statusFilter").value===next?"all":next;render();
+ });
  id("editMode").addEventListener("click",function(){if(sessionToken){sessionToken="";editMode();setStatus("Mode édition désactivé, aucune clé conservée.");render();}else authOpen();});
  id("authForm").addEventListener("submit",authSave);
  id("authCancel").addEventListener("click",authClose);
