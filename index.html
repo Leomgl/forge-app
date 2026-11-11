@@ -72,7 +72,7 @@
  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="authTitle">
   <div class="modal-top"><h2 id="authTitle">Activer l’édition GitHub</h2><button id="authCancel" class="outline" type="button" aria-label="Fermer">✕</button></div>
   <p>Pour changer l’état d’un ticket dans FORGE, GitHub exige une autorisation d’écriture. Utilise un <b>jeton fine-grained</b> limité à <code>Leomgl/forge-app</code> avec uniquement <b>Issues : Read and write</b> et une expiration courte.</p>
-  <p class="security-note">Le jeton reste uniquement dans la mémoire de cette page : il est effacé au rechargement, à la fermeture ou quand tu touches « Déconnecter ». Ne le mets jamais dans un ticket, une capture ou un chat.</p>
+  <p class="security-note">Le jeton reste uniquement en mémoire pendant cette session et disparaît au rechargement ou à la déconnexion. Ne le mets jamais dans un ticket, une capture ou un chat. Attention : une PWA GitHub Pages partage son origine web avec les autres apps du même compte ; pour une meilleure isolation, privilégier plus tard une adresse Cloudflare dédiée.</p>
   <a class="external" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Créer un jeton limité sur GitHub ↗</a>
   <form id="authForm" class="auth-form">
    <label for="tokenField">Jeton GitHub de session</label>
