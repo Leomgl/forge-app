@@ -41,13 +41,14 @@
 
 ## SANTÉ — Leomgl/sante-app
 
-- **Version déployée : V0.3 (11/11/2026)** ; dépôt GitHub privé et source `worker.mjs` + `push.js`. URL PWA Cloudflare indépendante : https://sante-app.q9pfwtztsc.workers.dev/.
-- **Modules :** accueil, traitements et prises manuelles, rendez-vous, dossier, carnet (vaccinations saisies manuellement, consultations, documents PDF/photos chiffrés) et export/restauration.
-- **Stockage clinique :** IndexedDB locale AES-256-GCM, PBKDF2 310000 tours, `records` et `files` séparés ; migration non destructive V0.1→V0.2. Les fichiers et les notes restent sur l'iPhone.
-- **Web Push V0.3 :** configuration depuis Santé, notifications d'horaires de traitements, rendez-vous J−1/−1h, échéances vaccinales J−30/−7/jour J. Messages détaillés/génériques configurables. App → D1 **seulement des échéances, des données de souscription, types de rappel et payloads AES-GCM chiffrés** ; le Service Worker déchiffre localement avec une clé de notification distincte. D1 EU `sante-push-db`, Worker `sante-app`, cron `*/5 * * * *`.
-- **NEXUS LINK :** NON ACTIVÉ. Exigence bidirectionnelle pour RDV/rappels, Santé source médicale, permissions minimales, ID/révisions et déduplication à construire. Ne pas supposer que le nouveau push est géré par Nexus.
-- **Risques :** perte de phrase/stockage iOS, absence de sauvegarde serveur, clés de notifications dans un store distinct du coffre, horaires et types de rappels révélés comme métadonnées à Cloudflare, exports individuels déchiffrés. Tous les secrets VAPID restent Cloudflare ; l'ancienne méthode d'upload V0.2 casserait les bindings.
-- **Validation :** tests GitHub CI, D1, bindings et cron confirmés par API Cloudflare, **recette de réception Web Push sur vrai iPhone et mode hors-ligne du coffre toujours à faire**. Lire `sante-app/docs/PROJECT-HANDOFF.md` et `docs/PUSH-V03.md` avant toute intervention.
+- **Déployée V0.4.0** sur Cloudflare Worker sante-app (11/11/2026), dépôt privé. Adresse : https://sante-app.q9pfwtztsc.workers.dev/ . Version de production confirmée via Cloudflare API, sauvegarde des bindings D1 et secrets VAPID vérifiée.
+- **Modules** : traitements et prises, rendez-vous, vaccins, documents chiffrés, dossier ; V0.4 ajoute mesures/constantes et poids, journal de santé, professionnels, analyses/valeurs, préparation de consultation. Data médicales restent dans le coffre IndexedDB AES-256-GCM local, migration additive et sauvegarde existantes conservées.
+- **Notifications :** Santé n'envoie plus que les push des **prises de traitements** ; rendez-vous et rappels de vaccins doivent venir de **NEXUS Agenda/Push** lorsque les événements Santé sont importés dans Nexus. Éviter les double notifications. Serveur Santé ne planifie plus les types non médicamenteux, D1 vidée de ces types.
+- **Lien Santé ↔ Nexus actuellement disponible en sens Santé → Nexus seulement** : relais E2EE *distinct* sante-nexus-link.q9pfwtztsc.workers.dev, base D1 UE sante-nexus-link-db, scopes dose_summary/health_calendar, code privé NXS1. Santé choisit de partager les noms des médicaments ou non (désactivé par défaut). Nexus stocke le résumé et les RDV importés localement en **clair** (avec consentement), affiche Pulse prises faites/planifiées et gère les alertes Agenda. Authentification par pairing et AES-GCM ; pas de docs/analyses/ordonnances partagés.
+- **Correspondance Nexus :** V0.21.5, fichiers sante-link-core.js, nexus-sante.js/css, app.js, pulse-v018.js, settings-v0214.js, index.html, sw.js. Import calendrier manuel ou opt-in automatique, IDs stables et conflits sans écraser les éditions locales.
+- **Pas encore livré :** modifications du calendrier Nexus répercutées vers Santé (vraie écriture bidirectionnelle), temps réel quand les deux PWAs sont fermées, validation iPhone E2E.
+- **Important** : ne jamais modifier le relais LINK commun Gaming/Rituel/Vestiaire pour Santé ; ne jamais redéployer Santé sans ses DEUX modules worker.mjs et push.js et sans conserver bindings DB/VAPID/PEPPER. Références : sante-app/docs/PROJECT-HANDOFF.md, nexus-app/docs/PROJECT-HANDOFF.md, FORGE #4/#6.
+
 
 ## Quand ajouter une autre application ?
 
