@@ -88,7 +88,7 @@ async function authCallback(req,env){
  accessUntil:Date.now()+Math.max(0,(token.expires_in||28800)-60)*1000,
  refreshUntil:Date.now()+Math.max(0,(token.refresh_token_expires_in||0)-60)*1000,
  login:profile.login,id:profile.id};
- return redirect("/?auth=ok",{"Set-Cookie":sessionCookie(await seal(session,env)),"Set-Cookie-OAuth":clearCookie("forge_oauth","/auth")});
+ return redirect("/?auth=ok",{"Set-Cookie":sessionCookie(await seal(session,env))});
  }catch{
  return redirect("/?auth=error",{"Set-Cookie":clearCookie("forge_oauth","/auth")});
  }
@@ -183,7 +183,7 @@ export default {
  if(req.method==="POST"&&p==="/api/workflow")return action(req,env,"status");
  if(req.method==="POST"&&p==="/api/issues")return action(req,env,"create");
  if(req.method==="GET"&&p.startsWith("/auth/"))return fail("Introuvable",404);
- if(req.method==="GET"||req.method==="HEAD")return staticFile(req);
+ if(req.method==="GET")return staticFile(req);
  return fail("Méthode non autorisée",405);
  }catch{return fail("Erreur du service FORGE",500);}
  }
