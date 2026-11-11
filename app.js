@@ -92,7 +92,7 @@ function editMode(){
  const notice=id("authNotice");
  const params=new URL(location.href).searchParams;
  const authResult=params.get("auth");
- const errors={setup:"Configuration GitHub incomplète sur Cloudflare.",state:"Connexion expirée ou retour GitHub non reconnu : retente depuis FORGE.",exchange:"GitHub a refusé l'échange du code : vérifie Client ID, Client Secret et Callback URL.",account:"Tu t'es connecté avec un compte différent de Leomgl.",oauth:"Connexion GitHub interrompue. Vérifie le Client Secret et la configuration de la GitHub App.",error:"Connexion GitHub non terminée.",ok:""};
+ const errors={setup:"Configuration GitHub incomplète sur Cloudflare.",state:"Connexion expirée ou retour GitHub non reconnu : retente depuis FORGE.",exchange:"GitHub a refusé l'échange du code : vérifie Client ID, Client Secret et Callback URL.",account:"Tu t'es connecté avec un compte différent de Leomgl.",oauth:"Connexion GitHub interrompue. Relance la connexion.",profile:"GitHub a validé l’autorisation, mais FORGE n’a pas pu lire le profil utilisateur. Vérifie la configuration de l’application GitHub.",session:"GitHub a validé ton identité, mais FORGE n’a pas pu sécuriser la session. Le serveur doit être corrigé.",error:"Connexion GitHub non terminée.",ok:""};
  let message="";
  if(!auth.edge)message="Ancienne adresse détectée. Ouvre FORGE sur Cloudflare, puis ajoute cette nouvelle adresse à l'écran d'accueil de ton iPhone.";
  else if(!auth.configured){
