@@ -10,12 +10,12 @@ FORGE ne synchronise aucune donnée applicative ; il suit les changements et leu
 | RITUEL → NEXUS | Import documenté côté NEXUS | Vérifier code d'import actuel et format accepté avant changement | Doublons, permissions, ancienne sauvegarde, collision d'identifiants |
 | VESTIAIRE → NEXUS | Projet futur/non activé | Planning/tenues avec opt-in, sans exposer photos | Photos privées, synchronisation involontaire, limites stockage |
 | VESTIAIRE → RITUEL | Idée future/non activée | Aucune intégration active à supposer | Effets de bord et données liées sans consentement |
-| SANTÉ ↔ NEXUS | Futur/non activé V0.2.1 | Santé est source médicale, NEXUS organise rendez-vous et rappels dans les deux sens, IDs/revisions/tombstones, permissions distinctes et synchronisation par réconciliation | Exposition clinique, conflits, doublons de rendez-vous ou notifications, suppression divergente |
+| SANTÉ ↔ NEXUS | Futur/non activé V0.3 | Santé est source médicale, NEXUS organise rendez-vous et rappels dans les deux sens, IDs/revisions/tombstones, permissions distinctes et synchronisation par réconciliation | Exposition clinique, conflits, doublons de rendez-vous ou notifications, suppression divergente |
 
 ## Frontières d'hébergement
 
 - `leomgl.github.io/nexus-app` et `/rituel-app` partagent **une même origine** malgré leurs sous-chemins. Ne pas considérer les chemins comme une isolation de sécurité du navigateur.
-- GAMING, VESTIAIRE et SANTÉ ont leurs **Workers Cloudflare** à URL distinctes. Santé utilise une origine dédiée et un coffre local chiffré, plus un stockage de documents chiffrés. Aucun lien médical vers NEXUS n'est actif.
+- GAMING, VESTIAIRE et SANTÉ ont leurs **Workers Cloudflare** à URL distinctes. Santé utilise une origine dédiée et un coffre local chiffré, plus un stockage de documents chiffrés. Web Push Santé V0.3 est indépendant de NEXUS et a sa propre base D1 européenne contenant des abonnements et échéances chiffrées. Aucun lien médical vers NEXUS n'est actif.
 - FORGE consulte **les dépôts et issues publics seulement** et ne doit jamais accéder aux IndexedDB/Workers de production des apps.
 
 ## Checklist rapide avant un correctif
