@@ -1,10 +1,24 @@
 # FORGE V0.4 — Connexion GitHub sans jeton à coller
 
+## Diagnostic de connexion — V0.4.1 (11 novembre 2026)
+
+Le Worker `forge-hub` a été redéployé avec le code actuel. Les noms `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` et `SESSION_KEY` sont visibles dans les bindings Cloudflare, mais tous trois apparaissent comme **plain_text**, et les valeurs n'ont pas été lues ni vérifiées. **Le code actuel n'utilise plus `SESSION_KEY`** : sa clé de cookie est dérivée par HKDF du `GITHUB_CLIENT_SECRET`. La variable `SESSION_KEY` peut être supprimée après vérification qu'aucun ancien déploiement ne l'exploite.
+
+**Sécurité :** migrer `GITHUB_CLIENT_SECRET` vers un secret chiffré dans Cloudflare (Type: Secret, pas Text). `GITHUB_CLIENT_ID` n'est pas un secret et peut rester une variable ordinaire. Ne jamais transmettre les valeurs dans une conversation ou un ticket public.
+
+- Utiliser l'adresse **Cloudflare** `https://forge-hub.q9pfwtztsc.workers.dev/` pour la connexion ; la PWA de `leomgl.github.io/forge-app/` n'a pas la même origine ni les mêmes cookies.
+- Ouvrir `/auth/status` sur Cloudflare : `configured: true` signifie seulement que les deux variables nécessaires ne sont pas vides, **pas** que les identifiants sont valides côté GitHub ; `missing` donne les noms absents et `clientIdFormat` un indice non sensible.
+- Après un échec, la page présente `auth=state`, `auth=exchange`, `auth=account` ou `auth=oauth`, sans jamais afficher le Client Secret.
+- Si la page affiche `configured: false`, vérifier les variables et leur portée de déploiement. Si `exchange`, comparer dans GitHub App le **Client ID**, le nouveau Client Secret et la callback exacte. Si `state`, refaire le parcours dans **le même contexte Safari/PWA**.
+- V0.4.1 invalide le cache service worker. Ne pas supprimer l'ancienne icône avant d'avoir récupéré les brouillons locaux.
+- Après toute modification de `edge-worker/index.mjs`, pousser le commit GitHub **et redéployer le Worker** en conservant ses bindings.
+- Le scénario réel d'autorisation et de cookie sur Safari iPhone n'est pas encore validé automatiquement.
+
 ## Situation réelle (11 novembre 2026)
 
 - Worker Cloudflare **créé et déployé** : `forge-hub`, URL attendue `https://forge-hub.q9pfwtztsc.workers.dev/`.
 - Source serveur : `edge-worker/index.mjs` ; source PWA : racine du dépôt `Leomgl/forge-app`.
-- **Connexion pas encore active** tant qu'une GitHub App n'a pas été créée, installée et ses deux secrets ajoutés dans Cloudflare.
+- **État vérifié le 11 novembre :** trois variables Cloudflare détectées (sans lecture de leurs valeurs) ; GitHub App présumée créée d'après le retour utilisateur, mais autorisation iPhone et jeton utilisateur pas encore confirmés.
 - Authentification de l'utilisateur depuis FORGE : clic « Se connecter avec GitHub », flux OAuth GitHub App avec `state` et PKCE ; aucune saisie de PAT. Jeton utilisateur et refresh chiffrés dans un cookie `Secure`, `HttpOnly`, `SameSite=Lax` de l'origine Cloudflare. Le navigateur ne lit aucun jeton.
 - Source de vérité inchangée : GitHub Issues. `À faire` / `En cours` / `Terminé` sont les mêmes que V0.3.
 - Mode non connecté : consultation possible, les nouvelles issues peuvent toujours être préremplies puis publiées manuellement sur GitHub.
