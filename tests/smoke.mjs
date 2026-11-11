@@ -1,0 +1,25 @@
+// FORGE — smoke tests unitaires sans dépendances npm.
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import vm from "node:vm";
+const src=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+new vm.Script(src,{filename:"app.js"});
+const needle='if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();';
+assert.ok(src.includes(needle),"entrypoint UI changed: adapt test extraction");
+const isolated=src.replace(needle,'globalThis.FORGE_TEST = {parseMeta,issueBody,clean};');
+const context=vm.createContext({});
+new vm.Script(isolated,{filename:"app-tests.js"}).runInContext(context);
+const api=context.FORGE_TEST;
+assert.equal(api.parseMeta({title:"[NEXUS][BUG] Tri",body:'<!-- FORGE_META: {"project":"NEXUS","type":"bug","priority":"haute","format":2} -->'}).project,"NEXUS");
+assert.equal(api.parseMeta({title:"[RITUEL] Autre",body:""}).project,"RITUEL");
+assert.equal(api.clean('<!-- FORGE_META: {"project":"GAMING"} -->\n## Test'),"Test");
+const md=api.issueBody({tProject:"GAMING",tType:"evolution",tPriority:"normale",tVersion:"0.7",tDescription:"Évolution",tSteps:"1. Test",tExpected:"Doit marcher",tConstraints:"Préserver NEXUS LINK"});
+assert.match(md,/github.com\/Leomgl\/gaming-app/);
+assert.match(md,/"project":"GAMING"/);
+assert.match(md,/Préserver NEXUS LINK/);
+const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
+assert.match(html,/Content-Security-Policy/);
+assert.match(html,/https:\/\/api.github.com/);
+const manifest=JSON.parse(fs.readFileSync(new URL("../manifest.webmanifest",import.meta.url),"utf8"));
+assert.equal(manifest.display,"standalone");
+console.log("FORGE smoke: syntax, metadata, Markdown, links, CSP, manifest OK");
