@@ -1,5 +1,9 @@
 # FORGE V0.4 — Connexion GitHub sans jeton à coller
 
+## Correctif du contrôle Client ID — 11 novembre 2026
+
+Après correction des variables, la réponse `configured:true`, `missing:[]`, `authenticated:false`, `clientIdFormat:check-client-id` a été observée. Le format de Client ID GitHub App moderne `Iv23…` est valide mais n'était pas reconnu par notre expression régulière (`Iv1.` uniquement). Vérification du préfixe côté Cloudflare sans afficher de secret : le Client ID stocké correspond bien à une GitHub App. Correctif poussé dans `edge-worker/index.mjs` et redéployé : reconnaissance `Iv1.`, `Iv23`, `Ov23`, suppression du `scope=offline_access` inutile pour une GitHub App, `trim()` pour éviter espaces de copie. Les variables ont été préservées pendant le redéploiement. **Le vrai parcours OAuth reste à valider par l'utilisateur dans Safari/PWA.**
+
 ## Diagnostic confirmé sur le déploiement actif — 11 novembre 2026
 
 Captures utilisateur à 17:47 : `/auth/status` répond `{"configured":false,"authenticated":false,"missing":["GITHUB_CLIENT_ID","GITHUB_CLIENT_SECRET"],"clientIdFormat":"missing","authVersion":"0.4.1"}`.
