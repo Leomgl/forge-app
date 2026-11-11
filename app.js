@@ -1,8 +1,9 @@
-/* FORGE v0.3 — statuses saved directly to GitHub Issues, session-only optional editing credential. */
+/* FORGE v0.4 — same-origin GitHub App OAuth, no client-side tokens. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
-var issues=[],loading=false,sessionToken="",pendingChange=null,saving=false;
+var issues=[],loading=false,saving=false,auth={configured:false,authenticated:false,login:null,edge:false};
+var GATEWAY="https://forge-hub.q9pfwtztsc.workers.dev/";
 var apps=[
  {id:"NEXUS",mark:"N",repo:"Leomgl/nexus-app",desc:"Second cerveau, contacts, rappels, budget et intégrations chiffrées."},
  {id:"GAMING",mark:"G",repo:"Leomgl/gaming-app",desc:"Jeux, stockage PS5, saisons, notifications et liens NEXUS."},
@@ -77,85 +78,68 @@ async function load(){
   else {issues=[];setStatus("Issues non accessibles pour le moment : "+err.message+". Ouvre GitHub directement.");}
  }finally{loading=false;id("refresh").disabled=false;render();}
 }
+
 function editMode(){
- id("editMode").textContent=sessionToken?"Édition active · Déconnecter":"Activer l'édition";
- id("editMode").classList.toggle("active",!!sessionToken);
- id("editInfo").textContent=sessionToken
-  ?"Édition autorisée pour cette session seulement : aucune clé enregistrée sur l'appareil."
-  :"Lecture publique. Pour modifier un état depuis FORGE, active l'édition GitHub.";
+ id("editMode").textContent=auth.authenticated?(auth.login+" · Déconnexion"):"Se connecter avec GitHub";
+ id("editMode").classList.toggle("active",auth.authenticated);
+ id("editInfo").textContent=auth.authenticated
+  ?"Compte GitHub connecté : modifications enregistrées dans FORGE."
+  :auth.configured?"Une seule connexion GitHub permet de piloter les tickets."
+  :auth.edge?"Connexion GitHub en cours de configuration. Les tickets restent consultables."
+  :"Version en lecture seule : ouvre FORGE sur son adresse Cloudflare pour modifier les tickets.";
+ id("publish").textContent=auth.authenticated?"Créer le ticket":"Publier via GitHub ↗";
 }
-function authOpen(){
- id("authMessage").textContent=pendingChange?"Autorise l'édition pour enregistrer l'état du ticket #"+pendingChange.number+".":"";
- id("authModal").hidden=false;
- id("tokenField").value="";
- id("tokenField").focus();
+async function authCheck(){
+ try{
+  const r=await fetch("/auth/status",{headers:{Accept:"application/json"},credentials:"same-origin",cache:"no-store"});
+  if(!r.ok||!(r.headers.get("content-type")||"").includes("application/json"))throw Error("gateway missing");
+  const v=await r.json();
+  auth={configured:!!v.configured,authenticated:!!v.authenticated,login:v.login||null,edge:true};
+ }catch{auth={configured:false,authenticated:false,login:null,edge:false};}
+ editMode();
 }
-function authClose(){id("authModal").hidden=true;id("tokenField").value="";pendingChange=null;render();}
-function authSave(e){
- e.preventDefault();
- var token=id("tokenField").value.trim();
- if(!/^(github_pat_|ghp_)/.test(token)||token.length<30){
-  id("authMessage").textContent="Jeton GitHub non reconnu. Utilise un jeton personnel limité au dépôt forge-app (permission Issues : lecture/écriture).";
-  return;
- }
- sessionToken=token;id("tokenField").value="";id("authModal").hidden=true;editMode();
- var next=pendingChange;pendingChange=null;
- if(next)saveWorkflow(next.number,next.target);
- else setStatus("Mode édition activé pour cette session. Sélectionne l'état d'un ticket.");
+async function editClick(){
+ if(auth.authenticated){
+  if(!confirm("Déconnecter GitHub de FORGE sur cet appareil ?"))return;
+  try{const r=await fetch("/auth/logout",{method:"POST",headers:{"Content-Type":"application/json","X-Forge-Action":"1"},credentials:"same-origin",body:"{}"});
+   if(!r.ok)throw Error("Connexion indisponible");await authCheck();setStatus("Compte GitHub déconnecté.");}
+  catch(e){setStatus("Déconnexion non confirmée : "+e.message);}
+ }else if(!auth.edge){window.location.href=GATEWAY;}
+ else if(!auth.configured){setStatus("Connexion non configurée sur Cloudflare. Voir docs/GITHUB-AUTH.md.");}
+ else window.location.href="/auth/login";
 }
 function apiHeaders(write){
- var h={"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};
- if(sessionToken)h.Authorization="Bearer "+sessionToken;
- if(write)h["Content-Type"]="application/json";
- return h;
+ const h={Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};
+ if(write){h["Content-Type"]="application/json";h["X-Forge-Action"]="1";}return h;
 }
-async function githubRequest(url,options){
- var res=await fetch(url,Object.assign({cache:"no-store",headers:apiHeaders(false)},options||{}));
- if(!res.ok){
-  if(res.status===401||res.status===403&&sessionToken){
-   // Don't keep rejected credentials in memory.
-   if(res.status===401)sessionToken="";
-   editMode();
-  }
-  var hint=res.status===401?" (jeton invalide ou expiré)":res.status===403?" (droits Issues ou limite API à vérifier)":res.status===422?" (données refusées par GitHub)":"";
-  throw Error("GitHub HTTP "+res.status+hint);
- }
- return res.json();
+async function writeApi(endpoint,payload){
+ const r=await fetch(endpoint,{method:"POST",headers:apiHeaders(true),credentials:"same-origin",cache:"no-store",body:JSON.stringify(payload)});
+ const data=await r.json().catch(()=>({}));
+ if(r.status===401){await authCheck();throw Error("Session expirée. Reconnecte-toi avec GitHub.");}
+ if(!r.ok)throw Error(data.error||"GitHub a refusé ("+r.status+")");
+ return data;
 }
 async function saveWorkflow(number,target){
  if(saving)return;
- var current=issues.find(function(x){return x.number===number;});
- if(!current||!WORKFLOW[target]){setStatus("Impossible de retrouver le ticket.");render();return;}
+ const current=issues.find(x=>x.number===number);
+ if(!current||!WORKFLOW[target]){setStatus("Ticket introuvable.");render();return;}
  if(workflow(current)===target){render();return;}
- if(!sessionToken){pendingChange={number:number,target:target};authOpen();return;}
- saving=true;render();setStatus("Enregistrement du ticket #"+number+" sur GitHub…");
+ if(!auth.authenticated){setStatus("Connecte-toi à GitHub pour modifier ce ticket.");editClick();render();return;}
+ saving=true;render();setStatus("Enregistrement du ticket #"+number+"…");
  try{
-  var url=API+"/"+number;
-  var fresh=await githubRequest(url);
-  if(fresh.updated_at!==current.updated_at||workflow(fresh)!==workflow(current)){
-   throw Error("Le ticket #"+number+" a changé sur GitHub depuis le dernier chargement. Actualise avant de modifier.");
-  }
-  var payload={body:updateWorkflowBody(fresh,target)};
-  var newState=target==="done"?"closed":"open";
-  if(fresh.state!==newState){
-   payload.state=newState;
-   payload.state_reason=newState==="closed"?"completed":"reopened";
-  }
-  var updated=await githubRequest(url,{method:"PATCH",headers:apiHeaders(true),body:JSON.stringify(payload)});
-  if(workflow(updated)!==target)throw Error("GitHub n'a pas confirmé l'état attendu. Actualise pour vérifier.");
-  issues=issues.map(function(x){return x.number===number?updated:x;})
-   .sort(function(a,b){return new Date(b.updated_at)-new Date(a.updated_at);});
-  try{localStorage.setItem(CACHE_KEY,JSON.stringify({at:Date.now(),issues:issues}));}catch(e){}
-  setStatus("Ticket #"+number+" → "+WORKFLOW[target]+" : enregistré sur GitHub et visible pour l'assistant.");
- }catch(e){
-  setStatus("Statut non modifié : "+e.message);
- }finally{saving=false;render();}
+  const data=await writeApi("/api/workflow",{number,target,updated_at:current.updated_at});
+  const updated=data.issue;
+  if(workflow(updated)!==target)throw Error("GitHub n'a pas confirmé le statut.");
+  issues=issues.map(x=>x.number===number?updated:x).sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at));
+  try{localStorage.setItem(CACHE_KEY,JSON.stringify({at:Date.now(),issues}));}catch{}
+  setStatus("Ticket #"+number+" → "+WORKFLOW[target]+" : enregistré sur GitHub.");
+ }catch(e){setStatus("Non enregistré : "+e.message);}
+ finally{saving=false;render();}
 }
 function onStatusChange(e){
  if(!e.target.classList.contains("status-picker"))return;
- var number=Number(e.target.getAttribute("data-number")),target=e.target.value;
- if(!Number.isSafeInteger(number)||number<1||!WORKFLOW[target])return;
- saveWorkflow(number,target);
+ const number=Number(e.target.getAttribute("data-number")),target=e.target.value;
+ if(Number.isSafeInteger(number)&&number>=1&&WORKFLOW[target])saveWorkflow(number,target);
 }
 function makeApps(){
  id("apps").innerHTML=apps.map(function(p){
@@ -190,17 +174,26 @@ function issueBody(d){
  +'- [ ] Commit/PR et fichiers modifiés référencés\n- [ ] Recette iPhone explicitement indiquée\n'
  +'- [ ] Documentation et dépendances mises à jour si nécessaire\n';
 }
-function publish(){
+async function publish(){
  var d=draft(),msg=id("composeMessage");
  if(!d.tTitle.trim()||!d.tDescription.trim()){msg.textContent="Ajoute au minimum un titre et une description.";id(!d.tTitle.trim()?"tTitle":"tDescription").focus();return;}
  var title="["+d.tProject+"]["+d.tType.toUpperCase()+"] "+d.tTitle.trim();
  var body=issueBody(d),url=new URL("https://github.com/"+REPO+"/issues/new");
+ if(auth.authenticated){
+  const btn=id("publish");btn.disabled=true;msg.textContent="Création du ticket dans GitHub…";
+  try{
+   const result=await writeApi("/api/issues",{title,body});
+   resetAfterPublication();msg.textContent="Ticket #"+result.issue.number+" publié !";await load();
+  }catch(e){msg.textContent="Publication non effectuée : "+e.message;}
+  finally{btn.disabled=false;}return;
+ }
  url.searchParams.set("title",title);url.searchParams.set("body",body);
  if(url.href.length>9000){msg.textContent="Le texte est trop long pour un formulaire GitHub prérempli fiable. Raccourcis le brouillon, ou copie-le dans GitHub.";return;}
  persist();
  msg.textContent="Ouverture de GitHub : connecte-toi et confirme « Submit new issue ». Ce brouillon seul n'est pas encore publié.";
  window.open(url.href,"_blank","noopener,noreferrer");
 }
+function resetAfterPublication(){fields.forEach(k=>{id(k).value=["tProject","tType","tPriority"].includes(k)?({tProject:"NEXUS",tType:"bug",tPriority:"normale"}[k]):"";});try{localStorage.removeItem(DRAFT_KEY);}catch{}}
 function reset(){
  if(!confirm("Effacer ton brouillon local ? Les tickets déjà publiés sur GitHub ne seront pas touchés."))return;
  fields.forEach(function(k){id(k).value=["tProject","tType","tPriority"].includes(k)?({tProject:"NEXUS",tType:"bug",tPriority:"normale"}[k]):"";});
@@ -208,18 +201,14 @@ function reset(){
  id("composeMessage").textContent="Brouillon effacé.";
 }
 function start(){
- makeApps();restore();editMode();
+ makeApps();restore();editMode();authCheck();
  id("issues").addEventListener("change",onStatusChange);
  id("workflowSummary").addEventListener("click",function(e){
   var btn=e.target.closest("[data-filter]");if(!btn)return;
   var next=btn.getAttribute("data-filter");if(!WORKFLOW[next])return;
   id("statusFilter").value=id("statusFilter").value===next?"all":next;render();
  });
- id("editMode").addEventListener("click",function(){if(sessionToken){sessionToken="";editMode();setStatus("Mode édition désactivé, aucune clé conservée.");render();}else authOpen();});
- id("authForm").addEventListener("submit",authSave);
- id("authCancel").addEventListener("click",authClose);
- id("authModal").addEventListener("click",function(e){if(e.target===id("authModal"))authClose();});
- document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!id("authModal").hidden)authClose();});
+ id("editMode").addEventListener("click",editClick);
  ["search","projectFilter","statusFilter"].forEach(function(k){id(k).addEventListener(k==="search"?"input":"change",render);});
  fields.forEach(function(k){id(k).addEventListener("input",persist);id(k).addEventListener("change",persist);});
  id("refresh").addEventListener("click",load);id("publish").addEventListener("click",publish);id("resetDraft").addEventListener("click",reset);
