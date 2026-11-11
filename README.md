@@ -48,3 +48,15 @@ Les données locales de brouillon peuvent être effacées par iOS ; seul un tick
 
 V0.2 — 11 novembre 2026 : architecture « GitHub Issues = registre canonique », docs pour reprise de contexte inter-conversations, cartographie et protocole de non-régression.
 
+
+## Vérifications de la V0.2
+
+- JavaScript compilé sans erreur de syntaxe.
+- Test en environnement simulé : chargement d'une liste d'issues GitHub, affichage du ticket, génération d'un formulaire d'issue prérempli et conservation du brouillon — **réussis**.
+- Tests de parsing des métadonnées `FORGE_META`, génération du Markdown, fallbacks sur le titre et liens techniques — **réussis**.
+- `node tests/smoke.mjs` : banc de test minimal versionné pour les maintenances futures ; à exécuter dans un environnement Node lors de la recette.
+- **Non vérifié :** GitHub Pages réellement activé, Safari iPhone installé, navigation externe vers GitHub et soumission d'une issue depuis la PWA. Aucune promesse de test physique.
+
+## Suivre l'évolution des apps
+
+[Historique par version et points de non-régression](docs/EVOLUTION-HISTORY.md) et [AGENTS.md](AGENTS.md) complètent les instructions de reprise. Ces documents sont des instantanés ; contrôler les sources actuelles avant de modifier du code.
