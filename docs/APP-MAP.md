@@ -1,4 +1,4 @@
-# Cartographie des quatre applications (instantané du 11/11/2026)
+# Cartographie des applications (instantané du 11/11/2026)
 
 **Toujours vérifier le README et les commits actuels du dépôt ciblé :** ces notes sont un instantané historique, pas une version garantie.
 
@@ -38,6 +38,15 @@
 - Sauvegarde `.vestiaire` VST1/manifeste : **non chiffrée** ; conserver privées les images et exports.
 - Fichiers/docs : `app.js`, `fit-engine.js`, `fits-import.js`, `README.md`, `docs/FITTING-V04.md`, `edge-web/`.
 - Risques : positions vestes/pantalons/ceintures, miniatures, origine des photos, migration IndexedDB ; sauvegarde obligatoire avant recalage massif. Validation iPhone avec mannequin/looks réels encore nécessaire.
+
+## SANTÉ — Leomgl/sante-app
+
+- **Version déployée :** V0.1.1, source `worker.mjs` ; adresse Cloudflare indépendante : https://sante-app.q9pfwtztsc.workers.dev/.
+- **Modules :** accueil, traitements et prises manuelles, rendez-vous, dossier, export/restauration chiffrés.
+- **Stockage :** IndexedDB chiffré AES-256-GCM dérivé d'une phrase secrète. Pas de données médicales sur GitHub/Cloudflare serveur, pas d'API de compte, ni de synchronisation cloud en V0.1.
+- **NEXUS LINK :** prévu, NON ACTIVÉ. Exigence bidirectionnelle : créer/éditer RDV et rappels depuis Nexus **ou** Santé, mais Santé reste la base médicale complète. Flux minimisés, permissions, anti-doublons, conflits et source de vérité à définir.
+- **Risques :** appareil compromis, perte de phrase, purge de stockage iOS, absence de restauration serveur, absence de push, icônes iOS non finalisées.
+- **État de validation :** tests GitHub Actions réussis ; recette utilisateur iPhone et vérification réseau/headers à faire. Voir `sante-app/docs/PROJECT-HANDOFF.md` et FORGE #4.
 
 ## Quand ajouter une autre application ?
 
