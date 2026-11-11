@@ -11,3 +11,5 @@ La mission de ce dépôt est **de conserver la mémoire de travail technique** :
 7. Les tests simulés ne prouvent pas le résultat sur iPhone réel.
 
 Le code principal de chaque app vit dans ses propres dépôts GitHub (liens dans `docs/APP-MAP.md`).
+
+8. Statuts FORGE V0.3 : `closed` = Terminé ; `open` avec `FORGE_META.workflow=doing` = En cours ; autre `open` = À faire. Pour mettre à jour, préserver le corps existant et vérifier l'écriture distante. Ne jamais se fier à un statut local non publié.
