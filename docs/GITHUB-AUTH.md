@@ -1,5 +1,20 @@
 # FORGE V0.4 — Connexion GitHub sans jeton à coller
 
+## Diagnostic confirmé sur le déploiement actif — 11 novembre 2026
+
+Captures utilisateur à 17:47 : `/auth/status` répond `{"configured":false,"authenticated":false,"missing":["GITHUB_CLIENT_ID","GITHUB_CLIENT_SECRET"],"clientIdFormat":"missing","authVersion":"0.4.1"}`.
+
+Inspection Cloudflare de la **version active** `58b7eee6-8085-42f2-9e1a-eb8d666dc71d` (déploiement du 11 novembre) : trois bindings présents `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `SESSION_KEY`, tous de type `plain_text`, avec `text` de longueur **0**. Il ne s'agit donc **ni d'un problème de cache Safari ni d'un échec OAuth côté GitHub** : les variables requises sont vides dans l'environnement en production.
+
+Correctif à faire par le propriétaire dans Cloudflare Workers & Pages → `forge-hub` → Settings → Variables and Secrets :
+1. `GITHUB_CLIENT_ID` : saisir le **Client ID** de la GitHub App dans le champ Value. Type `Text` acceptable.
+2. `GITHUB_CLIENT_SECRET` : saisir un **Client Secret** généré dans GitHub App Settings. Choisir le type **Secret** (pas Text) et ne jamais partager sa valeur dans un ticket, commit, conversation ou capture.
+3. **Deploy** pour déployer la configuration ; vérifier `/auth/status` sur l'origine Cloudflare, attendu `configured:true`, `missing:[]`, `authenticated:false` avant connexion.
+4. `SESSION_KEY` n'est pas requis par le code actuel (la clé de cookie provient du Client Secret via HKDF). Ne pas ajouter de troisième donnée inutile.
+5. Tester ensuite le clic Se connecter avec GitHub ; un nouveau diagnostic est nécessaire seulement si `configured:true` mais que l'authentification ne revient pas.
+
+**Consigne pour tout redéploiement ultérieur : préserver les bindings configurés et leurs valeurs / secrets.** Ne jamais écraser par des bindings vides, ni demander le Client Secret en conversation.
+
 ## Diagnostic de connexion — V0.4.1 (11 novembre 2026)
 
 Le Worker `forge-hub` a été redéployé avec le code actuel. Les noms `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` et `SESSION_KEY` sont visibles dans les bindings Cloudflare, mais tous trois apparaissent comme **plain_text**, et les valeurs n'ont pas été lues ni vérifiées. **Le code actuel n'utilise plus `SESSION_KEY`** : sa clé de cookie est dérivée par HKDF du `GITHUB_CLIENT_SECRET`. La variable `SESSION_KEY` peut être supprimée après vérification qu'aucun ancien déploiement ne l'exploite.
