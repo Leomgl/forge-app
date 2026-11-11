@@ -1,5 +1,13 @@
 # FORGE V0.4 — Connexion GitHub sans jeton à coller
 
+## Erreur OAuth après autorisation — correctif V0.4.2
+
+Symptôme utilisateur : retour à FORGE après GitHub avec `/?auth=oauth`, bannière « Connexion GitHub interrompue ». Le code serveur pouvait appeler `GET https://api.github.com/user` **sans `User-Agent`**, contrairement à l'exigence REST GitHub (403 possible). Cette cause est cohérente avec l'échec après échange OAuth, mais n'est pas confirmée par un log HTTP réel.
+
+Actions : ajout de `User-Agent: Forge-Leomgl-Hub` dans tous les appels REST GitHub (et l'échange de jeton), classification sûre du stade d'échec (`auth=exchange`, `auth=profile`, `auth=session`) et messages utilisateur dédiés, mise à jour cache PWA V0.4.2. Code déployé sur Cloudflare en préservant les deux variables Client ID et Client Secret.
+
+**Recette à faire :** retenter l'authentification depuis Safari sur l'origine Cloudflare (et non une ancienne PWA GitHub Pages). Si l'erreur se reproduit, lire le paramètre `auth` affiché par FORGE ; ne jamais copier de Client Secret, jeton ou `code` OAuth. `GITHUB_CLIENT_SECRET` est encore un binding `plain_text` : convertir en type Cloudflare `Secret` après validation, avec prudence pour ne pas effacer sa valeur.
+
 ## Correctif du contrôle Client ID — 11 novembre 2026
 
 Après correction des variables, la réponse `configured:true`, `missing:[]`, `authenticated:false`, `clientIdFormat:check-client-id` a été observée. Le format de Client ID GitHub App moderne `Iv23…` est valide mais n'était pas reconnu par notre expression régulière (`Iv1.` uniquement). Vérification du préfixe côté Cloudflare sans afficher de secret : le Client ID stocké correspond bien à une GitHub App. Correctif poussé dans `edge-worker/index.mjs` et redéployé : reconnaissance `Iv1.`, `Iv23`, `Ov23`, suppression du `scope=offline_access` inutile pour une GitHub App, `trim()` pour éviter espaces de copie. Les variables ont été préservées pendant le redéploiement. **Le vrai parcours OAuth reste à valider par l'utilisateur dans Safari/PWA.**
