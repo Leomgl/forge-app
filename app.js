@@ -2,7 +2,7 @@
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
-var issues=[],loading=false,saving=false,auth={configured:false,authenticated:false,login:null,edge:false};
+var issues=[],loading=false,saving=false,auth={configured:false,authenticated:false,login:null,edge:false,missing:[],clientIdFormat:"unknown"};
 var GATEWAY="https://forge-hub.q9pfwtztsc.workers.dev/";
 var apps=[
  {id:"NEXUS",mark:"N",repo:"Leomgl/nexus-app",desc:"Second cerveau, contacts, rappels, budget et intégrations chiffrées."},
@@ -81,32 +81,49 @@ async function load(){
 }
 
 function editMode(){
- id("editMode").textContent=auth.authenticated?(auth.login+" · Déconnexion"):"Se connecter avec GitHub";
+ id("editMode").textContent=auth.authenticated?(auth.login+" · Déconnexion"):auth.edge&&auth.configured?"Se connecter avec GitHub":auth.edge?"Vérifier la connexion":"Ouvrir FORGE sécurisé";
  id("editMode").classList.toggle("active",auth.authenticated);
  id("editInfo").textContent=auth.authenticated
   ?"Compte GitHub connecté : modifications enregistrées dans FORGE."
-  :auth.configured?"Une seule connexion GitHub permet de piloter les tickets."
-  :auth.edge?"Connexion GitHub en cours de configuration. Les tickets restent consultables."
-  :"Version en lecture seule : ouvre FORGE sur son adresse Cloudflare pour modifier les tickets.";
+  :auth.configured?"Une connexion GitHub suffit pour créer et modifier tes tickets."
+  :auth.edge?"Connexion GitHub non prête. Vérifie les variables Cloudflare indiquées ci-dessous."
+  :"Tu utilises l'ancienne adresse GitHub Pages. L'édition directe se fait dans FORGE sur Cloudflare.";
  id("publish").textContent=auth.authenticated?"Créer le ticket":"Publier via GitHub ↗";
+ const notice=id("authNotice");
+ const params=new URL(location.href).searchParams;
+ const authResult=params.get("auth");
+ const errors={setup:"Configuration GitHub incomplète sur Cloudflare.",state:"Connexion expirée ou retour GitHub non reconnu : retente depuis FORGE.",exchange:"GitHub a refusé l'échange du code : vérifie Client ID, Client Secret et Callback URL.",account:"Tu t'es connecté avec un compte différent de Leomgl.",oauth:"Connexion GitHub interrompue. Vérifie le Client Secret et la configuration de la GitHub App.",error:"Connexion GitHub non terminée.",ok:""};
+ let message="";
+ if(!auth.edge)message="Ancienne adresse détectée. Ouvre FORGE sur Cloudflare, puis ajoute cette nouvelle adresse à l'écran d'accueil de ton iPhone.";
+ else if(!auth.configured){
+  const missing=(auth.missing||[]).join(", ");
+  message="Connexion GitHub indisponible : "+(missing?"variable(s) manquante(s) : "+missing+".":"vérifie la configuration de la GitHub App.");
+ }else if(authResult&&errors[authResult])message=errors[authResult];
+ else if(authResult==="ok"&&!auth.authenticated)message="Retour GitHub reçu, mais la session n'est pas reconnue sur cette installation. Rouvre FORGE depuis la même adresse Cloudflare.";
+ if(auth.clientIdFormat==="check-client-id"&&auth.edge)message+=" Vérifie que GITHUB_CLIENT_ID contient bien le Client ID de la GitHub App.";
+ notice.hidden=!message;
+ notice.textContent=message;
+ const cloud=id("cloudEntry");cloud.hidden=auth.edge;
 }
 async function authCheck(){
  try{
   const r=await fetch("/auth/status",{headers:{Accept:"application/json"},credentials:"same-origin",cache:"no-store"});
   if(!r.ok||!(r.headers.get("content-type")||"").includes("application/json"))throw Error("gateway missing");
   const v=await r.json();
-  auth={configured:!!v.configured,authenticated:!!v.authenticated,login:v.login||null,edge:true};
- }catch{auth={configured:false,authenticated:false,login:null,edge:false};}
+  auth={configured:!!v.configured,authenticated:!!v.authenticated,login:v.login||null,edge:true,missing:Array.isArray(v.missing)?v.missing:[],clientIdFormat:v.clientIdFormat||"unknown"};
+ }catch{auth={configured:false,authenticated:false,login:null,edge:false,missing:[],clientIdFormat:"unknown"};}
  editMode();
 }
 async function editClick(){
  if(auth.authenticated){
   if(!confirm("Déconnecter GitHub de FORGE sur cet appareil ?"))return;
-  try{const r=await fetch("/auth/logout",{method:"POST",headers:{"Content-Type":"application/json","X-Forge-Action":"1"},credentials:"same-origin",body:"{}"});
-   if(!r.ok)throw Error("Connexion indisponible");await authCheck();setStatus("Compte GitHub déconnecté.");}
-  catch(e){setStatus("Déconnexion non confirmée : "+e.message);}
+  try{
+   const r=await fetch("/auth/logout",{method:"POST",headers:{"Content-Type":"application/json","X-Forge-Action":"1"},credentials:"same-origin",body:"{}"});
+   if(!r.ok)throw Error("Connexion indisponible");
+   await authCheck();setStatus("Compte GitHub déconnecté.");
+  }catch(e){setStatus("Déconnexion non confirmée : "+e.message);}
  }else if(!auth.edge){window.location.href=GATEWAY;}
- else if(!auth.configured){setStatus("Connexion non configurée sur Cloudflare. Voir docs/GITHUB-AUTH.md.");}
+ else if(!auth.configured){editMode();id("authNotice").scrollIntoView({behavior:"smooth",block:"center"});}
  else window.location.href="/auth/login";
 }
 function apiHeaders(write){
