@@ -1,5 +1,5 @@
 /* FORGE edge gateway v0.4 — GitHub App OAuth / dedicated origin.
-   Configure secrets: GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, SESSION_KEY.
+   Configure secrets: GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET. Cookie key derived with HKDF.
    No GitHub personal access token and no token exposed to browser code. */
 const REPO = "Leomgl/forge-app";
 const USER_ID = 242448324;
@@ -21,11 +21,11 @@ function setCookie(name,value,maxAge,path="/"){
  return name+"="+value+"; Path="+path+"; Max-Age="+maxAge+"; HttpOnly; Secure; SameSite=Lax";
 }
 function clearCookie(name,path="/"){return setCookie(name,"",0,path);}
-function ready(env){try{return !!(env.GITHUB_CLIENT_ID&&env.GITHUB_CLIENT_SECRET&&env.SESSION_KEY&&from64(env.SESSION_KEY).length===32);}catch{return false;}}
+function ready(env){return !!(env.GITHUB_CLIENT_ID&&env.GITHUB_CLIENT_SECRET);}
 async function cryptoKey(env){
- const raw=from64(env.SESSION_KEY);
- if(raw.length!==32)throw Error("Invalid server encryption key");
- return crypto.subtle.importKey("raw",raw,{name:"AES-GCM"},false,["encrypt","decrypt"]);
+ const material=await crypto.subtle.importKey("raw",encoder.encode(env.GITHUB_CLIENT_SECRET),"HKDF",false,["deriveKey"]);
+ return crypto.subtle.deriveKey({name:"HKDF",hash:"SHA-256",salt:encoder.encode("FORGE-APP-SESSION-2026"),info:encoder.encode("cookie-encryption-v1")},
+ material,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]);
 }
 async function seal(obj,env){
  const iv=crypto.getRandomValues(new Uint8Array(12));
