@@ -32,11 +32,15 @@ Consulter [la cartographie](docs/APP-MAP.md) pour les liens techniques et [les d
 
 Voir [le protocole complet](docs/TICKET-PROTOCOL.md).
 
-## Publication de la PWA
+## Publication de la PWA et connexion GitHub (V0.4)
 
-FORGE est une PWA gratuite et autonome : aucune synchronisation avec les données NEXUS/GAMING/RITUEL/VESTIAIRE. La PWA consulte les issues **publiques de ce dépôt** via l'API GitHub. Depuis V0.3, elle propose aussi une **édition facultative des statuts**, après saisie volontaire d'un jeton GitHub personnel **fine-grained** limité à `Leomgl/forge-app`, avec la seule permission `Issues: Read and write`. Le jeton est conservé **uniquement dans la mémoire JavaScript de la page**, jamais dans `localStorage`, `sessionStorage`, l'export des tickets ou le dépôt ; il est oublié au rechargement ou à la déconnexion. Les états sont **À faire**, **En cours**, **Terminé**. La source canonique reste l'issue GitHub : fermée = Terminé ; ouverte avec `FORGE_META.workflow=doing` = En cours ; toute autre issue ouverte = À faire. Les modifications sont vérifiées sur GitHub avant l'enregistrement, et l'app refuse de remplacer un ticket changé depuis le dernier chargement. Le formulaire de signalement ouvre le site GitHub avec le titre et le corps préremplis : **il faut encore toucher « Submit new issue »** en étant connecté. Pas de promesse de synchronisation de brouillons privés ni d'écriture sans validation.
+**Nouvelle adresse dédiée :** https://forge-hub.q9pfwtztsc.workers.dev/ — Worker Cloudflare `forge-hub` déployé le 11 novembre 2026. Il sert les fichiers publics de ce dépôt depuis une origine HTTPS indépendante. Le code serveur est versionné dans [edge-worker/index.mjs](edge-worker/index.mjs).
 
-GitHub Pages (branche `main`, racine) peut servir la PWA à `https://leomgl.github.io/forge-app/`. L'installation sur écran d'accueil depuis Safari requiert HTTPS. Activer Pages dans les paramètres du dépôt ; la présence des fichiers n'active pas Pages à elle seule. Pour isoler FORGE des autres PWA GitHub Pages de même origine, utiliser plus tard une origine Cloudflare séparée si nécessaire.
+**La connexion GitHub n'est pas encore activée :** une GitHub App doit être créée/installée une seule fois, puis ses deux identifiants configurés comme secrets dans Cloudflare. Ne pas prétendre que la connexion est testée sur iPhone avant sa recette réelle. [Guide de configuration pas-à-pas](docs/GITHUB-AUTH.md).
+
+La V0.4 remplace l'ancien champ de jeton personnel par **Se connecter avec GitHub**. Une fois configurée, la GitHub App a seulement `Issues: Read and write` pour le dépôt FORGE ; le Worker vérifie l'identité du propriétaire et garde les jetons dans un cookie chiffré HttpOnly. Le navigateur envoie uniquement des demandes métier sur `/api/issues` et `/api/workflow`. Il ne voit ni jeton personnel ni secret OAuth. Le compte autorisé peut **publier une issue directement** et **changer ses trois statuts** depuis la PWA. GitHub Issues reste la source de vérité. Hors connexion, les issues publiques restent consultables et le formulaire GitHub prérempli reste disponible.
+
+L'ancienne adresse GitHub Pages `https://leomgl.github.io/forge-app/` peut rester accessible en lecture seule ; le bouton de connexion renvoie vers la nouvelle origine Cloudflare. Les brouillons locaux ne se transfèrent pas automatiquement d'une origine à l'autre. Pour les notifications iPhone, aucune nouvelle API push n'est activée ici. **Aucun abonnement, aucun service payant et aucune base Cloudflare D1.**
 
 ## Protection des données et gratuité
 
@@ -46,10 +50,11 @@ Les données locales de brouillon peuvent être effacées par iOS ; seul un tick
 
 ## Version
 
-V0.3 — 11 novembre 2026 : trois statuts synchronisés avec GitHub, filtres d'état, édition GitHub volontaire par jeton à portée restreinte non persisté, refus d'écraser une version distante plus récente. Cette version ne fournit pas encore de connexion OAuth GitHub ni de déploiement Cloudflare dédié. Tests de syntaxe et de logique exécutés ; recette Safari iPhone et autorisation personnelle à vérifier.
+**V0.4 — 11 novembre 2026 :** nouvelle origine Cloudflare et passerelle GitHub App OAuth (state, PKCE, cookie chiffré), suppression de la saisie de PAT et création/édition directement dans l'app. **Backend déployé ; GitHub App et secrets non encore configurés, donc écritures non activées.** Tests de logique à compléter par une vraie autorisation et des tests Safari iPhone.
 
-V0.2 — 11 novembre 2026 : architecture « GitHub Issues = registre canonique », docs pour reprise de contexte inter-conversations, cartographie et protocole de non-régression.
+V0.3 — 11 novembre 2026 : suivi des trois états sur GitHub Issues. Ancienne édition par PAT supprimée en V0.4.
 
+V0.2 — 11 novembre 2026 : mémoire de tickets et documentation inter-applications.
 
 ## Vérifications de la V0.2
 
