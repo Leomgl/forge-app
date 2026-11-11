@@ -19,6 +19,7 @@
 | GAMING | [gaming-app](https://github.com/Leomgl/gaming-app) | Bibliothèque, stockage PS5, saisons/passes, push iOS, export NEXUS |
 | RITUEL | [rituel-app](https://github.com/Leomgl/rituel-app) | Routines, stock, statistiques et push iOS |
 | VESTIAIRE | [Vestiaire-app](https://github.com/Leomgl/Vestiaire-app) | Dressing, Fits, mannequin, poses et looks |
+| SANTÉ | [sante-app](https://github.com/Leomgl/sante-app) | Carnet médical chiffré, prises, rendez-vous ; liaison NEXUS bidirectionnelle à venir |
 
 Consulter [la cartographie](docs/APP-MAP.md) pour les liens techniques et [les dépendances](docs/DEPENDENCIES.md) pour les régressions possibles.
 
