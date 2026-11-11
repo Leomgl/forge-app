@@ -26,7 +26,7 @@ function setup(env){
  const missing=[];
  if(!id)missing.push("GITHUB_CLIENT_ID");
  if(!secret)missing.push("GITHUB_CLIENT_SECRET");
- return {configured:missing.length===0,missing,clientIdFormat:!id?"missing":/^(Iv1\.|Ov23)/.test(id)?"valid-looking":"check-client-id"};
+ return {configured:missing.length===0,missing,clientIdFormat:!id?"missing":/^(Iv1\.|Iv23|Ov23)/.test(id)?"valid-looking":"check-client-id"};
 }
 function ready(env){return setup(env).configured;}
 async function cryptoKey(env){
