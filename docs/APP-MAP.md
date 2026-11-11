@@ -41,12 +41,13 @@
 
 ## SANTÉ — Leomgl/sante-app
 
-- **Version déployée :** V0.1.1, source `worker.mjs` ; adresse Cloudflare indépendante : https://sante-app.q9pfwtztsc.workers.dev/.
-- **Modules :** accueil, traitements et prises manuelles, rendez-vous, dossier, export/restauration chiffrés.
-- **Stockage :** IndexedDB chiffré AES-256-GCM dérivé d'une phrase secrète. Pas de données médicales sur GitHub/Cloudflare serveur, pas d'API de compte, ni de synchronisation cloud en V0.1.
-- **NEXUS LINK :** prévu, NON ACTIVÉ. Exigence bidirectionnelle : créer/éditer RDV et rappels depuis Nexus **ou** Santé, mais Santé reste la base médicale complète. Flux minimisés, permissions, anti-doublons, conflits et source de vérité à définir.
-- **Risques :** appareil compromis, perte de phrase, purge de stockage iOS, absence de restauration serveur, absence de push, icônes iOS non finalisées.
-- **État de validation :** tests GitHub Actions réussis ; recette utilisateur iPhone et vérification réseau/headers à faire. Voir `sante-app/docs/PROJECT-HANDOFF.md` et FORGE #4.
+- **Version déployée : V0.2.1 (11/11/2026)** ; dépôt GitHub privé et source `worker.mjs`. Cloudflare Worker distinct : https://sante-app.q9pfwtztsc.workers.dev/.
+- **Modules :** accueil, traitement et prises manuelles, rendez-vous, dossier, **carnet** (vaccinations manuelles, consultations, documents PDF/photos chiffrés), export/restauration.
+- **Stockage :** IndexedDB locale AES-256-GCM, PBKDF2 310 000 tours. Migration non destructive v1→v2 : `records` intact, `files` chiffrés individuellement. Sauvegarde V2 inclut pièces jointes et est rétrocompatible avec V0.1.
+- **NEXUS LINK :** NON ACTIVÉ. Exigence **bidirectionnelle** pour RDV et rappels entre Nexus et Santé, avec Santé source de détail. Permissions, minimisation, anti-doublons, conflits et ID/révisions restent à réaliser.
+- **Notifications push iOS :** non actives. Échéances vaccinales enregistrées uniquement d'après saisie manuelle.
+- **Risques :** clé perdue = accès irrécupérable ; purge stockage iOS ; export individuel de documents en clair hors du coffre ; aucun compte/sync cloud ; icône PNG iOS non finalisée.
+- **Validation :** tests GitHub CI réussis, déploiement Worker confirmé par Cloudflare API, **recette V0.2 Safari/iPhone et réseau externe à faire**. Voir `sante-app/docs/PROJECT-HANDOFF.md` et `docs/RECETTE-V02.md`.
 
 ## Quand ajouter une autre application ?
 
