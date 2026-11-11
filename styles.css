@@ -24,3 +24,13 @@
 .auth-form .bigbutton{justify-self:start}
 @media(max-width:750px){.head-actions{justify-content:flex-start}.issue-actions{gap:10px}.issue-link{margin:0}.modal-panel{padding:18px}}
 @media(max-width:420px){.section-heading{flex-wrap:wrap}.head-actions{width:100%;justify-content:space-between}.head-actions button{flex:1;font-size:12px;padding:10px 11px}.modal-panel{max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 28px)}}
+
+.workflow-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}
+.statbox{background:var(--panel);border:1px solid var(--edge);border-radius:13px;padding:13px 14px;color:var(--txt);display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;min-width:0}
+.statbox span{font-size:12px;font-weight:800;color:var(--muted)}
+.statbox strong{font-size:21px;line-height:1;letter-spacing:-.04em}
+.statbox.doing strong{color:var(--accent)}
+.statbox.done strong{color:var(--green)}
+.statbox.selected{border-color:var(--accent);background:#302825}
+.statbox:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:420px){.statbox{padding:13px 9px;flex-direction:column;align-items:flex-start}.statbox span{font-size:11px}}
