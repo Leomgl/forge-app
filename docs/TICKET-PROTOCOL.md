@@ -36,7 +36,7 @@ Pour passer de l'un à l'autre, modifier le commentaire HTML `FORGE_META` sans e
 
 **Quand l'assistant change un statut :** lire d'abord la version actuelle de l'issue et ses commentaires, mettre à jour métadonnée et état via GitHub, contrôler le résultat, écrire le compte rendu/commit dans un commentaire si pertinent. Ne jamais changer le statut sur la seule base du cache FORGE.
 
-**Depuis la PWA :** le sélecteur d'état écrit directement dans GitHub avec une autorisation volontaire. Jeton `fine-grained` uniquement `Leomgl/forge-app`, permission `Issues: Read and write`, durée courte. Pas de jeton stocké localement ni dans le dépôt. Une vérification de `updated_at` et du statut côté GitHub avant PATCH refuse un écrasement évident ; cela ne constitue pas une transaction atomique et une modification simultanée reste possible. Un rafraîchissement relit GitHub. Sans autorisation, lecture seule ou modification sur github.com.
+**Depuis la PWA V0.4 :** l'origine Cloudflare dédiée gère une connexion GitHub App OAuth sans jeton à coller. Après installation de la GitHub App (permission `Issues: Read and write` sur le seul dépôt FORGE), le Worker vérifie une session sécurisée puis écrit dans GitHub. Les jetons restent dans un cookie chiffré HttpOnly de la même origine et n'entrent jamais dans le JavaScript client. Voir [GITHUB-AUTH.md](GITHUB-AUTH.md). Une vérification de `updated_at` et du statut côté GitHub avant PATCH refuse un écrasement évident ; cela ne constitue pas une transaction atomique et une modification simultanée reste possible. Un rafraîchissement relit GitHub. Sans autorisation, lecture seule ou modification sur github.com.
 
 
 ## Exemple de suivi après intervention
@@ -53,7 +53,7 @@ Pour passer de l'un à l'autre, modifier le commentaire HTML `FORGE_META` sans e
 ## Sécurité et limites
 
 - Issues d'un dépôt public : ne pas publier captures nominatives, secrets, exports de stockage, codes d'accès, tokens ou données médicales.
-- Aucun jeton GitHub ne doit être embarqué dans la PWA, le code source ou les stockages navigateur. Un jeton fourni volontairement pour les états reste en mémoire et ne sert qu'aux requêtes API Github destinées au dépôt FORGE ; le bouton « Publier » continue d'ouvrir GitHub et l'utilisateur finalise son issue.
+- Aucun jeton GitHub ne doit être embarqué dans la PWA, le code source ou les stockages navigateur. Depuis V0.4, un jeton personnel ne doit plus être saisi : si la connexion GitHub App est active, le bouton « Publier » crée directement le ticket ; sinon il ouvre GitHub pour validation manuelle. Les secrets OAuth restent dans Cloudflare.
 - GitHub API : lecture publique accessible sans compte et soumise aux limites de requêtes ; écritures authentifiées uniquement après action explicite.
 - Les pièces jointes sont ajoutées **manuellement sur GitHub** après contrôle du contenu.
 - La PWA n'exécute aucun travail en arrière-plan, aucune notification et aucune synchronisation de code.
