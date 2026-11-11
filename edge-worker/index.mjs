@@ -57,7 +57,7 @@ function github(path,token,options={}){
 async function tokenExchange(env,body){
  const r=await fetch("https://github.com/login/oauth/access_token",{
  method:"POST",headers:{Accept:"application/json","Content-Type":"application/x-www-form-urlencoded"},
- body:new URLSearchParams({client_id:env.GITHUB_CLIENT_ID,client_secret:env.GITHUB_CLIENT_SECRET,...body})});
+ body:new URLSearchParams({client_id:String(env.GITHUB_CLIENT_ID).trim(),client_secret:String(env.GITHUB_CLIENT_SECRET).trim(),...body})});
  const data=await r.json();
  if(!r.ok||data.error||!data.access_token)throw Error("Authentification GitHub refusée");
  return data;
@@ -68,10 +68,9 @@ async function authStart(req,env){
  const challenge=b64(new Uint8Array(await crypto.subtle.digest("SHA-256",encoder.encode(verifier))));
  const redirectUri=ownUrl(req)+"/auth/callback";
  const u=new URL("https://github.com/login/oauth/authorize");
- u.searchParams.set("client_id",env.GITHUB_CLIENT_ID);
+ u.searchParams.set("client_id",String(env.GITHUB_CLIENT_ID).trim());
  u.searchParams.set("redirect_uri",redirectUri);
  u.searchParams.set("state",state);
- u.searchParams.set("scope","offline_access");
  u.searchParams.set("code_challenge",challenge);
  u.searchParams.set("code_challenge_method","S256");
  return redirect(u.toString(),{"Set-Cookie":setCookie("forge_oauth",state+"."+verifier,600,"/auth")});
