@@ -56,6 +56,16 @@ Code/docs : [README](https://github.com/Leomgl/rituel-app/blob/main/README.md) �
 
 Code/docs : [README](https://github.com/Leomgl/Vestiaire-app/blob/main/README.md) · [Fitting V0.4](https://github.com/Leomgl/Vestiaire-app/blob/main/docs/FITTING-V04.md).
 
+## FORGE — outil de suivi lui-même
+
+| Version | Évolution | Vigilance |
+|---|---|---|
+| V0.2 | GitHub Issues comme registre canonique, instructions IA et cartographie inter-apps | Ne pas confondre brouillons locaux et tickets publiés |
+| V0.3 | Trois statuts À faire / En cours / Terminé avec source GitHub | Préserver les corps des issues, `updated_at`, éviter écrasement d'historique |
+| V0.4 | Origine Cloudflare dédiée, GitHub App OAuth, création et modification sans PAT, tickets internes FORGE | **GitHub App pas encore configurée ; recette iPhone requise**. Ne jamais publier secrets OAuth ou déclarer l'authentification validée avant essais réels |
+
+Ticket de mise en route : [FORGE #3](https://github.com/Leomgl/forge-app/issues/3). Guide : [Connexion GitHub](GITHUB-AUTH.md).
+
 ## Comment tenir ce document à jour
 
 Après une livraison qui change le comportement ou la structure, ajouter le jalon, **puis** joindre un lien vers commit/PR et tests dans l'issue FORGE. Pour la vérité des versions et des fichiers, reconsulter l'app ciblée à chaque nouvelle intervention.
