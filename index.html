@@ -25,10 +25,11 @@
   <div class="intro"><div><p class="eyebrow">LE CARNET DE CHANTIER DES APPLICATIONS</p><h1>Un ticket.<br><em>Tout le contexte.</em></h1><p>Tu signales, je retrouve le code, les anciennes décisions et les précautions à prendre. Tout se suit dans GitHub, pas dans un coin perdu de ton iPhone.</p></div>
   <a href="#composer" class="bigbutton">＋ Nouveau ticket</a></div>
   <section id="tickets" class="section">
-   <div class="section-heading"><div><p class="eyebrow">SOURCE : GITHUB ISSUES</p><h2>Tickets publiés <span id="issueCount" class="count">—</span></h2></div><button id="refresh" class="outline">↻ Actualiser</button></div>
+   <div class="section-heading"><div><p class="eyebrow">SOURCE : GITHUB ISSUES</p><h2>Tickets publiés <span id="issueCount" class="count">—</span></h2></div><div class="head-actions"><button id="editMode" class="outline" type="button">Activer l’édition</button><button id="refresh" class="outline" type="button">↻ Actualiser</button></div></div>
    <div class="filters"><label class="sr-only" for="search">Rechercher un ticket</label><input id="search" placeholder="Rechercher un ticket ou un numéro…">
    <label class="sr-only" for="projectFilter">Application</label><select id="projectFilter"><option value="all">Toutes les apps</option><option value="NEXUS">NEXUS</option><option value="GAMING">GAMING</option><option value="RITUEL">RITUEL</option><option value="VESTIAIRE">VESTIAIRE</option></select>
-   <label class="sr-only" for="statusFilter">État</label><select id="statusFilter"><option value="all">Tous les états</option><option value="open">Ouverts</option><option value="closed">Terminés</option></select></div>
+   <label class="sr-only" for="statusFilter">État</label><select id="statusFilter"><option value="all">Tous les états</option><option value="todo">À faire</option><option value="doing">En cours</option><option value="done">Terminé</option></select></div>
+   <p id="editInfo" class="micro">Lecture publique. Pour modifier un état depuis FORGE, active l’édition GitHub.</p>
    <p id="loadInfo" class="micro" role="status" aria-live="polite">Chargement des issues GitHub…</p>
    <div id="issues" class="issues" aria-live="polite"></div>
   </section>
@@ -64,7 +65,21 @@
     <a href="./docs/DECISIONS.md" target="_blank" class="contextlink"><span>04</span><b>Arbitrages techniques</b><small>Pourquoi nous avons fait certains choix</small></a></div>
   </section>
  </main>
- <footer><span>FORGE <strong>v0.2</strong> · GitHub Issues fait foi</span><span>Aucun token, aucune liaison aux données des apps · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
+ <footer><span>FORGE <strong>v0.3</strong> · GitHub Issues fait foi</span><span>Jeton d’édition facultatif, jamais conservé · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
+</div>
+<div id="authModal" class="modal" hidden>
+ <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal-top"><h2 id="authTitle">Activer l’édition GitHub</h2><button id="authCancel" class="outline" type="button" aria-label="Fermer">✕</button></div>
+  <p>Pour changer l’état d’un ticket dans FORGE, GitHub exige une autorisation d’écriture. Utilise un <b>jeton fine-grained</b> limité à <code>Leomgl/forge-app</code> avec uniquement <b>Issues : Read and write</b> et une expiration courte.</p>
+  <p class="security-note">Le jeton reste uniquement dans la mémoire de cette page : il est effacé au rechargement, à la fermeture ou quand tu touches « Déconnecter ». Ne le mets jamais dans un ticket, une capture ou un chat.</p>
+  <a class="external" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Créer un jeton limité sur GitHub ↗</a>
+  <form id="authForm" class="auth-form">
+   <label for="tokenField">Jeton GitHub de session</label>
+   <input id="tokenField" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…" required maxlength="280">
+   <p id="authMessage" class="micro" role="status" aria-live="polite"></p>
+   <button class="bigbutton" type="submit">Activer et enregistrer</button>
+  </form>
+ </div>
 </div>
 <script src="./app.js"></script>
 </body>
