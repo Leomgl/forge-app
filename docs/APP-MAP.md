@@ -41,13 +41,13 @@
 
 ## SANTÉ — Leomgl/sante-app
 
-- **Version déployée : V0.2.1 (11/11/2026)** ; dépôt GitHub privé et source `worker.mjs`. Cloudflare Worker distinct : https://sante-app.q9pfwtztsc.workers.dev/.
-- **Modules :** accueil, traitement et prises manuelles, rendez-vous, dossier, **carnet** (vaccinations manuelles, consultations, documents PDF/photos chiffrés), export/restauration.
-- **Stockage :** IndexedDB locale AES-256-GCM, PBKDF2 310 000 tours. Migration non destructive v1→v2 : `records` intact, `files` chiffrés individuellement. Sauvegarde V2 inclut pièces jointes et est rétrocompatible avec V0.1.
-- **NEXUS LINK :** NON ACTIVÉ. Exigence **bidirectionnelle** pour RDV et rappels entre Nexus et Santé, avec Santé source de détail. Permissions, minimisation, anti-doublons, conflits et ID/révisions restent à réaliser.
-- **Notifications push iOS :** non actives. Échéances vaccinales enregistrées uniquement d'après saisie manuelle.
-- **Risques :** clé perdue = accès irrécupérable ; purge stockage iOS ; export individuel de documents en clair hors du coffre ; aucun compte/sync cloud ; icône PNG iOS non finalisée.
-- **Validation :** tests GitHub CI réussis, déploiement Worker confirmé par Cloudflare API, **recette V0.2 Safari/iPhone et réseau externe à faire**. Voir `sante-app/docs/PROJECT-HANDOFF.md` et `docs/RECETTE-V02.md`.
+- **Version déployée : V0.3 (11/11/2026)** ; dépôt GitHub privé et source `worker.mjs` + `push.js`. URL PWA Cloudflare indépendante : https://sante-app.q9pfwtztsc.workers.dev/.
+- **Modules :** accueil, traitements et prises manuelles, rendez-vous, dossier, carnet (vaccinations saisies manuellement, consultations, documents PDF/photos chiffrés) et export/restauration.
+- **Stockage clinique :** IndexedDB locale AES-256-GCM, PBKDF2 310000 tours, `records` et `files` séparés ; migration non destructive V0.1→V0.2. Les fichiers et les notes restent sur l'iPhone.
+- **Web Push V0.3 :** configuration depuis Santé, notifications d'horaires de traitements, rendez-vous J−1/−1h, échéances vaccinales J−30/−7/jour J. Messages détaillés/génériques configurables. App → D1 **seulement des échéances, des données de souscription, types de rappel et payloads AES-GCM chiffrés** ; le Service Worker déchiffre localement avec une clé de notification distincte. D1 EU `sante-push-db`, Worker `sante-app`, cron `*/5 * * * *`.
+- **NEXUS LINK :** NON ACTIVÉ. Exigence bidirectionnelle pour RDV/rappels, Santé source médicale, permissions minimales, ID/révisions et déduplication à construire. Ne pas supposer que le nouveau push est géré par Nexus.
+- **Risques :** perte de phrase/stockage iOS, absence de sauvegarde serveur, clés de notifications dans un store distinct du coffre, horaires et types de rappels révélés comme métadonnées à Cloudflare, exports individuels déchiffrés. Tous les secrets VAPID restent Cloudflare ; l'ancienne méthode d'upload V0.2 casserait les bindings.
+- **Validation :** tests GitHub CI, D1, bindings et cron confirmés par API Cloudflare, **recette de réception Web Push sur vrai iPhone et mode hors-ligne du coffre toujours à faire**. Lire `sante-app/docs/PROJECT-HANDOFF.md` et `docs/PUSH-V03.md` avant toute intervention.
 
 ## Quand ajouter une autre application ?
 
