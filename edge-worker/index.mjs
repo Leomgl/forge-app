@@ -5,7 +5,7 @@ const REPO = "Leomgl/forge-app";
 const USER_ID = 242448324;
 const ROOT = "https://raw.githubusercontent.com/Leomgl/forge-app/main/";
 const API = "https://api.github.com/repos/" + REPO + "/issues";
-const ACCEPT = {Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};
+const ACCEPT = {Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28","User-Agent":"Forge-Leomgl-Hub"};
 const COOKIE = "forge_session";
 const STATES = {todo:true,doing:true,done:true};
 const decoder = new TextDecoder(), encoder = new TextEncoder();
@@ -56,7 +56,7 @@ function github(path,token,options={}){
 }
 async function tokenExchange(env,body){
  const r=await fetch("https://github.com/login/oauth/access_token",{
- method:"POST",headers:{Accept:"application/json","Content-Type":"application/x-www-form-urlencoded"},
+ method:"POST",headers:{Accept:"application/json","Content-Type":"application/x-www-form-urlencoded","User-Agent":"Forge-Leomgl-Hub"},
  body:new URLSearchParams({client_id:String(env.GITHUB_CLIENT_ID).trim(),client_secret:String(env.GITHUB_CLIENT_SECRET).trim(),...body})});
  const data=await r.json();
  if(!r.ok||data.error||!data.access_token)throw Error("Authentification GitHub refusée");
@@ -81,24 +81,30 @@ async function authCallback(req,env){
  const sep=cookie.indexOf(".");
  const state=sep>=0?cookie.slice(0,sep):"",verifier=sep>=0?cookie.slice(sep+1):"";
  if(!state||!verifier||params.get("state")!==state||!params.get("code")){
- return redirect("/?auth=state",{"Set-Cookie":clearCookie("forge_oauth","/auth")});
+  return redirect("/?auth=state",{"Set-Cookie":clearCookie("forge_oauth","/auth")});
  }
+ let phase="exchange";
  try{
- const token=await tokenExchange(env,{code:params.get("code"),redirect_uri:ownUrl(req)+"/auth/callback",code_verifier:verifier});
- const profileRes=await github("/user",token.access_token);
- if(!profileRes.ok)throw Error("Cannot verify GitHub identity");
- const profile=await profileRes.json();
- if(profile.id!==USER_ID||String(profile.login).toLowerCase()!=="leomgl")throw Error("Wrong GitHub account");
- // A GitHub App user token can only reach explicitly installed repositories.
- const session={access:token.access_token,refresh:token.refresh_token||"",
- accessUntil:Date.now()+Math.max(0,(token.expires_in||28800)-60)*1000,
- refreshUntil:Date.now()+Math.max(0,(token.refresh_token_expires_in||0)-60)*1000,
- login:profile.login,id:profile.id};
- return redirect("/?auth=ok",{"Set-Cookie":sessionCookie(await seal(session,env))});
+  const token=await tokenExchange(env,{code:params.get("code"),redirect_uri:ownUrl(req)+"/auth/callback",code_verifier:verifier});
+  phase="profile";
+  const profileRes=await github("/user",token.access_token);
+  if(!profileRes.ok)throw Error("Profile endpoint HTTP "+profileRes.status);
+  const profile=await profileRes.json();
+  if(profile.id!==USER_ID||String(profile.login).toLowerCase()!=="leomgl")throw Error("Wrong GitHub account");
+  const session={access:token.access_token,refresh:token.refresh_token||"",
+   accessUntil:Date.now()+Math.max(0,(token.expires_in||28800)-60)*1000,
+   refreshUntil:Date.now()+Math.max(0,(token.refresh_token_expires_in||0)-60)*1000,
+   login:profile.login,id:profile.id};
+  phase="session";
+  return redirect("/?auth=ok",{"Set-Cookie":sessionCookie(await seal(session,env))});
  }catch(e){
- const reason=String(e?.message||"");
- const error=reason.includes("Wrong GitHub account")?"account":reason.includes("Authentification GitHub refusée")?"exchange":"oauth";
- return redirect("/?auth="+error,{"Set-Cookie":clearCookie("forge_oauth","/auth")});
+  const reason=String(e?.message||"");
+  const error=reason.includes("Wrong GitHub account")?"account"
+   :phase==="exchange"?"exchange"
+   :phase==="profile"?"profile"
+   :phase==="session"?"session":"oauth";
+  // Never expose error details, GitHub tokens, OAuth code, or credentials to browser.
+  return redirect("/?auth="+error,{"Set-Cookie":clearCookie("forge_oauth","/auth")});
  }
 }
 async function withSession(req,env){
