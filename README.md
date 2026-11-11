@@ -50,6 +50,8 @@ Les données locales de brouillon peuvent être effacées par iOS ; seul un tick
 
 ## Version
 
+**V0.4.2 — 11 novembre 2026 :** correction de l'appel GitHub REST API depuis Cloudflare Worker avec l'en-tête obligatoire `User-Agent`. Ajout de diagnostics OAuth distincts (`exchange`, `profile`, `session`), sans exposer de secret. Code redéployé sur le Worker avec conservation des bindings existants ; test de parcours OAuth réel sur iPhone encore nécessaire.
+
 **V0.4.1 — 11 novembre 2026 :** correction du parcours de connexion : nouveau déploiement du Worker avec conservation des variables Cloudflare, diagnostic non sensible dans `/auth/status`, messages de retour GitHub, bannière sur l'ancienne origine GitHub Pages et actualisation du cache PWA iPhone. **Les variables ont été détectées mais leur validité et la réussite OAuth restent à confirmer par essai réel sur iPhone.** Vérification d'infrastructure effectuée, aucun ticket existant modifié.
 
 **V0.4 — 11 novembre 2026 :** passerelle GitHub App OAuth (state, PKCE, cookie chiffré), suppression de la saisie de PAT et création/édition directement dans l'app. Pas de connexion définitivement validée tant que l'autorisation GitHub n'a pas été testée.
