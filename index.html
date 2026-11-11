@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101318">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FORGE">
+<meta name="description" content="Tickets GitHub et contexte technique pour nos applications.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./styles.css">
+<title>FORGE — Development Memory</title>
+</head>
+<body>
+<div class="shell">
+ <header class="top">
+  <a class="brand" href="#tickets" aria-label="FORGE accueil"><span class="symbol">F<span>.</span></span><span><b>FORGE</b><small>DEVELOPMENT MEMORY</small></span></a>
+  <a class="external" href="https://github.com/Leomgl/forge-app/issues" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+ </header>
+ <main>
+  <div class="intro"><div><p class="eyebrow">LE CARNET DE CHANTIER DES APPLICATIONS</p><h1>Un ticket.<br><em>Tout le contexte.</em></h1><p>Tu signales, je retrouve le code, les anciennes décisions et les précautions à prendre. Tout se suit dans GitHub, pas dans un coin perdu de ton iPhone.</p></div>
+  <a href="#composer" class="bigbutton">＋ Nouveau ticket</a></div>
+  <section id="tickets" class="section">
+   <div class="section-heading"><div><p class="eyebrow">SOURCE : GITHUB ISSUES</p><h2>Tickets publiés <span id="issueCount" class="count">—</span></h2></div><button id="refresh" class="outline">↻ Actualiser</button></div>
+   <div class="filters"><label class="sr-only" for="search">Rechercher un ticket</label><input id="search" placeholder="Rechercher un ticket ou un numéro…">
+   <label class="sr-only" for="projectFilter">Application</label><select id="projectFilter"><option value="all">Toutes les apps</option><option value="NEXUS">NEXUS</option><option value="GAMING">GAMING</option><option value="RITUEL">RITUEL</option><option value="VESTIAIRE">VESTIAIRE</option></select>
+   <label class="sr-only" for="statusFilter">État</label><select id="statusFilter"><option value="all">Tous les états</option><option value="open">Ouverts</option><option value="closed">Terminés</option></select></div>
+   <p id="loadInfo" class="micro" role="status" aria-live="polite">Chargement des issues GitHub…</p>
+   <div id="issues" class="issues" aria-live="polite"></div>
+  </section>
+  <section class="section" id="composer">
+   <div class="section-heading"><div><p class="eyebrow">SAISIE RAPIDE</p><h2>Signaler ou proposer</h2></div><span class="count">Brouillon local</span></div>
+   <p class="muted">Le brouillon reste sur ton appareil. Pour que je le retrouve dans un autre chat, il faut **publier l'issue sur GitHub**. N'ajoute ni secret, ni capture privée dans une issue publique.</p>
+   <div class="formbox">
+     <div class="cols">
+      <label>Application<select id="tProject"><option value="NEXUS">NEXUS</option><option value="GAMING">GAMING</option><option value="RITUEL">RITUEL</option><option value="VESTIAIRE">VESTIAIRE</option></select></label>
+      <label>Nature<select id="tType"><option value="bug">Bug</option><option value="evolution">Évolution</option><option value="idee">Idée</option><option value="test">Test / vérification</option></select></label>
+      <label>Priorité<select id="tPriority"><option value="normale">Normale</option><option value="haute">Haute</option><option value="critique">Critique</option><option value="basse">Basse</option></select></label>
+      <label>Version observée <span class="optional">(facultatif)</span><input id="tVersion" maxlength="60" placeholder="Ex : 0.17.2"></label>
+     </div>
+     <label>Titre du ticket <span class="required">*</span><input id="tTitle" maxlength="140" placeholder="Ex : Le tri A–Z saute certaines lettres"></label>
+     <label>Contexte / ce que tu aimerais obtenir <span class="required">*</span><textarea id="tDescription" rows="4" maxlength="8000" placeholder="Décris l'idée, le problème ou la fonction voulue…"></textarea></label>
+     <div class="cols">
+       <label>Étapes pour reproduire <span class="optional">(bug)</span><textarea id="tSteps" rows="3" maxlength="4000" placeholder="1. Ouvrir…  2. Cliquer…"></textarea></label>
+       <label>Résultat attendu / critères d'acceptation<textarea id="tExpected" rows="3" maxlength="4000" placeholder="Ce qu'on doit pouvoir faire ou vérifier…"></textarea></label>
+     </div>
+     <label>Contraintes / points à préserver <span class="optional">(facultatif)</span><textarea id="tConstraints" rows="2" maxlength="4000" placeholder="Ex : ne pas toucher aux contacts ni au coffre cloud…"></textarea></label>
+     <div class="formfoot"><p><b>Publication sécurisée :</b> FORGE ouvrira GitHub avec le texte prérempli. Tu valideras la création sur GitHub. Aucune clé d'API dans cette PWA.</p>
+       <div class="actions"><button id="resetDraft" class="outline" type="button">Effacer le brouillon</button><button id="publish" class="bigbutton" type="button">Publier via GitHub ↗</button></div>
+     </div>
+     <p id="composeMessage" role="status" aria-live="polite" class="micro"></p>
+   </div>
+  </section>
+  <section class="section" id="context">
+    <div class="section-heading"><div><p class="eyebrow">MÉMOIRE PARTAGÉE</p><h2>Contexte des applications</h2></div><a class="external" href="./docs/AI-START-HERE.md" target="_blank">Guide IA ↗</a></div>
+    <div class="apps" id="apps"></div>
+    <div class="contextgrid"><a href="./docs/AI-START-HERE.md" target="_blank" class="contextlink"><span>01</span><b>Point d'entrée de l'assistant</b><small>Comment reprendre un ticket dans un nouveau chat</small></a>
+    <a href="./docs/DEPENDENCIES.md" target="_blank" class="contextlink"><span>02</span><b>Liens et dépendances</b><small>Ce qu'on risque de casser entre les apps</small></a>
+    <a href="./docs/TICKET-PROTOCOL.md" target="_blank" class="contextlink"><span>03</span><b>Méthode de livraison</b><small>Analyse, migration, tests et décision</small></a>
+    <a href="./docs/DECISIONS.md" target="_blank" class="contextlink"><span>04</span><b>Arbitrages techniques</b><small>Pourquoi nous avons fait certains choix</small></a></div>
+  </section>
+ </main>
+ <footer><span>FORGE <strong>v0.2</strong> · GitHub Issues fait foi</span><span>Aucun token, aucune liaison aux données des apps · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
+</div>
+<script src="./app.js"></script>
+</body>
+</html>
