@@ -8,7 +8,8 @@ var apps=[
  {id:"NEXUS",mark:"N",repo:"Leomgl/nexus-app",desc:"Second cerveau, contacts, rappels, budget et intégrations chiffrées."},
  {id:"GAMING",mark:"G",repo:"Leomgl/gaming-app",desc:"Jeux, stockage PS5, saisons, notifications et liens NEXUS."},
  {id:"RITUEL",mark:"R",repo:"Leomgl/rituel-app",desc:"Routines, stocks, statistiques et push iPhone."},
- {id:"VESTIAIRE",mark:"V",repo:"Leomgl/Vestiaire-app",desc:"Dressing, import Fits, mannequin et superposition des tenues."}
+ {id:"VESTIAIRE",mark:"V",repo:"Leomgl/Vestiaire-app",desc:"Dressing, import Fits, mannequin et superposition des tenues."},
+ {id:"FORGE",mark:"F",repo:"Leomgl/forge-app",desc:"Mémoire des tickets, connexion GitHub et pilotage du développement."}
 ];
 function id(n){return document.getElementById(n);}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -142,7 +143,7 @@ function onStatusChange(e){
  if(Number.isSafeInteger(number)&&number>=1&&WORKFLOW[target])saveWorkflow(number,target);
 }
 function makeApps(){
- id("apps").innerHTML=apps.map(function(p){
+ id("apps").innerHTML=apps.filter(function(p){return p.id!=="FORGE";}).map(function(p){
  return '<article class="appcard"><span class="appmark">'+p.mark+'</span><b>'+p.id+'</b><p>'+esc(p.desc)+'</p>'
  +'<a target="_blank" rel="noopener noreferrer" href="https://github.com/'+p.repo+'">Voir le dépôt ↗</a></article>';
  }).join("");
