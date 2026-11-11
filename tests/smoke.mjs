@@ -50,6 +50,11 @@ const edge=fs.readFileSync(new URL("../edge-worker/index.mjs",import.meta.url),"
 new vm.Script(edge.replace("export default {","const EDGE_HANDLER = {"),{filename:"edge-worker/index.mjs"});
 assert.match(edge,/GITHUB_CLIENT_SECRET/);
 assert.match(edge,/GITHUB_CLIENT_ID/);
+assert.match(edge,/"User-Agent":"Forge-Leomgl-Hub"/);
+assert.match(edge,/phase==="profile"/);
+assert.match(edge,/phase==="session"/);
+assert.match(src,/profile:"GitHub a validé/);
+assert.match(src,/session:"GitHub a validé/);
 assert.match(edge,/HttpOnly; Secure; SameSite=Lax/);
 assert.match(edge,/async function authStart/);
 assert.match(edge,/async function authCallback/);
