@@ -195,3 +195,12 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - LINK V0.6 : tous les 7 contrats dans l'onglet Connexions, les diagnostics avancés repliés, protocole de contrôle `management.mjs` sans secrets. Cloudflare Worker `93e219bd-a1c6-4bb5-8dfb-f386dcdbacf5` à 100 %.
 - Gaming/Nexus : `link-bridge.js` avec confirmation contextuelle, sans menu permanent ; Gaming Worker `417ff6f8-02fe-4f76-bf25-5044e49ecdb0` à 100 %, push et cron préservés ; Nexus Pages et CI réussies.
 - CI LINK 51/51, Gaming 13/13, Nexus 94/94. Recette iPhone V0.6 non confirmée, 6 autres flux non pilotables, jumelages et contrôles hérités conservés.
+
+## 2026-11-13 — LINK V0.6.1 : faux « jumelage absent » corrigé, limite iOS identifiée
+
+- Retour utilisateur : « Autoriser la vérification » renvoyait « Aucun jumelage dans cette app », malgré un jumelage Gaming ↔ Nexus déjà confirmé. Cause : contrôle déclenché sur une origine ouverte dans Safari, stockage séparé de la PWA iPhone installée.
+- Gaming et Nexus `link-bridge.js` renvoient `context-isolated` en navigateur non standalone sans paire visible ; LINK n'affirme plus de suppression de jumelage. Un ancien relevé local indiquant une paire est rappelé avec date, sans statut temps réel.
+- Synchronisation centralisée empêchée tant qu'une vérification de cette app n'est pas déclarée réussie dans les dix dernières minutes. Aucun lien recréé/révoqué, aucun secret transmis.
+- Worker LINK V0.6.1 `84f1fbfe-9a51-4ba3-9bd2-23a34a2112b5` et Gaming `ab750dfc-6941-4eba-aa73-c4bba1783e27` à 100 %, bindings/push/cron conservés, Nexus GitHub Pages succès ; CI LINK 52/52, Gaming et Nexus vertes.
+- Limite structurelle toujours ouverte : LINK ne peut pas réveiller directement une autre PWA en retrouvant son IndexedDB ; concevoir un vrai pont authentifié et consenti. Recette iPhone encore requise, Forge #28 non clos.
+
