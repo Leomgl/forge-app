@@ -142,3 +142,9 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - **Nexus** : fichier `link-import.js` exposant un diagnostic volontaire dans Propositions Gaming, `index.html` charge `link-import.js?v=02113`, Service Worker `nexus-v0.21.12.1`. Il n'exporte ni secrets, IDs, titres, montants, ni payloads ; les flux et la validation manuelle restent identiques.
 - **Important** : la correspondance numérique des compteurs n'atteste ni la même paire, ni la bonne livraison des événements, ni un ACK de relay. Comparateur purement consultatif et non signé, sans envoi serveur.
 - **Validation** : tests Nexus GitHub Actions verts ; LINK tests V0.4 verts et Worker déployé 100 %. Recette iPhone de V0.4 et nouvelles interactions Nexus restant à confirmer. Forge #28 demeure en cours.
+
+## 2026-11-12 — Nexus Face ID correctif de robustesse (#30)
+
+- NEXUS `passkey-client.js` prépare les défis Cloudflare hors du geste, puis appelle directement `navigator.credentials.get/create` au tap sur iOS ; `index.html` et le cache SW sont versionnés `02114` / `0.21.12.2`. **Aucun credential, backend passkey, vault, D1, secret ou jumelage supprimé.**
+- Tests de sécurité/UX CI 85/85 ; déploiement GitHub Pages réussi. **La réparation effective Face ID sur iPhone n'est pas encore attestée**. Le code antérieur n'avait pas été modifié pendant LINK V0.4.
+- La recette LINK V0.4 est validée pour l'import des instantanés Nexus/Gaming ; la preuve de livraison/ACK reste un futur jalon de Forge #28. Bug suivi distinctement en Forge #30.
