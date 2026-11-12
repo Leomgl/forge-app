@@ -29,7 +29,7 @@ Le propriétaire dépose des idées, bugs et demandes d'évolutions. **L'assista
 
 | Type | Autorité |
 |---|---|
-| Code et versions réellement livrées | Dépôts GitHub des 6 apps (NEXUS, GAMING, RITUEL, VESTIAIRE, SANTÉ, GARAGE) et de FORGE + configuration de déploiement |
+| Code et versions réellement livrées | Dépôts GitHub des 6 apps métier (NEXUS, GAMING, RITUEL, VESTIAIRE, SANTÉ, GARAGE), du centre LINK et de FORGE + configuration de déploiement |
 | Demandes / bugs / arbitrages | Issues et commentaires de `Leomgl/forge-app` |
 | Contrats techniques inter-apps | Code des deux côtés + docs des dépôts |
 | Inventaire d'architecture transversal | `docs/APP-MAP.md`, `docs/DEPENDENCIES.md` (à actualiser) |
@@ -87,3 +87,7 @@ Les tickets `[GENERAL]` ne désignent **aucun dépôt unique**. Lire `FORGE_META
 ## FORGE V0.8 — organisation de la PWA (12/11/2026)
 
 La page d'accueil `#tickets` montre uniquement `À faire` + `En cours`. Les issues closes restent dans `#completed` et ont toujours leurs commentaires : **ne pas déduire de leur absence sur l'accueil qu'elles ont disparu**. Le formulaire est `#composer` et la cartographie est `#context`. Les liens `#ticket/N` ouvrent une fiche complète depuis n'importe quelle vue. Les changements d'état sont enregistrés sur GitHub via le Worker existant ; toute réouverture quitte les archives. Mettre à jour les docs et le journal de l'issue après intervention, comme auparavant.
+
+## LINK (12/11/2026)
+
+Source officielle : dépôt privé Leomgl/link-app ; la copie d'incubation FORGE n'est plus autoritaire. V0.1 validée sur iPhone par le propriétaire. V0.2 : registre des contrats, SDK expérimental, API de lecture ; zéro relation migrée et aucun ancien code/jumelage supprimé. Consulter link-app/README.md et docs/ARCHITECTURE.md puis FORGE #28. Ne pas confondre recette Safari V0.1 et validation V0.2.
