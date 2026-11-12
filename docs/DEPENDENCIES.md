@@ -10,7 +10,7 @@ FORGE ne synchronise aucune donnée applicative ; il suit les changements et leu
 | RITUEL → NEXUS | Import documenté côté NEXUS | Vérifier code d'import actuel et format accepté avant changement | Doublons, permissions, ancienne sauvegarde, collision d'identifiants |
 | VESTIAIRE → NEXUS | **Actif** : Vestiaire V0.7.1 + Nexus V0.21.8 | Consentement et jumelage NEXUS LINK AES-GCM, scope `outfit_catalog` ; V1 (24 looks) accepté en lecture, V2 pages chiffrées (24/page, 200 pages max) et stockage tampon `vestiaireTransfers[]` vérifié avant ACK ; activation **uniquement du catalogue complet**, aucun échange de photo/vêtement détaillé/agenda | iPhone non encore validé sur V2, anciens clients V1, coupure réseau/lot partiel, révocation, sauvegardes contenant le secret LINK |
 | VESTIAIRE → RITUEL | Idée future/non activée | Aucune intégration active à supposer | Effets de bord et données liées sans consentement |
-| SANTÉ → NEXUS (E2EE) | Actif en lecture/partage V0.4 Santé + Nexus V0.21.5 ; retour Nexus→Santé NON livré | Santé source dossier, Nexus affiche le suivi des prises et importe RDV/vaccins avec consentement ; Nexus notifie Agenda, Santé notifie médicaments, scopes dose_summary/health_calendar, IDs/revisions/tombstones, arrêt sur conflits | Secrets de jumelage dans Nexus local non chiffré, exposition des titres de RDV importés, perte de données iOS, divergences d'édition, doublons de notifications si une ancienne version est utilisée |
+| SANTÉ → NEXUS (E2EE) | Actif V0.6 Santé + Nexus V0.21.9 ; retour Nexus→Santé NON livré | Santé source dossier, Nexus affiche le suivi des prises et importe RDV/vaccins avec consentement ; Nexus notifie Agenda, Santé notifie médicaments, scopes dose_summary/health_calendar et agrégat d'hydratation facultatif, IDs/revisions/tombstones, arrêt sur conflits | Secrets de jumelage dans Nexus local non chiffré, exposition des titres de RDV importés, perte de données iOS, divergences d'édition, doublons de notifications si une ancienne version est utilisée |
 
 ## Frontières d'hébergement
 
@@ -37,3 +37,10 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - Inventaire local IndexedDB privé ; **aucun lien inter-app actif**. Les ensembles et mouvements sont gérés uniquement dans Garage.
 - Projet futur `GARAGE → NEXUS` : résumés d'ensembles pour événements de voyage, uniquement après consentement explicite, jumelage chiffré et scopes séparés. Ne pas partager photos, numéros de série, factures ou inventaire complet par défaut.
 - **Risque :** l'origine PWA iPhone peut perdre son stockage ; sauvegarde JSON personnelle manuelle et migrations additives obligatoires. Le Worker et le dépôt sont indépendants d'un déploiement automatique.
+
+
+## Compléments du 12/11/2026
+
+- SANTÉ V0.6 partage **uniquement sur opt-in** un résumé quotidien d'hydratation / caféine vers NEXUS V0.21.9. Aucun journal de boissons, ordonnance ou document clinique ne doit partir vers le stockage non chiffré de NEXUS. Le bloc Pulse ne doit pas régresser le catalogue Vestiaire (transfert paginé V2).
+- GARAGE reste indépendant, aucun lien NEXUS actif ; si un futur événement Agenda déclenche une proposition de kit, prévoir permission par catégorie et transfert minimal chiffré, jamais les photos/numéros de série.
+- FORGE V0.5 est uniquement un tableau de tickets publics. L'ajout SANTÉ/GARAGE n'autorise **aucune lecture de données privées**. Le Worker `forge-hub` doit accepter leurs préfixes dans les tickets sans être connecté aux Workers/D1 des apps elles-mêmes.

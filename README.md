@@ -20,7 +20,7 @@
 | RITUEL | [rituel-app](https://github.com/Leomgl/rituel-app) | Routines, stock, statistiques et push iOS |
 | VESTIAIRE | [Vestiaire-app](https://github.com/Leomgl/Vestiaire-app) | Dressing, Fits, mannequin, poses et looks |
 | GARAGE | [garage-app](https://github.com/Leomgl/garage-app) | Inventaire privé, emplacements, prêts, kits de départ (PWA Cloudflare) |
-| SANTÉ | [sante-app](https://github.com/Leomgl/sante-app) | Carnet médical chiffré, prises, rendez-vous ; liaison NEXUS bidirectionnelle à venir |
+| SANTÉ | [sante-app](https://github.com/Leomgl/sante-app) | Carnet médical chiffré, traitements, agenda, habitudes (boissons/hydratation) ; partage NEXUS sur consentement |
 
 Consulter [la cartographie](docs/APP-MAP.md) pour les liens techniques et [les dépendances](docs/DEPENDENCIES.md) pour les régressions possibles.
 
@@ -38,7 +38,7 @@ Voir [le protocole complet](docs/TICKET-PROTOCOL.md).
 
 **Nouvelle adresse dédiée :** https://forge-hub.q9pfwtztsc.workers.dev/ — Worker Cloudflare `forge-hub` déployé le 11 novembre 2026. Il sert les fichiers publics de ce dépôt depuis une origine HTTPS indépendante. Le code serveur est versionné dans [edge-worker/index.mjs](edge-worker/index.mjs).
 
-**La connexion GitHub n'est pas encore activée :** une GitHub App doit être créée/installée une seule fois, puis ses deux identifiants configurés comme secrets dans Cloudflare. Ne pas prétendre que la connexion est testée sur iPhone avant sa recette réelle. [Guide de configuration pas-à-pas](docs/GITHUB-AUTH.md).
+**Connexion GitHub :** l'utilisateur a confirmé le 11 novembre 2026 que la connexion depuis la PWA fonctionne après configuration de la GitHub App. L'état dépend toujours de la session du navigateur ; l'assistant doit recontrôler avant d'affirmer qu'un changement est enregistré. [Guide de configuration pas-à-pas](docs/GITHUB-AUTH.md).
 
 La V0.4 remplace l'ancien champ de jeton personnel par **Se connecter avec GitHub**. Une fois configurée, la GitHub App a seulement `Issues: Read and write` pour le dépôt FORGE ; le Worker vérifie l'identité du propriétaire et garde les jetons dans un cookie chiffré HttpOnly. Le navigateur envoie uniquement des demandes métier sur `/api/issues` et `/api/workflow`. Il ne voit ni jeton personnel ni secret OAuth. Le compte autorisé peut **publier une issue directement** et **changer ses trois statuts** depuis la PWA. GitHub Issues reste la source de vérité. Hors connexion, les issues publiques restent consultables et le formulaire GitHub prérempli reste disponible.
 
@@ -51,6 +51,11 @@ Le dépôt **et ses issues sont publics** : ne jamais publier noms/contacts pers
 Les données locales de brouillon peuvent être effacées par iOS ; seul un ticket effectivement publié est durable. GitHub Issues n'est pas un coffre privé ni un moteur d'instructions automatiques à l'assistant. L'assistant doit **ouvrir activement** les sources à chaque nouvelle session.
 
 ## Version
+
+**V0.5.0 — 12 novembre 2026 :** refonte du tableau de tickets en colonnes par état, priorités visibles et filtrables, formulaire compact avec options avancées repliables, catalogue commun au suivi et à la saisie des tickets comprenant **SANTÉ et GARAGE**. Liste des projets gérée en un seul endroit dans `app.js`, acceptation des deux nouvelles apps dans la passerelle `edge-worker/index.mjs`, cache PWA actualisé. Les données et tickets restent exclusivement dans GitHub ; aucune migration de stockage, aucun secret OAuth modifié. Recette iPhone de cette version à effectuer.
+
+**Routine de synchronisation du contexte :** après tout chantier iPhone (nouveau dépôt, décision, changement de schéma, contrat LINK, correction critique ou déploiement), relire GitHub et, si utile, Cloudflare ; mettre à jour `docs/APP-MAP.md`, `docs/DEPENDENCIES.md`, `docs/EVOLUTION-HISTORY.md`, le registre `apps` de `app.js`, et le ticket concerné **dans la même intervention**. Voir `docs/AI-START-HERE.md`.
+
 
 **V0.4.2 — 11 novembre 2026 :** correction de l'appel GitHub REST API depuis Cloudflare Worker avec l'en-tête obligatoire `User-Agent`. Ajout de diagnostics OAuth distincts (`exchange`, `profile`, `session`), sans exposer de secret. Code redéployé sur le Worker avec conservation des bindings existants ; test de parcours OAuth réel sur iPhone encore nécessaire.
 

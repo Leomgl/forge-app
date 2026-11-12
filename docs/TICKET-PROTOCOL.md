@@ -11,7 +11,7 @@ La description doit idéalement contenir :
 - Critères de validation/recette, liens vers le dépôt source et documents ;
 - Commentaires au fil des choix, commit/PR après intervention.
 
-Les intitulés `[NEXUS]`, `[GAMING]`, `[RITUEL]`, `[VESTIAIRE]` permettent le tri. Une métadonnée structurée dans un commentaire HTML est facultative ; ne faire confiance qu'aux données vérifiées dans le repo.
+Les intitulés `[NEXUS]`, `[GAMING]`, `[RITUEL]`, `[VESTIAIRE]`, `[SANTE]`, `[GARAGE]`, `[FORGE]` permettent le tri. Une métadonnée structurée dans un commentaire HTML est facultative ; ne faire confiance qu'aux données vérifiées dans le repo.
 
 ## Reprise dans n'importe quelle conversation
 
@@ -57,3 +57,11 @@ Pour passer de l'un à l'autre, modifier le commentaire HTML `FORGE_META` sans e
 - GitHub API : lecture publique accessible sans compte et soumise aux limites de requêtes ; écritures authentifiées uniquement après action explicite.
 - Les pièces jointes sont ajoutées **manuellement sur GitHub** après contrôle du contenu.
 - La PWA n'exécute aucun travail en arrière-plan, aucune notification et aucune synchronisation de code.
+
+
+## À chaque thread de développement iPhone (contrat de maintenance du 12/11/2026)
+
+1. Vérifier l'état courant du ou des dépôts GitHub, et l'infrastructure Cloudflare uniquement quand elle joue un rôle pour la modification ou la vérification.
+2. Avant de terminer, mettre à jour le contexte FORGE si une nouvelle application, une version, une décision, un bug résolu ou un contrat technique a changé. Pour une nouvelle app, vérifier le registre unique `app.js`, les documents, et la liste blanche du Worker `edge-worker/index.mjs`.
+3. Lier la livraison à l'issue existante, préciser la PR/les commits, l'impact sur les données et ce qui est **réellement** validé sur iPhone. Ne pas ouvrir des tickets doublons.
+4. Ne pas attendre une exécution invisible après la conversation : la documentation et les changements doivent être effectués immédiatement dans le chantier.

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#101318">
+<meta name="theme-color" content="#10141b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="FORGE">
@@ -22,38 +22,42 @@
   <a class="external" href="https://github.com/Leomgl/forge-app/issues" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
  </header>
  <main>
-  <div class="intro"><div><p class="eyebrow">LE CARNET DE CHANTIER DES APPLICATIONS</p><h1>Un ticket.<br><em>Tout le contexte.</em></h1><p>Tu signales, je retrouve le code, les anciennes décisions et les précautions à prendre. Tout se suit dans GitHub, pas dans un coin perdu de ton iPhone.</p></div>
+  <div class="intro"><div><p class="eyebrow">PILOTAGE · APPLICATIONS IPHONE</p><h1>Le cockpit <em>des projets.</em></h1><p>Retrouve tes tickets, leurs priorités et les décisions techniques. Une vue claire, toujours synchronisée avec GitHub.</p></div>
   <a href="#composer" class="bigbutton">＋ Nouveau ticket</a></div>
   <div id="authNotice" class="auth-alert" role="alert" hidden></div>
   <a id="cloudEntry" class="cloud-entry" href="https://forge-hub.q9pfwtztsc.workers.dev/" hidden>Ouvrir la nouvelle application FORGE sécurisée ↗</a>
   <section id="tickets" class="section">
    <div class="section-heading"><div><p class="eyebrow">SOURCE : GITHUB ISSUES</p><h2>Tickets publiés <span id="issueCount" class="count">—</span></h2></div><div class="head-actions"><button id="editMode" class="outline" type="button">Activer l’édition</button><button id="refresh" class="outline" type="button">↻ Actualiser</button></div></div>
    <div class="filters"><label class="sr-only" for="search">Rechercher un ticket</label><input id="search" placeholder="Rechercher un ticket ou un numéro…">
-   <label class="sr-only" for="projectFilter">Application</label><select id="projectFilter"><option value="all">Toutes les apps</option><option value="NEXUS">NEXUS</option><option value="GAMING">GAMING</option><option value="RITUEL">RITUEL</option><option value="VESTIAIRE">VESTIAIRE</option><option value="FORGE">FORGE</option></select>
-   <label class="sr-only" for="statusFilter">État</label><select id="statusFilter"><option value="all">Tous les états</option><option value="todo">À faire</option><option value="doing">En cours</option><option value="done">Terminé</option></select></div>
+   <label class="sr-only" for="projectFilter">Application</label><select id="projectFilter"><option value="all">Toutes les apps</option></select>
+   <label class="sr-only" for="statusFilter">État</label><select id="statusFilter"><option value="all">Tous les états</option><option value="todo">À faire</option><option value="doing">En cours</option><option value="done">Terminé</option></select>
+   <label class="sr-only" for="priorityFilter">Priorité</label><select id="priorityFilter"><option value="all">Toutes les priorités</option><option value="critique">Critique</option><option value="haute">Haute</option><option value="normale">Normale</option><option value="basse">Basse</option></select></div>
    <div id="workflowSummary" class="workflow-summary" aria-label="Répartition des statuts"></div>
    <p id="editInfo" class="micro">Connecte-toi avec GitHub pour piloter les tickets. Sans connexion, la consultation reste possible.</p>
    <p class="micro"><a class="external" href="./docs/GITHUB-AUTH.md" target="_blank" rel="noopener noreferrer">Configurer la connexion GitHub · Guide ↗</a></p>
    <p id="loadInfo" class="micro" role="status" aria-live="polite">Chargement des issues GitHub…</p>
-   <div id="issues" class="issues" aria-live="polite"></div>
+   <div id="issues" class="issues workflow-board" aria-live="polite"></div>
   </section>
   <section class="section" id="composer">
    <div class="section-heading"><div><p class="eyebrow">SAISIE RAPIDE</p><h2>Signaler ou proposer</h2></div><span class="count">Brouillon local</span></div>
    <p class="muted">Le brouillon reste sur ton appareil. Connecte-toi avec GitHub pour publier directement dans FORGE. N'ajoute ni secret, ni capture privée dans une issue publique.</p>
    <div class="formbox">
      <div class="cols">
-      <label>Application<select id="tProject"><option value="NEXUS">NEXUS</option><option value="GAMING">GAMING</option><option value="RITUEL">RITUEL</option><option value="VESTIAIRE">VESTIAIRE</option><option value="FORGE">FORGE</option></select></label>
+      <label>Application<select id="tProject"><option value="NEXUS">NEXUS</option></select></label>
       <label>Nature<select id="tType"><option value="bug">Bug</option><option value="evolution">Évolution</option><option value="idee">Idée</option><option value="test">Test / vérification</option></select></label>
       <label>Priorité<select id="tPriority"><option value="normale">Normale</option><option value="haute">Haute</option><option value="critique">Critique</option><option value="basse">Basse</option></select></label>
-      <label>Version observée <span class="optional">(facultatif)</span><input id="tVersion" maxlength="60" placeholder="Ex : 0.17.2"></label>
      </div>
      <label>Titre du ticket <span class="required">*</span><input id="tTitle" maxlength="140" placeholder="Ex : Le tri A–Z saute certaines lettres"></label>
      <label>Contexte / ce que tu aimerais obtenir <span class="required">*</span><textarea id="tDescription" rows="4" maxlength="8000" placeholder="Décris l'idée, le problème ou la fonction voulue…"></textarea></label>
-     <div class="cols">
-       <label>Étapes pour reproduire <span class="optional">(bug)</span><textarea id="tSteps" rows="3" maxlength="4000" placeholder="1. Ouvrir…  2. Cliquer…"></textarea></label>
-       <label>Résultat attendu / critères d'acceptation<textarea id="tExpected" rows="3" maxlength="4000" placeholder="Ce qu'on doit pouvoir faire ou vérifier…"></textarea></label>
-     </div>
-     <label>Contraintes / points à préserver <span class="optional">(facultatif)</span><textarea id="tConstraints" rows="2" maxlength="4000" placeholder="Ex : ne pas toucher aux contacts ni au coffre cloud…"></textarea></label>
+     <details class="advanced-options" id="advancedOptions"><summary>Options avancées <span>Version, reproduction, critères, contraintes</span></summary>
+     <div class="advanced-fields">
+       <label>Version observée <span class="optional">(facultatif)</span><input id="tVersion" maxlength="60" placeholder="Ex : 0.17.2"></label>
+       <div class="cols">
+         <label>Étapes pour reproduire <span class="optional">(bug)</span><textarea id="tSteps" rows="2" maxlength="4000" placeholder="1. Ouvrir… 2. Cliquer…"></textarea></label>
+         <label>Résultat attendu / critères d'acceptation<textarea id="tExpected" rows="2" maxlength="4000" placeholder="Ce qu'on doit vérifier…"></textarea></label>
+       </div>
+       <label>Contraintes / points à préserver<textarea id="tConstraints" rows="2" maxlength="4000" placeholder="Ce qu'il ne faut pas casser…"></textarea></label>
+     </div></details>
      <div class="formfoot"><p><b>Publication sécurisée :</b> sur l'adresse Cloudflare avec GitHub connecté, le ticket sera créé directement. Sinon, FORGE ouvrira le formulaire GitHub prérempli.</p>
        <div class="actions"><button id="resetDraft" class="outline" type="button">Effacer le brouillon</button><button id="publish" class="bigbutton" type="button">Publier via GitHub ↗</button></div>
      </div>
@@ -69,7 +73,7 @@
     <a href="./docs/DECISIONS.md" target="_blank" class="contextlink"><span>04</span><b>Arbitrages techniques</b><small>Pourquoi nous avons fait certains choix</small></a></div>
   </section>
  </main>
- <footer><span>FORGE <strong>v0.4.1</strong> · GitHub Issues fait foi</span><span>Connexion GitHub sécurisée · sans jeton à saisir · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
+ <footer><span>FORGE <strong>v0.5.0</strong> · GitHub Issues fait foi</span><span>Connexion GitHub sécurisée · sans jeton à saisir · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
 </div>
 <script src="./app.js"></script>
 </body>
