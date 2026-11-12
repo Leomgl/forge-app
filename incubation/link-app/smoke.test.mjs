@@ -29,5 +29,6 @@ test("writes are rejected",async()=>{
 test("bundle excludes legacy secrets",async()=>{
  const js=await (await request("/app.js")).text();
  assert.doesNotMatch(js,/LINK_PEPPER|PRIVATE_KEY|writerVerifier/i);
- assert.match(js,/Les cases de préparation sont uniquement des notes locales/);
+ const html=await (await request("/")).text();
+ assert.match(html,/Les cases de préparation sont uniquement des notes locales/);
 });
