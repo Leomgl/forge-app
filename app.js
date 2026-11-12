@@ -1,4 +1,4 @@
-/* FORGE v0.5 — workflow board, priority, centralized app registry; OAuth unchanged. */
+/* FORGE v0.6 — workflow board and internal ticket detail; OAuth unchanged. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
@@ -39,7 +39,7 @@ function ticketCard(item){
  var m=parseMeta(item),published=item.html_url||("https://github.com/"+REPO+"/issues/"+item.number),state=workflow(item),priority=priorityOf(item);
  return '<article class="issue" data-issue="'+Number(item.number)+'">'
  +'<div class="issue-top"><span class="issue-num">#'+Number(item.number)+'</span><span class="pill priority '+priority+'">'+PRIORITIES[priority].label+'</span></div>'
- +'<a class="issue-title" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">'+esc(item.title)+'</a>'
+ +'<a class="issue-title" href="#ticket/'+Number(item.number)+'" aria-label="Ouvrir le ticket #'+Number(item.number)+'">'+esc(item.title)+'</a>'
  +'<div class="issue-preview">'+esc(clean(item.body).slice(0,150))+'</div>'
  +'<div class="issue-meta"><span class="pill app">'+esc(m.project||"AUTRE")+'</span><span class="pill">'+esc(m.type||"Ticket")+'</span><span class="age">'+esc(age(item.updated_at))+'</span></div>'
  +'<div class="issue-actions"><label class="status-label">État <select class="status-picker" data-number="'+Number(item.number)+'" aria-label="État du ticket '+Number(item.number)+'" '+(saving?"disabled":"")+'>'+
