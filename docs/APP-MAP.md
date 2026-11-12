@@ -135,3 +135,10 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - **GAMING** : entrée Réglages → LINK · Observateur, adossée à `GamingNexusSync.preview()` en lecture seule. Le diagnostic contient existence locale du jumelage, auto activé oui/non, nombre de scopes, comptes de propositions et date de dernière publication locale. Jamais de secret, code NXL1, IDs, titres ou montants. Aucun appel de publication/ACK dans ce parcours. L'ancien Gaming → Nexus continue normalement.
 - **Cloudflare Gaming** : Worker `gaming-app` V0.12 recompilé avec backend push et routeurs existants. Bindings `DB`, `PUSH_RATE_PEPPER`, `VAPID_PRIVATE_JWK`, `VAPID_PUBLIC_KEY` et cron 5 minutes confirmés inchangés après déploiement.
 - **Tests** : LINK 28/28, Gaming 4/4 + build/check en CI. Recette iPhone V0.3 et la navigation Gaming → LINK **restent à confirmer** ; seul le bouton LINK V0.2.1 7/7 a été validé par l'utilisateur. Voir FORGE #28.
+
+## LINK V0.4 + NEXUS V0.21.12.1 — relevés croisés (12/11/2026)
+
+- **LINK** : dépôt privé `Leomgl/link-app`, Worker workers.dev V0.4 à 100 %, endpoint read-only `/api/v1/status` (`linksManaged=0`). Diagnostic ajoute une entrée Nexus (`LDN1`) en plus du relevé Gaming (`LDO1`), comparaison agrégée locale, alerte si nombre de permissions/propositions différent et mention explicite de ses limites. `src/observation.mjs` valide les schémas ; les comptes sont gardés uniquement dans localStorage LINK.
+- **Nexus** : fichier `link-import.js` exposant un diagnostic volontaire dans Propositions Gaming, `index.html` charge `link-import.js?v=02113`, Service Worker `nexus-v0.21.12.1`. Il n'exporte ni secrets, IDs, titres, montants, ni payloads ; les flux et la validation manuelle restent identiques.
+- **Important** : la correspondance numérique des compteurs n'atteste ni la même paire, ni la bonne livraison des événements, ni un ACK de relay. Comparateur purement consultatif et non signé, sans envoi serveur.
+- **Validation** : tests Nexus GitHub Actions verts ; LINK tests V0.4 verts et Worker déployé 100 %. Recette iPhone de V0.4 et nouvelles interactions Nexus restant à confirmer. Forge #28 demeure en cours.
