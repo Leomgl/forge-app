@@ -4,13 +4,14 @@
 
 ## NEXUS — Leomgl/nexus-app
 
-- **Version de code vérifiée :** V0.21.9 après fusion de la PR #11 (12/11/2026). Le titre du README indique encore V0.21.5 et n'est pas une source de version suffisante ; suivre les commits et `docs/PROJECT-HANDOFF.md`. URL PWA : https://leomgl.github.io/nexus-app/ ; cache iPhone à contrôler séparément.
+- **Version de code vérifiée :** V0.21.10 sur `main` (12/11/2026), avec simulateur de remboursements anticipés, plan révisable et revenus variables ; précédemment V0.21.9 après PR #11. Le titre du README indique encore V0.21.5 et n'est pas une source de version suffisante ; suivre les commits et `docs/PROJECT-HANDOFF.md`. URL PWA : https://leomgl.github.io/nexus-app/ ; cache iPhone à contrôler séparément.
 - HTML/CSS/JS natifs, IndexedDB ; GitHub Pages ; backend Cloudflare Workers/D1.
 - Modules : Notes, Agenda, Rappels, Contacts, Projets, Achats, Budget, capture intelligente, corbeille.
 - Coffre cloud *optionnel* : snapshots chiffrés localement AES-GCM ; stockage local en clair ; passkey WebAuthn serveur en bêta. Notification Web Push sous condition d'opt-in.
 - Liaison NEXUS LINK chiffrée avec Gaming ; proposition de données **à accepter** dans NEXUS ; ne jamais écrire directement une dépense non approuvée.
 - Points du code/docs : `app.js`, `cloud.js`, `link-core.js`, `link-import.js`, `contacts-v017.js`, `README.md`, `docs/CONTACTS-V017.md`, `schemas/`, `backend/`.
 - Risques : clés de coffre, liens contacts Agenda/Rappels, scripts d'import, migrations, cache PWA, accès aux données personnelles.
+- **Budget V0.21.10** : revenus réguliers avec Pause/Reprendre (sans rétroactivité de revenus auto) et saisies manuelles de recettes variables. Les prêts peuvent recevoir un versement anticipé explicitement confirmé, simuler une réduction de durée ou de mensualité, puis appliquer une correction d'échéancier. Les projections et rappels utilisent le montant révisé pour chaque échéance. Capital/taux déclarés, pas d'Open Banking, calcul non contractuel hors frais/assurance ; historique et Journal conservés. Voir [docs/BUDGET-FINANCE-V02110.md](https://github.com/Leomgl/nexus-app/blob/main/docs/BUDGET-FINANCE-V02110.md). Tests CI et Pages validés, Safari iPhone à vérifier.
 - À tester : état réel du tri alphabétique mobile et version effectivement installée avant de diagnostiquer.
 
 ## GAMING — Leomgl/gaming-app
