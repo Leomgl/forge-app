@@ -1,9 +1,10 @@
-/* FORGE v0.6 — workflow board and internal ticket detail; OAuth unchanged. */
+/* FORGE v0.7 — global and cross-app tickets; OAuth unchanged. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
 var issues=[],loading=false,saving=false,auth={configured:false,authenticated:false,login:null,edge:false,missing:[],clientIdFormat:"unknown"};
 var GATEWAY="https://forge-hub.q9pfwtztsc.workers.dev/";
+var SCOPE_TYPES={all:"Toutes les apps",multiple:"Plusieurs apps",newapp:"Nouvelle app",other:"Projet / réflexion générale"};
 var apps=[
  {id:"NEXUS",mark:"N",repo:"Leomgl/nexus-app",desc:"Second cerveau, contacts, rappels, budget et intégrations chiffrées."},
  {id:"GAMING",mark:"G",repo:"Leomgl/gaming-app",desc:"Jeux, stockage PS5, saisons, notifications et liens NEXUS."},
@@ -34,6 +35,8 @@ function updateWorkflowBody(item,target){
 function age(date){try{return new Date(date).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"});}catch(e){return "—";}}
 function setStatus(text){id("loadInfo").textContent=text;}
 const PRIORITIES={critique:{label:"Critique",rank:0},haute:{label:"Haute",rank:1},normale:{label:"Normale",rank:2},basse:{label:"Basse",rank:3}};
+function projectLabel(project){return project==="GENERAL"?"GÉNÉRAL":project==="SANTE"?"SANTÉ":project;}
+function scopeLabel(scope){return SCOPE_TYPES[scope]||SCOPE_TYPES.all;}
 function priorityOf(item){var raw=String(parseMeta(item).priority||"normale").toLowerCase();return PRIORITIES[raw]?raw:"normale";}
 function ticketCard(item){
  var m=parseMeta(item),published=item.html_url||("https://github.com/"+REPO+"/issues/"+item.number),state=workflow(item),priority=priorityOf(item);
@@ -41,7 +44,8 @@ function ticketCard(item){
  +'<div class="issue-top"><span class="issue-num">#'+Number(item.number)+'</span><span class="pill priority '+priority+'">'+PRIORITIES[priority].label+'</span></div>'
  +'<a class="issue-title" href="#ticket/'+Number(item.number)+'" aria-label="Ouvrir le ticket #'+Number(item.number)+'">'+esc(item.title)+'</a>'
  +'<div class="issue-preview">'+esc(clean(item.body).slice(0,150))+'</div>'
- +'<div class="issue-meta"><span class="pill app">'+esc(m.project||"AUTRE")+'</span><span class="pill">'+esc(m.type||"Ticket")+'</span><span class="age">'+esc(age(item.updated_at))+'</span></div>'
+ +(m.project==="GENERAL"?'<div class="issue-scope">'+esc(scopeLabel(m.scope))+'</div>':"")
+ +'<div class="issue-meta"><span class="pill app '+(m.project==="GENERAL"?"general":"")+'">'+esc(projectLabel(m.project||"AUTRE"))+'</span><span class="pill">'+esc(m.type||"Ticket")+'</span><span class="age">'+esc(age(item.updated_at))+'</span></div>'
  +'<div class="issue-actions"><label class="status-label">État <select class="status-picker" data-number="'+Number(item.number)+'" aria-label="État du ticket '+Number(item.number)+'" '+(saving?"disabled":"")+'>'+
  ["todo","doing","done"].map(function(st){return '<option value="'+st+'" '+(st===state?'selected':'')+'>'+WORKFLOW[st]+'</option>';}).join("")
  +'</select></label><a class="issue-link" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></article>';
@@ -173,7 +177,9 @@ function onStatusChange(e){
 function populateProjects(){
  ["projectFilter","tProject"].forEach(function(key){
   var el=id(key),previous=el.value,all=key==="projectFilter";
-  el.innerHTML=(all?'<option value="all">Toutes les apps</option>':"")+apps.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(p.id==="SANTE"?"SANTÉ":p.id)+'</option>';}).join("");
+  el.innerHTML=(all?'<option value="all">Tous les tickets</option>':"")
+    +'<option value="GENERAL">GÉNÉRAL · projets transversaux</option>'
+    +apps.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(projectLabel(p.id))+'</option>';}).join("");
   el.value=previous&&Array.from(el.options).some(function(o){return o.value===previous;})?previous:(all?"all":"NEXUS");
  });
 }
@@ -183,27 +189,40 @@ function makeApps(){
  +'<a target="_blank" rel="noopener noreferrer" href="https://github.com/'+p.repo+'">Voir le dépôt ↗</a></article>';
  }).join("");
 }
-var fields=["tProject","tType","tPriority","tVersion","tTitle","tDescription","tSteps","tExpected","tConstraints"];
+var fields=["tProject","tType","tPriority","tScope","tScopeDetails","tVersion","tTitle","tDescription","tSteps","tExpected","tConstraints"];
+function toggleGeneral(){
+ var general=id("tProject").value==="GENERAL",el=id("generalScopeFields");
+ el.hidden=!general;
+ id("tScope").disabled=!general;
+ id("tScopeDetails").disabled=!general;
+}
 function draft(){
  var r={};fields.forEach(function(k){r[k]=id(k).value;});return r;
 }
 function persist(){try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draft()));}catch(e){}}
 function restore(){try{var d=JSON.parse(localStorage.getItem(DRAFT_KEY)||"{}");fields.forEach(function(k){if(typeof d[k]==="string"&&id(k))id(k).value=d[k];});}catch(e){}}
 function issueBody(d){
- var p=apps.find(function(a){return a.id===d.tProject;});
- var meta=JSON.stringify({project:d.tProject,type:d.tType,priority:d.tPriority,version:d.tVersion||null,workflow:"todo",format:3});
+ var general=d.tProject==="GENERAL",p=apps.find(function(a){return a.id===d.tProject;});
+ if(!general&&!p)throw Error("Application inconnue");
+ var scope=SCOPE_TYPES[d.tScope]?d.tScope:"all",scopeDetails=String(d.tScopeDetails||"").trim();
+ var data={project:d.tProject,type:d.tType,priority:d.tPriority,version:d.tVersion||null,workflow:"todo",format:3};
+ if(general){data.scope=scope;if(scopeDetails)data.scopeDetails=scopeDetails;}
+ var meta=JSON.stringify(data);
  return '<!-- FORGE_META: '+meta+' -->\n'
  +'## Demande / problème\n'+d.tDescription.trim()+'\n\n'
+ +(general?'## Périmètre du chantier\n- Portée : '+scopeLabel(scope)+'\n'+(scopeDetails?'- Précisions : '+scopeDetails+'\n':'')+'\n':'')
  +'## Étapes de reproduction / vérification\n'+(d.tSteps.trim()||"Non renseignées")+'\n\n'
  +'## Résultat attendu / critères de recette\n'+(d.tExpected.trim()||"À préciser pendant le diagnostic")+'\n\n'
  +'## Contraintes / éléments à préserver\n'+(d.tConstraints.trim()||"Identifier pendant le diagnostic")+'\n\n'
  +'## Contexte technique et procédure pour l’assistant\n'
- +'- Dépôt à analyser : https://github.com/'+p.repo+'\n'
+ +(general?'- Dépôts à identifier lors du diagnostic selon le périmètre ; une nouvelle app peut ne pas encore avoir de dépôt.\n'
+   :'- Dépôt à analyser : https://github.com/'+p.repo+'\n')
  +'- Version observée : '+(d.tVersion.trim()||"Non fournie, vérifier la version réellement servie")+'\n'
  +'- Priorité exprimée : '+d.tPriority+'\n'
  +'- Point de départ : https://github.com/Leomgl/forge-app/blob/main/docs/AI-START-HERE.md\n'
  +'- Dépendances : https://github.com/Leomgl/forge-app/blob/main/docs/DEPENDENCIES.md\n'
- +'- Lire le README actuel, code concerné, tests et commits récents avant toute modification.\n'
+ +(general?'- Identifier les apps réellement concernées et vérifier leurs dépôts, contrats NEXUS LINK et déploiements Cloudflare avant intervention.\n'
+   :'- Lire le README actuel, code concerné, tests et commits récents avant toute modification.\n')
  +'- Documenter l’impact sur les données/migrations, les régressions possibles, les tests réalisés et les tests iPhone restant à faire.\n\n'
  +'## Suivi de livraison (à remplir lors du traitement)\n'
  +'- [ ] Diagnostic confirmé\n- [ ] Changement limité et tests de non-régression\n'
@@ -229,15 +248,15 @@ async function publish(){
  msg.textContent="Ouverture de GitHub : connecte-toi et confirme « Submit new issue ». Ce brouillon seul n'est pas encore publié.";
  window.open(url.href,"_blank","noopener,noreferrer");
 }
-function resetAfterPublication(){fields.forEach(k=>{id(k).value=["tProject","tType","tPriority"].includes(k)?({tProject:"NEXUS",tType:"bug",tPriority:"normale"}[k]):"";});try{localStorage.removeItem(DRAFT_KEY);}catch{}}
+function resetAfterPublication(){fields.forEach(k=>{id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"NEXUS",tType:"bug",tPriority:"normale",tScope:"all"}[k]):"";});try{localStorage.removeItem(DRAFT_KEY);}catch{}toggleGeneral();}
 function reset(){
  if(!confirm("Effacer ton brouillon local ? Les tickets déjà publiés sur GitHub ne seront pas touchés."))return;
- fields.forEach(function(k){id(k).value=["tProject","tType","tPriority"].includes(k)?({tProject:"NEXUS",tType:"bug",tPriority:"normale"}[k]):"";});
+ fields.forEach(function(k){id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"NEXUS",tType:"bug",tPriority:"normale",tScope:"all"}[k]):"";});
  try{localStorage.removeItem(DRAFT_KEY);}catch(e){}
- id("composeMessage").textContent="Brouillon effacé.";
+ id("composeMessage").textContent="Brouillon effacé.";toggleGeneral();
 }
 function start(){
- populateProjects();makeApps();restore();editMode();authCheck();
+ populateProjects();makeApps();restore();toggleGeneral();editMode();authCheck();
  id("issues").addEventListener("change",onStatusChange);
  id("workflowSummary").addEventListener("click",function(e){
   var btn=e.target.closest("[data-filter]");if(!btn)return;
@@ -247,6 +266,7 @@ function start(){
  id("editMode").addEventListener("click",editClick);
  ["search","projectFilter","statusFilter","priorityFilter"].forEach(function(k){id(k).addEventListener(k==="search"?"input":"change",render);});
  fields.forEach(function(k){id(k).addEventListener("input",persist);id(k).addEventListener("change",persist);});
+ id("tProject").addEventListener("change",toggleGeneral);
  id("refresh").addEventListener("click",load);id("publish").addEventListener("click",publish);id("resetDraft").addEventListener("click",reset);
  load();
  if("serviceWorker" in navigator&&location.protocol==="https:")navigator.serviceWorker.register("./sw.js").catch(function(){});
