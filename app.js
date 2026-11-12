@@ -1,4 +1,4 @@
-/* FORGE v0.7 — global and cross-app tickets; OAuth unchanged. */
+/* FORGE v0.8 — modular home, completed archive and bottom navigation. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
@@ -33,7 +33,7 @@ function updateWorkflowBody(item,target){
  return marker+"\n\n"+body;
 }
 function age(date){try{return new Date(date).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"});}catch(e){return "—";}}
-function setStatus(text){id("loadInfo").textContent=text;}
+function setStatus(text){id("loadInfo").textContent=text;id("completedInfo").textContent=text;}
 const PRIORITIES={critique:{label:"Critique",rank:0},haute:{label:"Haute",rank:1},normale:{label:"Normale",rank:2},basse:{label:"Basse",rank:3}};
 function projectLabel(project){return project==="GENERAL"?"GÉNÉRAL":project==="SANTE"?"SANTÉ":project;}
 function scopeLabel(scope){return SCOPE_TYPES[scope]||SCOPE_TYPES.all;}
@@ -50,29 +50,55 @@ function ticketCard(item){
  ["todo","doing","done"].map(function(st){return '<option value="'+st+'" '+(st===state?'selected':'')+'>'+WORKFLOW[st]+'</option>';}).join("")
  +'</select></label><a class="issue-link" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></article>';
 }
+function issueMatches(item,q,project,priority){
+ var m=parseMeta(item);
+ return (project==="all"||m.project===project)&&(priority==="all"||priorityOf(item)===priority)
+   &&(!q||String(item.number).includes(q.replace("#",""))||[item.title,item.body,m.project].join(" ").toLocaleLowerCase("fr").includes(q));
+}
+function prioritySort(a,b){return PRIORITIES[priorityOf(a)].rank-PRIORITIES[priorityOf(b)].rank||new Date(b.updated_at)-new Date(a.updated_at);}
 function render(){
  var q=id("search").value.toLocaleLowerCase("fr").trim(),project=id("projectFilter").value,status=id("statusFilter").value,priority=id("priorityFilter").value;
- var scoped=issues.filter(function(item){
-  var m=parseMeta(item);
-  return (project==="all"||m.project===project)&&(priority==="all"||priorityOf(item)===priority)
-   &&(!q||String(item.number).includes(q.replace("#",""))||[item.title,item.body,m.project].join(" ").toLocaleLowerCase("fr").includes(q));
- });
- var totals={todo:0,doing:0,done:0};
- scoped.forEach(function(item){totals[workflow(item)]++;});
- id("workflowSummary").innerHTML=["todo","doing","done"].map(function(st){
+ var active=issues.filter(function(item){return workflow(item)!=="done";});
+ var scoped=active.filter(function(item){return issueMatches(item,q,project,priority);});
+ var totals={todo:0,doing:0};scoped.forEach(function(item){totals[workflow(item)]++;});
+ id("workflowSummary").innerHTML=["doing","todo"].map(function(st){
   return '<button type="button" class="statbox '+st+(status===st?' selected':'')+'" data-filter="'+st+'" aria-pressed="'+(status===st)+'"><span>'+WORKFLOW[st]+'</span><strong>'+totals[st]+'</strong></button>';
  }).join("");
- id("issueCount").textContent=issues.length;
- var states=status==="all"?["todo","doing","done"]:[status];
+ id("issueCount").textContent=active.length;
+ id("navActiveCount").textContent=active.length;
+ var states=status==="all"?["doing","todo"]:[status];
  id("issues").innerHTML=states.map(function(st){
-  var group=scoped.filter(function(item){return workflow(item)===st;}).sort(function(a,b){
-    return PRIORITIES[priorityOf(a)].rank-PRIORITIES[priorityOf(b)].rank||new Date(b.updated_at)-new Date(a.updated_at);
-  });
+  var group=scoped.filter(function(item){return workflow(item)===st;}).sort(prioritySort);
   return '<section class="issue-column col-'+st+'" aria-label="'+WORKFLOW[st]+'">'
    +'<div class="column-heading"><span class="column-indicator"></span><h3>'+WORKFLOW[st]+'</h3><span class="column-count">'+group.length+'</span></div>'
    +'<div class="column-list">'+(group.length?group.map(ticketCard).join(""):'<div class="column-empty">Aucun ticket ici.</div>')+'</div></section>';
  }).join("");
+ var completed=issues.filter(function(item){return workflow(item)==="done";});
+ id("completedCount").textContent=completed.length;
+ var cq=id("completedSearch").value.toLocaleLowerCase("fr").trim(),cp=id("completedProjectFilter").value,pr=id("completedPriorityFilter").value;
+ var archived=completed.filter(function(item){return issueMatches(item,cq,cp,pr);}).sort(function(a,b){return new Date(b.updated_at)-new Date(a.updated_at);});
+ id("completedIssues").innerHTML=archived.length?archived.map(ticketCard).join("")
+  :'<div class="column-empty archive-empty">Aucun ticket terminé ne correspond aux filtres.</div>';
 }
+const VIEWS=["tickets","completed","composer","context"];
+let activeView="tickets";
+function showView(name){
+ if(!VIEWS.includes(name))return;
+ activeView=name;
+ VIEWS.forEach(function(view){id(view).hidden=view!==name;});
+ id("homeIntro").hidden=name!=="tickets";
+ document.querySelectorAll(".bottom-nav-item").forEach(function(link){
+  var selected=link.dataset.view===name;
+  link.classList.toggle("active",selected);
+  if(selected)link.setAttribute("aria-current","page");else link.removeAttribute("aria-current");
+ });
+ window.scrollTo(0,0);
+}
+function routeView(){
+ var name=location.hash.slice(1);
+ if(VIEWS.includes(name))showView(name);
+}
+
 async function load(){
  if(loading)return;loading=true;id("refresh").disabled=true;setStatus("Connexion aux issues publiques GitHub…");
  try {
@@ -166,6 +192,7 @@ async function saveWorkflow(number,target){
   issues=issues.map(x=>x.number===number?updated:x).sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at));
   try{localStorage.setItem(CACHE_KEY,JSON.stringify({at:Date.now(),issues}));}catch{}
   setStatus("Ticket #"+number+" → "+WORKFLOW[target]+" : enregistré sur GitHub.");
+  if(workflow(current)==="done"&&target!=="done")location.hash="#tickets";
  }catch(e){setStatus("Non enregistré : "+e.message);}
  finally{saving=false;render();}
 }
@@ -175,8 +202,8 @@ function onStatusChange(e){
  if(Number.isSafeInteger(number)&&number>=1&&WORKFLOW[target])saveWorkflow(number,target);
 }
 function populateProjects(){
- ["projectFilter","tProject"].forEach(function(key){
-  var el=id(key),previous=el.value,all=key==="projectFilter";
+ ["projectFilter","completedProjectFilter","tProject"].forEach(function(key){
+  var el=id(key),previous=el.value,all=key!=="tProject";
   el.innerHTML=(all?'<option value="all">Tous les tickets</option>':"")
     +'<option value="GENERAL">GÉNÉRAL · projets transversaux</option>'
     +apps.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(projectLabel(p.id))+'</option>';}).join("");
@@ -257,14 +284,16 @@ function reset(){
 }
 function start(){
  populateProjects();makeApps();restore();toggleGeneral();editMode();authCheck();
+ window.addEventListener("hashchange",routeView);routeView();
  id("issues").addEventListener("change",onStatusChange);
+ id("completedIssues").addEventListener("change",onStatusChange);
  id("workflowSummary").addEventListener("click",function(e){
   var btn=e.target.closest("[data-filter]");if(!btn)return;
   var next=btn.getAttribute("data-filter");if(!WORKFLOW[next])return;
   id("statusFilter").value=id("statusFilter").value===next?"all":next;render();
  });
  id("editMode").addEventListener("click",editClick);
- ["search","projectFilter","statusFilter","priorityFilter"].forEach(function(k){id(k).addEventListener(k==="search"?"input":"change",render);});
+ ["search","projectFilter","statusFilter","priorityFilter","completedSearch","completedProjectFilter","completedPriorityFilter"].forEach(function(k){id(k).addEventListener(k==="search"||k==="completedSearch"?"input":"change",render);});
  fields.forEach(function(k){id(k).addEventListener("input",persist);id(k).addEventListener("change",persist);});
  id("tProject").addEventListener("change",toggleGeneral);
  id("refresh").addEventListener("click",load);id("publish").addEventListener("click",publish);id("resetDraft").addEventListener("click",reset);

@@ -23,3 +23,8 @@ Décision : conserver GitHub Issues comme registre central et les commentaires G
 ## 2026-11-12 — Ticket GÉNÉRAL plutôt qu'un ticket par application
 
 Décision : ajouter une catégorie de **tickets transversaux** sans en faire une septième application métier. Elle peut piloter une refonte des logos de toutes les PWA, la création d'une nouvelle app ou une évolution multi-repos. Le périmètre est une métadonnée supplémentaire, et les commentaires GitHub servent au suivi commun. Les tickets existants conservent leur format et chaque application garde son propre dépôt/source de vérité.
+
+
+## 2026-11-12 — FORGE V0.8 : séparation opérationnel / historique
+
+Décision : l'accueil est réservé au travail actif (`doing`, `todo`), tandis que les tickets terminés rejoignent un onglet d'historique indépendant. Garder un formulaire de création autonome et un catalogue documentaire distinct, accessibles par une barre inférieure sur iPhone. **Pas d'archivage dans une seconde base** : une issue close reste un ticket GitHub consultable, modifiable et réouvrable. Le statut GitHub reste prioritaire sur les métadonnées locales.

@@ -82,3 +82,8 @@ La fiche interne `#ticket/N` affiche la description entière ainsi que les comme
 ## FORGE V0.7 — traiter les tickets GÉNÉRAL
 
 Les tickets `[GENERAL]` ne désignent **aucun dépôt unique**. Lire `FORGE_META.scope` (`all`, `multiple`, `newapp`, `other`) et `scopeDetails`, ainsi que le corps et les commentaires. Pour un chantier transversal : identifier les dépôts réellement impactés, synchroniser la cartographie/contrats, préparer la cohérence et les risques de régression pour chaque app. Pour une création : le dépôt peut ne pas exister ; ne pas inventer une URL ni ajouter une app au catalogue avant création effective. Garder un seul ticket central pour la coordination, avec commentaires de livraison par étape. Source de vérité GitHub et recette iPhone séparées.
+
+
+## FORGE V0.8 — organisation de la PWA (12/11/2026)
+
+La page d'accueil `#tickets` montre uniquement `À faire` + `En cours`. Les issues closes restent dans `#completed` et ont toujours leurs commentaires : **ne pas déduire de leur absence sur l'accueil qu'elles ont disparu**. Le formulaire est `#composer` et la cartographie est `#context`. Les liens `#ticket/N` ouvrent une fiche complète depuis n'importe quelle vue. Les changements d'état sont enregistrés sur GitHub via le Worker existant ; toute réouverture quitte les archives. Mettre à jour les docs et le journal de l'issue après intervention, comme auparavant.

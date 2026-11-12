@@ -84,3 +84,8 @@ La V0.6 permet de lire la demande et les échanges depuis la fiche intégrée et
 Créer un ticket `[GENERAL][IDEE|EVOLUTION|BUG|TEST]` pour un chantier commun, une future application ou une étude sans app cible. Le formulaire affiche le périmètre et les précisions seulement quand `GÉNÉRAL` est sélectionné. Valeurs : `scope=all|multiple|newapp|other`. Les détails et commentaires appartiennent à la même GitHub Issue et la même fiche de Forge.
 
 **Ne pas dupliquer** artificiellement le même chantier sur toutes les applications : garder ce ticket comme référence et lier les commits/PR par app au fur et à mesure. Lors du diagnostic, déterminer les dépôts touchés, vérifier les dépendances et planifier les validations. Une nouvelle app n'est inscrite au registre Forge qu'une fois son dépôt et son contexte existants. Les issues demeurent publiques ; aucune donnée confidentielle d'autres apps.
+
+
+## Navigation FORGE V0.8 — les tickets clos restent des sources d'histoire
+
+Une issue `closed` est rangée dans **Terminés**, jamais sur l'accueil, même si son ancien `FORGE_META.workflow` indique encore `todo` ou `doing`. Ouvrir un ticket terminé, lire son corps/commentaires, et décider de la suite exactement comme pour un ticket actif ; la fermeture n'est pas une suppression. Lorsqu'on rouvre l'issue via son statut, elle revient dans l'accueil. Le formulaire est dans **Nouveau**, les fiches d'apps dans **Apps**. Préserver les liens `#ticket/N` en reprenant un ticket depuis un thread. Vérifier GitHub actuel à chaque fois ; le cache local est seulement une copie temporaire.
