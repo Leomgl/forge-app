@@ -74,3 +74,7 @@ Source serveur dans `edge-worker/index.mjs`, adresse dédiée `https://forge-hub
 - En cas d'évolution importante, de correction ou de contrat NEXUS LINK : synchroniser contexte, suivi et dépendances **pendant la conversation**, et créer/compléter la GitHub Issue appropriée sans duplication. Documenter version réellement livrée, tests automatiques et recette Safari iPhone restant à effectuer.
 - Garder la confidentialité : issues/docs FORGE publics, repos `sante-app` et `garage-app` privés ; aucun détail médical, identifiant d'objet, photo, secret ou export utilisateur dans FORGE.
 - FORGE ne se met pas à jour tout seul quand un thread se termine. Le rituel est une action de développement à exécuter dans le même chantier, pas une promesse de veille automatique.
+
+## FORGE V0.6 — journal des interventions
+
+La fiche interne `#ticket/N` affiche la description entière ainsi que les commentaires de l'issue GitHub. **Lire les commentaires précédents** pour éviter de reposer des questions déjà tranchées ou de dupliquer un correctif. Après une intervention, **ajouter réellement un commentaire GitHub** (ce que j'ai fait, pourquoi, comment, PR/commit, tests, recette iPhone, suite). Quand l'issue est terminée, mettre à jour son état avec preuve de livraison. Une réponse dans le chat n'est pas automatiquement visible dans FORGE : il faut publier le commentaire pendant le chantier. Ne jamais publier de données privées (notamment Santé ou Garage).
