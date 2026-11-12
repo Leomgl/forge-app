@@ -73,3 +73,14 @@ Ticket de mise en route : [FORGE #3](https://github.com/Leomgl/forge-app/issues/
 ## Comment tenir ce document à jour
 
 Après une livraison qui change le comportement ou la structure, ajouter le jalon, **puis** joindre un lien vers commit/PR et tests dans l'issue FORGE. Pour la vérité des versions et des fichiers, reconsulter l'app ciblée à chaque nouvelle intervention.
+
+
+## Nouvelles étapes du 12 novembre 2026
+
+| Application | Version | Évolution | À préserver / non-régression |
+|---|---|---|---|
+| SANTÉ | V0.6 | Habitudes : boissons, eau, caféine estimée, tendances et partage facultatif de résumé NEXUS | Coffre chiffré, consommation saisie manuellement, consentement, aucun journal détaillé exporté |
+| SANTÉ | V0.6.1 | Boutons Enregistrer Agenda/Carnet/dossier sécurisés, validation JS et retour d'erreur | Données existantes, CSP, traitements, rappels push, tests iPhone physiques encore nécessaires |
+| NEXUS | V0.21.9 | Bloc de synthèse hydratation Santé dans Pulse, après opt-in | Vestiaire V0.21.8, données reçues minimales, liaison E2EE |
+| GARAGE | V0.1.0 | Inventaire, lieux, prêts, kits, photos locales et sauvegarde JSON | Aucun lien Nexus activé, IndexedDB local, exports non chiffrés |
+| FORGE | V0.5.0 | Colonnes par état, filtres/priorités, formulaire compact, suivi des 6 apps | OAuth GitHub, tickets et métadonnées, workflow, aucune donnée privée |
