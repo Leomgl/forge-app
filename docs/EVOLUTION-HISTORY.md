@@ -204,3 +204,10 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Worker LINK V0.6.1 `84f1fbfe-9a51-4ba3-9bd2-23a34a2112b5` et Gaming `ab750dfc-6941-4eba-aa73-c4bba1783e27` à 100 %, bindings/push/cron conservés, Nexus GitHub Pages succès ; CI LINK 52/52, Gaming et Nexus vertes.
 - Limite structurelle toujours ouverte : LINK ne peut pas réveiller directement une autre PWA en retrouvant son IndexedDB ; concevoir un vrai pont authentifié et consenti. Recette iPhone encore requise, Forge #28 non clos.
 
+## 2026-11-13 — LINK V0.7 / passage à un hub distribuant les messages
+
+- L'utilisateur confirme le rôle de LINK : **point de contact unique** de toutes les apps, ancien et futur catalogue, et serveur qui redistribue les enveloppes chiffrées selon les passerelles configurées ; fin des actions basées sur l'ouverture Safari.
+- Nouveau moteur D1 `src/hub.mjs`, SDK `src/client-sdk.mjs`, schéma SQL `migrations/0001_hub.sql`. Tests d'inscription d'une nouvelle app, de droits, idempotence, confidentialité, reprise et ACK : **63/63 verts**.
+- D1 indépendante EU `link-hub-db` créée (UUID `d81d8dbe-1167-477e-a41b-8db74f5eec45`), mais migration SQL impossible : limite quotidienne D1 gratuite dépassée, API code 7500. Pas de passage payant ou contournement.
+- Worker LINK V0.7 `20ef81a9-a51a-4e51-9a13-4803972a61c9` à 100 %, API hub **non activée / staged** faute de DB initialisée et de secrets propriétaire ; anciens relais inchangés. Documentation archivée dans LINK/docs/HUB-V07.md, détail et état dans Forge #28.
+- Prochain jalon unique : SQL D1 → binding/identité propriétaire → apps enrôlées → Gaming ↔ Nexus en shadow mode → iPhone E2E + rollback → 6 autres flux. Aucun chantier hors #28 avant stabilisation.
