@@ -188,3 +188,10 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - `gaming-app` Worker `c3eca787-7949-4607-8764-f0353eb5f37e` à 100 %, nouvelle action Réglages → LINK · Vérifier les événements, sans action sur l'ancien envoi. CI Gaming **9/9** réussis. D1, deux secrets push, variable VAPID et cron `*/5 * * * *` conservés après déploiement.
 - `nexus-app` sur GitHub Pages : `link-audit.js` chargé avant `link-import.js`, cache versionné, nouveau bouton « Vérifier les événements » dans le panneau Propositions Gaming. Suite Nexus **90/90** et Pages vertes lors du contrôle, sans changement de schéma, clé ou service de synchronisation.
 - Portée : comparaison **indicative et manuelle** des alias HMAC temporaires, ne prouve ni ACK serveur ni authentification de l'exportateur ; recettage iPhone V0.5 encore à faire, retour arrière permanent jusqu'à migration E2E. FORGE #28 reste ouvert.
+
+## 2026-11-12 — LINK V0.6 recentrage et pont pilote
+
+- Le propriétaire recentre le chantier sur un cockpit unique LINK et gèle les autres évolutions jusqu'à la centralisation complète (#28).
+- LINK V0.6 : tous les 7 contrats dans l'onglet Connexions, les diagnostics avancés repliés, protocole de contrôle `management.mjs` sans secrets. Cloudflare Worker `93e219bd-a1c6-4bb5-8dfb-f386dcdbacf5` à 100 %.
+- Gaming/Nexus : `link-bridge.js` avec confirmation contextuelle, sans menu permanent ; Gaming Worker `417ff6f8-02fe-4f76-bf25-5044e49ecdb0` à 100 %, push et cron préservés ; Nexus Pages et CI réussies.
+- CI LINK 51/51, Gaming 13/13, Nexus 94/94. Recette iPhone V0.6 non confirmée, 6 autres flux non pilotables, jumelages et contrôles hérités conservés.
