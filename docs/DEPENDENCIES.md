@@ -122,3 +122,12 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - Chaque action commence dans LINK, nécessite un accord visible dans l'app, puis renvoie un statut local déclaratif. Le retour ne prouve pas l'identité ni le succès de livraison distante ; iOS peut ouvrir Safari et isoler les données des PWA.
 - Pour les autres flux, aucune commande opérationnelle avant adaptateur, tests, consentement et rollback ; les boutons sont désactivés plutôt que présenter un faux succès.
 - Aucune suppression ni migration d'anciens relais, D1, pairings NXL1/NXS1/GRL1, ACK, coffres, push ou menus en production avant parité physique iPhone. Voir Leomgl/link-app/docs/CENTRAL-CONTROL-V06.md.
+
+## LINK HUB V0.7 — nouvelle stratégie de transport (13/11/2026)
+
+- Au lieu de l'ouverture Safari entre PWA, chaque app possédera un SDK de publication/réception HTTPS vers **LINK**, unique hub de routage. Message chiffré avant envoi avec les clés de la paire, jamais en clair sur LINK ; métadonnées de route/scopes et horodatages visibles au transport.
+- LINK autorise chaque envoi par identité d'app, direction source/destinataire, contrat et permission. Aucun grant implicite : les anciennes paires NXL1/NXS1/GRL1 ne valent pas autorisation automatique du nouveau hub.
+- D1 isolée `link-hub-db` stockera les enveloppes, permissions et ACK, sans supprimer/modifier les D1 historiques. Schéma SQL versionné mais **non appliqué** tant que la limite d'écritures D1 du compte est atteinte.
+- Destinataire déchiffre, déduplique, persiste puis ACK. ACK `persisted` ne signifie pas achat accepté ni rendez-vous confirmé. Santé et ses données privées restent sous un verrou supplémentaire, et le consentement reste explicite.
+- Mode shadow Gaming → Nexus à tester avant tout basculement, puis 6 relations restantes. Limitations iOS PWA : le serveur peut conserver/dispatcher pendant la fermeture, mais application locale du message seulement quand le client fonctionne, sauf traitement backend métier déjà prévu.
+- Aucune ancienne connexion supprimée, aucun secret déplacé, aucune synchronisation centrale mise en production à ce stade. Référence : Leomgl/link-app/docs/HUB-V07.md.
