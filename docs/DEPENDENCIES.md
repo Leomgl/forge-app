@@ -102,3 +102,9 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - L'utilisateur choisit de produire un code de diagnostic `LDN1` depuis Nexus puis de le coller/ouvrir dans LINK. Les deux relevés `LDO1`/ `LDN1` sont validés et comparés sur le téléphone ; chaque source reste propriétaire de son stockage.
 - Comparer les comptes Gaming « propositions actuelles » et Nexus « historique conservé » fournit seulement une **indication**, jamais une preuve d'identité de paire ni de message identique. Les états `pending` sont de nature différente (à publier côté Gaming, à examiner côté Nexus).
 - Aucune modification de `nexus-link-api`, `sante-nexus-link`, D1, paires, secrets, notifications ou clients historiques. Pour automatiser à l'avenir, il faudra un contrat explicite d'authentification, un consentement utilisateur et une preuve cryptographique côté source/destinataire.
+
+## Passkeys Nexus — protocole WebAuthn iOS, correctif 12/11/2026
+
+- Les passkeys Nexus utilisent le domaine `leomgl.github.io`, des défis générés par `nexus-app-api` et des assertions WebAuthn ; le coffre cloud utilise séparément sa clé de récupération. L'UI lock ne chiffre pas les données IndexedDB et Face ID ne remplace jamais la clé de coffre.
+- Après signalement iPhone, le client prépare les défis avec `NexusCloud.session()` puis déclenche `navigator.credentials.get/create` directement dans le tap, pour préserver l'activation utilisateur iOS. Challenge côté serveur valable 180 s ; client n'accepte une préparation en mémoire que 90 s.
+- Fallback par clé de récupération inchangé. Aucun changement des bindings API, des credentials existants, de la base D1 ou des circuits LINK. Vérification réelle Face ID sur appareil en attente (Forge #30).
