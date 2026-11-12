@@ -81,4 +81,10 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - Nouvelle PWA `link-app` V0.1 déployée **en lecture seule**. Elle affiche uniquement un inventaire documentaire des sept relations principales ; `linksManaged: 0`. Le Worker nouveau ne possède aucun D1/binding, ne lit aucun appairage ni IndexedDB externe et refuse tout POST/PATCH/DELETE.
 - **Frontière impérative** : la plateforme de contrôle LINK pourra orchestrer permissions, diagnostic et flux, mais chaque app garde son stockage/validation métier. Le relais Santé `sante-nexus-link` et ses secrets/bases restent isolés du relais commun `nexus-link-api`.
 - Les clés historiques NXL1/NXS1/GRL1, source IDs, ACK, revisions/tombstones et pairings doivent être préservés ; basculer app par app seulement après backups, tests anti-doublons, reprise offline et recette iPhone. Les anciens écrans ne sont supprimables qu'en fin de migration.
-- Contenu actuel et limites : voir `docs/LINK-V01.md`. Code source LINK provisoire dans `incubation/link-app/worker.mjs`. Aucune synchronisation iPhone en arrière-plan permanent n'est garantie par une PWA.
+- Contenu actuel et limites : voir `docs/LINK-V01.md`. Source officielle LINK V0.2 : dépôt privé Leomgl/link-app, worker.mjs et src/protocol.mjs. La copie FORGE incubation/link-app/ n'est plus la source de vérité. Aucune synchronisation iPhone en arrière-plan permanent n'est garantie par une PWA.
+
+## LINK V0.2 : contrat de contrôle, non-régression (12/11/2026)
+
+- Le SDK de contrôle est testable mais **non branché aux clients historiques** ; API /api/v1/contracts purement documentaire, linksManaged=0.
+- Conservation impérative des relais D1 séparés, des secrets, pairings NXL1/NXS1/GRL1 et des sources d'identité. Aucune migration sans vérification du chiffrement, des permissions, des ACK et des sauvegardes.
+- La V0.1 a reçu confirmation iPhone ; V0.2 reste à tester physiquement, puis les futures migrations seront vérifiées relation par relation.
