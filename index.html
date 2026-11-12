@@ -47,6 +47,16 @@
       <label>Nature<select id="tType"><option value="bug">Bug</option><option value="evolution">Évolution</option><option value="idee">Idée</option><option value="test">Test / vérification</option></select></label>
       <label>Priorité<select id="tPriority"><option value="normale">Normale</option><option value="haute">Haute</option><option value="critique">Critique</option><option value="basse">Basse</option></select></label>
      </div>
+     <div id="generalScopeFields" class="general-scope" hidden>
+       <label>Périmètre du ticket<select id="tScope">
+        <option value="all">Toutes les apps</option>
+        <option value="multiple">Plusieurs apps</option>
+        <option value="newapp">Nouvelle app</option>
+        <option value="other">Projet / réflexion générale</option>
+       </select></label>
+       <label>Précisions <span class="optional">(facultatif)</span><input id="tScopeDetails" maxlength="300" placeholder="Ex : logos Nexus, Santé, Garage ; ou idée de nouvelle app"></label>
+       <p>Un ticket commun suffit : les projets concernés seront déterminés lors du travail.</p>
+     </div>
      <label>Titre du ticket <span class="required">*</span><input id="tTitle" maxlength="140" placeholder="Ex : Le tri A–Z saute certaines lettres"></label>
      <label>Contexte / ce que tu aimerais obtenir <span class="required">*</span><textarea id="tDescription" rows="4" maxlength="8000" placeholder="Décris l'idée, le problème ou la fonction voulue…"></textarea></label>
      <details class="advanced-options" id="advancedOptions"><summary>Options avancées <span>Version, reproduction, critères, contraintes</span></summary>
@@ -99,7 +109,7 @@
    </div>
   </section>
 
- <footer><span>FORGE <strong>v0.6.0</strong> · GitHub Issues fait foi</span><span>Connexion GitHub sécurisée · sans jeton à saisir · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
+ <footer><span>FORGE <strong>v0.7.0</strong> · GitHub Issues fait foi</span><span>Connexion GitHub sécurisée · sans jeton à saisir · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
 </div>
 <script src="./app.js"></script>
 <script src="./ticket-detail.js"></script>
