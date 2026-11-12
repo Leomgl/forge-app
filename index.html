@@ -73,8 +73,35 @@
     <a href="./docs/DECISIONS.md" target="_blank" class="contextlink"><span>04</span><b>Arbitrages techniques</b><small>Pourquoi nous avons fait certains choix</small></a></div>
   </section>
  </main>
- <footer><span>FORGE <strong>v0.5.0</strong> · GitHub Issues fait foi</span><span>Connexion GitHub sécurisée · sans jeton à saisir · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
+  <section id="ticketDialog" class="ticket-overlay" role="dialog" aria-modal="true" aria-labelledby="ticketTitle" hidden>
+   <div class="ticket-panel">
+    <header class="ticket-header"><div class="ticket-heading">
+      <p class="eyebrow">FICHE TICKET · GITHUB</p>
+      <h2 id="ticketTitle">Ticket</h2>
+      <p id="ticketCaption" class="ticket-caption"></p>
+     </div><button id="ticketClose" type="button" class="outline ticket-close" aria-label="Fermer le ticket">✕</button></header>
+    <div class="ticket-columns">
+     <section class="ticket-section" aria-labelledby="ticketRequestHeading">
+      <div class="ticket-subheading"><h3 id="ticketRequestHeading">Demande initiale</h3><a id="ticketGithub" href="https://github.com/Leomgl/forge-app/issues" target="_blank" rel="noopener noreferrer">Voir sur GitHub ↗</a></div>
+      <div class="ticket-md" id="ticketBody"></div>
+     </section>
+     <section class="ticket-section" aria-labelledby="ticketJournalHeading">
+      <div class="ticket-subheading"><h3 id="ticketJournalHeading">Journal des interventions</h3><span id="ticketCommentCount" class="ticket-caption"></span></div>
+      <div id="ticketComments" class="ticket-comments" aria-live="polite"></div>
+      <form id="ticketReplyForm" class="ticket-reply">
+       <label for="ticketReply">Ajouter une réponse</label>
+       <textarea id="ticketReply" rows="4" maxlength="12000" placeholder="Décision, retour de test, précision…" disabled></textarea>
+       <p id="ticketReplyHint" class="ticket-caption">Connexion GitHub requise pour commenter.</p>
+       <div class="ticket-reply-actions"><button id="ticketReplySubmit" type="submit" class="bigbutton" disabled>Publier la réponse</button><p id="ticketMessage" role="status" aria-live="polite"></p></div>
+      </form>
+     </section>
+    </div>
+   </div>
+  </section>
+
+ <footer><span>FORGE <strong>v0.6.0</strong> · GitHub Issues fait foi</span><span>Connexion GitHub sécurisée · sans jeton à saisir · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
 </div>
 <script src="./app.js"></script>
+<script src="./ticket-detail.js"></script>
 </body>
 </html>
