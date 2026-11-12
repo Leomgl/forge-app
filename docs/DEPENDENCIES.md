@@ -95,3 +95,10 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - **Schéma strict :** seuls `schema`, `contractId`, `app`, `createdAt`, `paired`, `autoEnabled`, `possible`, `pending`, `scopeCount`, `lastPublishedAt` sont acceptés. Inconnus, codes expirés de plus de 7 jours, compteurs impossibles et champs privés rejetés ; stockage LINK local effaçable. **Rapport non authentifié**, à considérer comme instantané déclaratif, jamais preuve de succès distant.
 - **Ancien transport inchangé :** Gaming continue les chiffrages/propositions via `nexus-app-api` et l'ACK ancien. Aucun point de synchronisation n'est migré ; le cas Santé reste séparé, D1 et push existants préservés.
 - **À tester** : iOS PWA → PWA peut ouvrir Safari plutôt que LINK, d'où fallback copier/coller ; vérifier également les notifications Gaming et la consultation de Nexus après l'upgrade du Worker Gaming. Test physique non encore effectué.
+
+## Diagnostic croisé LINK V0.4 (12/11/2026)
+
+- Nexus connaît les messages Gaming qu'il a conservés dans son `linkInbox` : `pending`, `accepted` et `rejected`. Les compteurs ne partent jamais automatiquement vers LINK : appairage et clés d'authentification NXL1 restent dans Nexus.
+- L'utilisateur choisit de produire un code de diagnostic `LDN1` depuis Nexus puis de le coller/ouvrir dans LINK. Les deux relevés `LDO1`/ `LDN1` sont validés et comparés sur le téléphone ; chaque source reste propriétaire de son stockage.
+- Comparer les comptes Gaming « propositions actuelles » et Nexus « historique conservé » fournit seulement une **indication**, jamais une preuve d'identité de paire ni de message identique. Les états `pending` sont de nature différente (à publier côté Gaming, à examiner côté Nexus).
+- Aucune modification de `nexus-link-api`, `sante-nexus-link`, D1, paires, secrets, notifications ou clients historiques. Pour automatiser à l'avenir, il faudra un contrat explicite d'authentification, un consentement utilisateur et une preuve cryptographique côté source/destinataire.
