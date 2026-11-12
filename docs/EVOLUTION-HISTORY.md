@@ -130,3 +130,10 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 |---|---|---|---|
 
 | GARAGE / RITUEL / NEXUS | V0.3 / V1.9 / V0.21.12 | Liaison chiffrée du catalogue Rituel et des emplacements Garage, demandes de mouvement dans les deux sens et création consentie d'ensemble pour séjour Nexus | Garage PR #2 `20341c5b02`, Rituel PR #1 `5172c36d3f`, Nexus PR #13 `5ef0b3369d`, Workers à 100 %, D1 migration contrôlée 4/51 et FK 0, CI/Pages réussies ; recette iPhone E2E en attente |
+
+## 2026-11-12 — LINK V0.1 (FORGE #28)
+
+- Worker Cloudflare `link-app` autonome déployé 100 % sur workers.dev ; site PWA avec navigation mobile, icône, manifest et cache offline.
+- Registre documentaire 6 apps / 7 relations, API lecture seule, diagnostic LINK, préparation locale ; **0 connexion migrée**.
+- Dépôt futur indépendant encore à créer, source intermédiaire `incubation/link-app/worker.mjs` et recette `docs/LINK-V01.md`.
+- Aucun ancien relais, jumelage, menu, IndexedDB, D1 ni notification modifié. Vérification réelle sur iPhone en attente.
