@@ -52,7 +52,7 @@ Les données locales de brouillon peuvent être effacées par iOS ; seul un tick
 
 ## Version
 
-**Version active : FORGE V0.8.0 (12 novembre 2026, déploiement en cours).** Quatre onglets, accueil actif et archives séparées. Recette Safari iPhone à confirmer.
+**Version active : FORGE V0.8.0 (12 novembre 2026).** PR #23 fusionnée dans `main`, interface à quatre onglets servie par le Worker Cloudflare `forge-hub` existant, sans changement de backend. Recette réelle Safari iPhone à confirmer.
 
 ## FORGE V0.6 — fiche ticket et journal de livraison (12/11/2026)
 
@@ -114,3 +114,5 @@ V0.2 — 11 novembre 2026 : mémoire de tickets et documentation inter-applicati
 - **Navigation :** barre fixe à 4 onglets sur iPhone (safe area) et navigateur, URL `#tickets`, `#completed`, `#composer`, `#context`. Les liens directs `#ticket/N` restent fonctionnels ; fermer une fiche ramène à l'onglet d'origine, notamment `Terminés`.
 - **Stockage / backend :** GitHub reste l'unique source des tickets et commentaires. Aucun nouveau Worker, D1, schéma ou secret n'a été introduit ; seul le frontend et le cache PWA sont modifiés.
 - **Recette :** validation automatisée de la répartition et du routage, puis contrôle réel sur Safari iPhone à confirmer séparément.
+
+**FORGE V0.8 livraison (12/11/2026)** : ticket #22 clôturé avec compte rendu GitHub ; PR #23 fusionnée, commit `2f2ce0b3230ffba54c5231ed92e535b85444071e`. Le backend Worker existant `forge-hub` reste déployé à 100 % sur la version `8115f368-e14d-4fc0-8344-5aee6e9a072d` (aucune modification du script), et relaie les fichiers GitHub `main` dont la V0.8. La recette Safari PWA reste à confirmer ; validation V8 du routage et des états effectuée.
