@@ -1,5 +1,5 @@
-const CACHE="forge-v0.5.0-20261112";
-const ASSETS=["./","./index.html","./styles.css","./app.js","./manifest.webmanifest","./icon.svg","./icon-180.png"];
+const CACHE="forge-v0.6.0-20261112";
+const ASSETS=["./","./index.html","./styles.css","./app.js","./ticket-detail.js","./manifest.webmanifest","./icon.svg","./icon-180.png"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ASSETS);}));self.skipWaiting();});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(keys){return Promise.all(keys.filter(function(k){return k.startsWith("forge-v")&&k!==CACHE;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
 self.addEventListener("fetch",function(e){var u=new URL(e.request.url);if(e.request.method!=="GET"||u.origin!==self.location.origin||u.pathname.startsWith("/auth/")||u.pathname.startsWith("/api/"))return;e.respondWith(fetch(e.request).then(function(r){if(r.ok){var copy=r.clone();caches.open(CACHE).then(function(c){c.put(e.request,copy);});}return r;}).catch(function(){return caches.match(e.request).then(function(r){return r||((e.request.mode==="navigate")?caches.match("./index.html"):Response.error());});}));});
