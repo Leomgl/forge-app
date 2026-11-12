@@ -165,3 +165,11 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - Pont de contrôle pilote `link-bridge.js` dans Gaming et Nexus, demande de vérification / envoi / réception depuis LINK avec validation locale ; les anciens flux persistants restent inchangés. Gaming Worker v0.14 (`417ff6f8-02fe-4f76-bf25-5044e49ecdb0`) à 100 %, D1, secrets, VAPID et cron inchangés. Nexus GitHub Pages et tests verts.
 - CI tests : LINK 51/51, Gaming 13/13, Nexus 94/94. **Recette réelle Safari iPhone V0.6 non encore réalisée**. Aucun jumelage n'est encore administré ou migré dans LINK, et les cinq autres relations restent en cours d'adaptation.
 - Note centrale : https://github.com/Leomgl/link-app/blob/main/docs/CENTRAL-CONTROL-V06.md — ticket Forge #28 demeure ouvert et prioritaire.
+
+## LINK V0.7 — hub inter-apps E2EE en préparation (13/11/2026)
+
+- **Décision propriétaire** : les applications publient et reçoivent désormais **via LINK** une fois migrées. LINK route les enveloppes chiffrées en fonction des contrats/scopes et administre les identités/passerelles, sans posséder les clés ni lire le contenu métier. Les PWA récupèrent leurs messages à l'ouverture ou reprise, pas par liens Safari. Une PWA fermée ne peut pas garantir l'application silencieuse des messages en fond.
+- V0.7 : nouveau module `src/hub.mjs` (routage sécurisé, séparation émetteur/destinataire, refus par défaut, idempotence et ACK durable), SDK `src/client-sdk.mjs` et migration `migrations/0001_hub.sql`. Enregistrement d'une nouvelle app et d'une route personnalisée testé en SQLite, sans recoder le moteur.
+- Nouveau **D1 EU `link-hub-db`** (`d81d8dbe-1167-477e-a41b-8db74f5eec45`) créé. **Migrations SQL BLOQUÉES** par la limite quotidienne d'écritures D1 gratuites (erreur Cloudflare 7500). Aucun upgrade payant et aucun ancien stockage modifié.
+- Worker LINK V0.7 `20ef81a9-a51a-4e51-9a13-4803972a61c9` à 100 %, **sans binding D1 / secret / activation** : statut `staged`, aucun message métier transmis par LINK. App conserve ses 7 contrats et les contrôles Safari trompeurs sont suspendus.
+- CI LINK **63/63** : https://github.com/Leomgl/link-app/actions/runs/43331793183. Docs détaillées : https://github.com/Leomgl/link-app/blob/main/docs/HUB-V07.md. Forge #28 reste prioritaire et EN COURS.
