@@ -49,3 +49,7 @@ Les anciens liens ne sont ni migrés ni modifiés. LINK ne jumelle, synchronise,
 - Contrôler que les anciens jumelages et leurs échanges restent inchangés dans les apps sources.
 
 Aucun contrôle Safari réel ni synchronisation de bout en bout n'a encore été vérifié pour LINK V0.1.
+
+## Mise à jour post-recette (12/11/2026)
+
+Le propriétaire a confirmé que la **V0.1 LINK fonctionne sur son iPhone** et a créé le dépôt privé officiel Leomgl/link-app. Cette page garde l'historique V0.1 ; la source et l'évolution V0.2 sont dans https://github.com/Leomgl/link-app . La validation V0.1 ne valide pas V0.2 ni les échanges inter-apps.
