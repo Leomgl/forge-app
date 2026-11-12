@@ -1,11 +1,11 @@
-/* FORGE v0.7 — fiche ticket accessible, compatible GENERAL. */
+/* FORGE v0.8 — ticket detail retaining source tab for navigation. */
 (function () {
 "use strict";
 const ROOT="https://api.github.com/repos/Leomgl/forge-app/issues/";
 const dlg=document.getElementById("ticketDialog");
 if(!dlg)return;
 const $=id=>document.getElementById(id);
-let current=0,loadKey=0,authenticated=false,posting=false,previousFocus=null;
+let current=0,loadKey=0,authenticated=false,posting=false,previousFocus=null,returnHash="#tickets";
 function safeUrl(raw){
  try{const u=new URL(String(raw||""));return (u.protocol==="https:"||u.protocol==="http:")?u.href:null;}
  catch{return null;}
@@ -102,6 +102,8 @@ async function loadComments(number,key){
 }
 function open(number){
  if(!Number.isSafeInteger(number)||number<=0)return;
+ const selected=document.querySelector(".bottom-nav-item.active");
+ returnHash=selected?.getAttribute("href")||"#tickets";
  current=number;const key=++loadKey;previousFocus=document.activeElement;
  dlg.hidden=false;document.body.classList.add("ticket-open");$("ticketClose").focus();
  $("ticketTitle").textContent="Ticket #"+number;
@@ -159,10 +161,11 @@ async function reply(e){
  }catch(err){if(number===current)status("Non publié : "+err.message);}
  finally{posting=false;$("ticketReplySubmit").disabled=!authenticated;}
 }
-$("ticketClose").addEventListener("click",()=>{location.hash="#tickets";});
-dlg.addEventListener("click",e=>{if(e.target===dlg)location.hash="#tickets";});
+function returnToView(){location.hash=returnHash;}
+$("ticketClose").addEventListener("click",returnToView);
+dlg.addEventListener("click",e=>{if(e.target===dlg)returnToView();});
 dlg.addEventListener("keydown",e=>{
- if(e.key==="Escape"){e.preventDefault();location.hash="#tickets";}
+ if(e.key==="Escape"){e.preventDefault();returnToView();}
  if(e.key==="Tab"){
   const controls=Array.from(dlg.querySelectorAll('a[href],button:not([disabled]),textarea:not([disabled])')).filter(el=>el.getClientRects().length);
   if(!controls.length)return;
