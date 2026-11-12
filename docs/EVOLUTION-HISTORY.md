@@ -144,3 +144,9 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - API documentaire /api/v1/contracts ; LINK reste en lecture seule, zéro paire migrée et aucun ancien relais modifié.
 - Forge : app LINK ajoutée au registre/filtre/formulaire, backend redéployé en préservant ses 3 bindings et nouveau cache PWA.
 - Recette tactile Safari V0.2 et essai de publication d'un ticket LINK dans Forge encore à confirmer.
+
+## 2026-11-12 — LINK V0.2.1, bouton Diagnostic Safari
+
+- Signalement iPhone : « Vérifier les contrats » visible mais sans réaction. Cause probable : HTML nouveau et JavaScript ancien simultanés, car le Service Worker servait `/app.js` en cache-first.
+- Correctif uniquement dans `Leomgl/link-app/worker.mjs` : URL de script versionnée `/app.js?v=0.2.1`, stratégie réseau d'abord pour JS/CSS, nouveau cache `link-shell-v0.2.1`, clic délégué et message immédiat de chargement/résultat/échec.
+- GitHub Actions LINK : **19/19 tests réussis** (https://github.com/Leomgl/link-app/actions/runs/43300049906), dont simulation du clic et erreur réseau. Worker Cloudflare version `c2f46e21-6fc5-4c86-aed0-7e121cae7409` à 100 %, aucune modification des Workers/D1 hérités. Recette Safari V0.2.1 à confirmer sur le téléphone ; ticket transversal #28 toujours en cours.
