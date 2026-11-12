@@ -53,6 +53,10 @@ Code/docs : [README](https://github.com/Leomgl/rituel-app/blob/main/README.md) �
 | V0.2 | Filtres, variantes, planning, migration IndexedDB V1 → V2 | Anciennes sauvegardes/restauration |
 | V0.3 | Import privé Fits, vêtements superposés, données d'origine | Photos privées, liens et import atomique |
 | V0.4 | Moteur `fit-engine.js`, proportions et couches, recalage ancien Fits, retour arrière | Tenues réelles sur iPhone, miniatures et sauvegardes |
+| V0.5 | Calibration du mannequin de référence, repères photo | Aucun upload de mannequin |
+| V0.6 | NEXUS LINK opt-in, catalogue chiffré V1 limité à 24 tenues | Consentement, secrets et non-divulgation des photos |
+| V0.7 | Studio tactile un doigt/deux doigts, menu de remplacement et retrait | Calques et positionnement, recette iPhone validée par utilisateur |
+| V0.7.1 | ✓ confirmation, zones à portée de main, catalogue complet en pages V2 avec Nexus V0.21.8 | Reprise de transfert, synchronisation atomique et non-régression iPhone |
 
 Code/docs : [README](https://github.com/Leomgl/Vestiaire-app/blob/main/README.md) · [Fitting V0.4](https://github.com/Leomgl/Vestiaire-app/blob/main/docs/FITTING-V04.md).
 
