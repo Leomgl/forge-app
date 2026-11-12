@@ -64,7 +64,7 @@ Les états visibles dans la PWA sont `À faire`, `En cours`, `Terminé`. Les tic
 
 ## Mise à jour FORGE V0.4 — édition sans PAT dans la PWA
 
-Source serveur dans `edge-worker/index.mjs`, adresse dédiée `https://forge-hub.q9pfwtztsc.workers.dev/`. Une fois une GitHub App installée sur le **seul** repo `Leomgl/forge-app` avec droits Issues et les deux identifiants configurés dans les secrets Cloudflare, l'utilisateur peut se connecter via OAuth et piloter les tickets sans saisir de PAT. **À la date du 11/11/2026, le Worker est déployé mais la GitHub App et les secrets restent à configurer** ; ne pas présenter l'authentification comme déjà fonctionnelle. Lire `docs/GITHUB-AUTH.md`. L'assistant continue d'opérer directement avec son outil GitHub et de relire le code réel de l'app concernée.
+Source serveur dans `edge-worker/index.mjs`, adresse dédiée `https://forge-hub.q9pfwtztsc.workers.dev/`. Une fois une GitHub App installée sur le **seul** repo `Leomgl/forge-app` avec droits Issues et les deux identifiants configurés dans les secrets Cloudflare, l'utilisateur peut se connecter via OAuth et piloter les tickets sans saisir de PAT. **Au 12/11/2026, l'utilisateur a confirmé sur iPhone que l'authentification GitHub fonctionne.** Le Worker est désormais en V0.5 (déploiement 100 % confirmé) ; revérifier toute nouvelle session plutôt que supposer l'utilisateur connecté. Lire `docs/GITHUB-AUTH.md`. L'assistant continue d'opérer directement avec son outil GitHub et de relire le code réel de l'app concernée.
 
 
 ## Routine obligatoire pour les prochains threads « Apps iPhone » (12/11/2026)
