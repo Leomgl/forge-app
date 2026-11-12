@@ -52,7 +52,7 @@ Les données locales de brouillon peuvent être effacées par iOS ; seul un tick
 
 ## Version
 
-**Version active : FORGE V0.7.0 (12 novembre 2026).** Tickets généraux et transversaux, Cloudflare `forge-hub` déployé à 100 % ; recette de création depuis Safari iPhone encore à confirmer. Historique ci-dessous.
+**Version active : FORGE V0.8.0 (12 novembre 2026, déploiement en cours).** Quatre onglets, accueil actif et archives séparées. Recette Safari iPhone à confirmer.
 
 ## FORGE V0.6 — fiche ticket et journal de livraison (12/11/2026)
 
@@ -104,3 +104,13 @@ V0.2 — 11 novembre 2026 : mémoire de tickets et documentation inter-applicati
 - Tests JS : génération d'un ticket pour toutes les apps, pour une nouvelle app, comparaison avec un ticket NEXUS, absence de lien de repo inventé ; recette Safari iPhone à confirmer.
 
 **FORGE Cloudflare V0.7 déployée (12/11/2026)** : PR #20 fusionnée (squash `c9a23901bb78cbb7222a7da36e336c07d0ecd261`), Worker `forge-hub` sur la version `8115f368-e14d-4fc0-8344-5aee6e9a072d` à **100 %** (déploiement `9d8fe30a-26f7-4290-b799-0ed2026e4e9f`). Trois bindings OAuth conservés, aucune app ni D1 supplémentaires. Ticket #18 clôturé, commentaire de livraison publié. Tests de syntaxe et génération de tickets effectués dans V8 ; test de création connecté depuis la PWA et recette Safari iPhone restent à confirmer.
+
+## FORGE V0.8 — navigation modulaire et archive des tickets (12/11/2026)
+
+- **Accueil :** seules les issues `open` en états `À faire` / `En cours` apparaissent, avec deux modules classés par priorité. Une issue `closed` n'apparaît **jamais** sur l'accueil, indépendamment de sa métadonnée historique.
+- **Terminés :** onglet à part, liste de toutes les issues `closed`, triées par dernière activité ; recherche, filtre app et priorité, fiches et commentaires inchangés. Repasser un ticket terminé à `À faire` ou `En cours` le réintègre dans l'accueil.
+- **Nouveau :** formulaire existant isolé (brouillons persistants, ticket Général, création OAuth, options avancées inchangés).
+- **Apps :** catalogue et documents techniques sortis du flux d'accueil.
+- **Navigation :** barre fixe à 4 onglets sur iPhone (safe area) et navigateur, URL `#tickets`, `#completed`, `#composer`, `#context`. Les liens directs `#ticket/N` restent fonctionnels ; fermer une fiche ramène à l'onglet d'origine, notamment `Terminés`.
+- **Stockage / backend :** GitHub reste l'unique source des tickets et commentaires. Aucun nouveau Worker, D1, schéma ou secret n'a été introduit ; seul le frontend et le cache PWA sont modifiés.
+- **Recette :** validation automatisée de la répartition et du routage, puis contrôle réel sur Safari iPhone à confirmer séparément.
