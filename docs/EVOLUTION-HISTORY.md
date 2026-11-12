@@ -84,3 +84,5 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 | NEXUS | V0.21.9 | Bloc de synthèse hydratation Santé dans Pulse, après opt-in | Vestiaire V0.21.8, données reçues minimales, liaison E2EE |
 | GARAGE | V0.1.0 | Inventaire, lieux, prêts, kits, photos locales et sauvegarde JSON | Aucun lien Nexus activé, IndexedDB local, exports non chiffrés |
 | FORGE | V0.5.0 | Colonnes par état, filtres/priorités, formulaire compact, suivi des 6 apps | OAuth GitHub, tickets et métadonnées, workflow, aucune donnée privée |
+
+| RITUEL | V1.7 | Collection, photos locales, parfums et trousses de voyage avec checklist | Préserver `rituel_personal_v1`, photos dans sauvegardes personnelles, aucun lien Agenda Nexus activé sans consentement |
