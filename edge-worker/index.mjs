@@ -158,7 +158,7 @@ async function action(req,env,kind){
  state=target;
  }else if(kind==="create"){
  const title=String(data.title||"").trim(),body=String(data.body||"").trim();
- if(title.length<4||title.length>200||body.length<20||body.length>25000||!/^(?:\[(?:NEXUS|GAMING|RITUEL|VESTIAIRE|SANTE|GARAGE|FORGE|GENERAL)\])\[(?:BUG|EVOLUTION|IDEE|TEST)\]/.test(title)||!body.includes("FORGE_META"))return fail("Titre ou description invalide");
+ if(title.length<4||title.length>200||body.length<20||body.length>25000||!/^(?:\[(?:NEXUS|GAMING|RITUEL|VESTIAIRE|SANTE|GARAGE|LINK|FORGE|GENERAL)\])\[(?:BUG|EVOLUTION|IDEE|TEST)\]/.test(title)||!body.includes("FORGE_META"))return fail("Titre ou description invalide");
  endpoint="/repos/"+REPO+"/issues";options.body=JSON.stringify({title,body});
  }else if(kind==="comment"){
   const number=Number(data.number),body=String(data.body||"").trim();
