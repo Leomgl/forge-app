@@ -166,3 +166,10 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - **Validation du propriétaire par capture iPhone** : diagnostic Gaming → Nexus importé et affiché dans LINK V0.3. Instantané local horodaté 12/11/2026 22:19 : jumelage configuré, auto activée, 12 propositions possibles, 0 à actualiser, 7 permissions ; dernière publication déclarée dans Gaming le 11/11/2026 à 17:14. Les valeurs sont un relevé local, pas de la télémétrie temps réel.
 - V0.2.1 « Vérifier les contrats » 7/7 déjà confirmée précédemment. Les systèmes historiques restent en place.
 - **Non attesté** : réception effective de chaque proposition côté Nexus, notifications push et synchronisation automatique orchestrée par LINK, révocation/rollback. Projet #28 toujours ouvert.
+
+## 2026-11-12 — LINK V0.4 / NEXUS observateur (Forge #28)
+
+- LINK V0.4 : nouvel import volontaire `LDN1` du diagnostic côté Nexus, affichage de ses propositions locales à examiner/acceptées/ignorées et comparaison agrégée côte à côte avec Gaming `LDO1`. Gardes-fous de validation de rapport et avertissements sur la non-preuve de réception ou de parité d'appairage.
+- Nexus `link-import.js` : ajoute « Diagnostic LINK » dans Propositions Gaming ; code non sensible sans IDs ni montants ; cache `nexus-v0.21.12.1` et script versionné. Aucun nouveau stockage, schéma, relay ou secret.
+- Source : dépôts privés `Leomgl/link-app` et `Leomgl/nexus-app`. Worker LINK version `9e3b99e8-c77d-49f2-9b9c-065a00ee7397` déployé 100 %. Tests automatisés Nexus et LINK verts ; **recette Safari iPhone de V0.4 et de la nouvelle action Nexus non encore confirmée**.
+- Ancienne liaison Gaming → Nexus intacte. Prochaine étape : preuves de réception authentifiées, consenties et réversibles.
