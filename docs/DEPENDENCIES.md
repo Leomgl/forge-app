@@ -88,3 +88,10 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - Le SDK de contrôle est testable mais **non branché aux clients historiques** ; API /api/v1/contracts purement documentaire, linksManaged=0.
 - Conservation impérative des relais D1 séparés, des secrets, pairings NXL1/NXS1/GRL1 et des sources d'identité. Aucune migration sans vérification du chiffrement, des permissions, des ACK et des sauvegardes.
 - La V0.1 a reçu confirmation iPhone ; V0.2 reste à tester physiquement, puis les futures migrations seront vérifiées relation par relation.
+
+## LINK LDO1 — transfert de diagnostic manuel, sans migration (12/11/2026)
+
+- **Origine et consentement :** Gaming calcule un relevé anonymisé en lecture seule ; l'utilisateur choisit de le transmettre à LINK via URL **fragment-only** (`#observe=LDO1...`) ou copier/coller. Le fragment ne part pas dans la requête HTTP, aucun nouvel endpoint serveur n'a été créé et aucune lecture d'IndexedDB inter-origines n'est tentée.
+- **Schéma strict :** seuls `schema`, `contractId`, `app`, `createdAt`, `paired`, `autoEnabled`, `possible`, `pending`, `scopeCount`, `lastPublishedAt` sont acceptés. Inconnus, codes expirés de plus de 7 jours, compteurs impossibles et champs privés rejetés ; stockage LINK local effaçable. **Rapport non authentifié**, à considérer comme instantané déclaratif, jamais preuve de succès distant.
+- **Ancien transport inchangé :** Gaming continue les chiffrages/propositions via `nexus-app-api` et l'ACK ancien. Aucun point de synchronisation n'est migré ; le cas Santé reste séparé, D1 et push existants préservés.
+- **À tester** : iOS PWA → PWA peut ouvrir Safari plutôt que LINK, d'où fallback copier/coller ; vérifier également les notifications Gaming et la consultation de Nexus après l'upgrade du Worker Gaming. Test physique non encore effectué.
