@@ -157,3 +157,11 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - **Gaming** : réglages → LINK · Vérifier les événements, code établi depuis l'Outbox de publications déjà enregistrées ; Worker `gaming-app` recompilé, D1, 2 secrets push, VAPID publique et cron 5 min vérifiés présents après déploiement.
 - **Nexus** : panneau Propositions Gaming → Vérifier les événements, code établi depuis `linkInbox` persisté ; nouvelle version `link-import.js?v=02115`, `link-audit.js?v=02115`, cache `nexus-v0.21.12.3`, GitHub Pages.
 - **Portée limitée :** reports non signés, aucune attestation d'origine/ACK, aucun nouveau jumelage, aucune synchronisation métier activée par LINK ; `mode=read-only`, `linksManaged=0`. Réception et envoi historiques strictement inchangés. Recette physique V0.5 encore à effectuer.
+
+## LINK V0.6 — pivot vers le cockpit central (12 novembre 2026)
+
+- **Objectif propriétaire prioritaire** : une seule interface LINK pour gérer tous les liens, et plus de nouveaux panneaux LINK dispersés dans les apps. Les apps conservent leur propriétaire de données, clés E2EE, notifications et une boîte de consentement contextuelle.
+- LINK Cloudflare Worker v0.6 (`93e219bd-a1c6-4bb5-8dfb-f386dcdbacf5`) servie à 100 %. Onglet Connexions réunit 7 contrats, autorisations recensées, actions pilotables, journal local et diagnostics repliés dans un panneau avancé. Aucun D1 ni nouvelle clé.
+- Pont de contrôle pilote `link-bridge.js` dans Gaming et Nexus, demande de vérification / envoi / réception depuis LINK avec validation locale ; les anciens flux persistants restent inchangés. Gaming Worker v0.14 (`417ff6f8-02fe-4f76-bf25-5044e49ecdb0`) à 100 %, D1, secrets, VAPID et cron inchangés. Nexus GitHub Pages et tests verts.
+- CI tests : LINK 51/51, Gaming 13/13, Nexus 94/94. **Recette réelle Safari iPhone V0.6 non encore réalisée**. Aucun jumelage n'est encore administré ou migré dans LINK, et les cinq autres relations restent en cours d'adaptation.
+- Note centrale : https://github.com/Leomgl/link-app/blob/main/docs/CENTRAL-CONTROL-V06.md — ticket Forge #28 demeure ouvert et prioritaire.
