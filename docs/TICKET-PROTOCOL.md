@@ -78,3 +78,9 @@ Pour passer de l'un à l'autre, modifier le commentaire HTML `FORGE_META` sans e
 - **Suite** : points ouverts, ou aucune suite si terminé.
 
 La V0.6 permet de lire la demande et les échanges depuis la fiche intégrée et, une fois connecté, de commenter en direct via `POST /api/comments`. L'authentification et les en-têtes anti-CSRF restent côté Worker. GitHub conserve la source de vérité ; ne jamais stocker un token dans le navigateur ni promettre une automatisation des réponses entre threads.
+
+## Ticket général / transversal (FORGE V0.7)
+
+Créer un ticket `[GENERAL][IDEE|EVOLUTION|BUG|TEST]` pour un chantier commun, une future application ou une étude sans app cible. Le formulaire affiche le périmètre et les précisions seulement quand `GÉNÉRAL` est sélectionné. Valeurs : `scope=all|multiple|newapp|other`. Les détails et commentaires appartiennent à la même GitHub Issue et la même fiche de Forge.
+
+**Ne pas dupliquer** artificiellement le même chantier sur toutes les applications : garder ce ticket comme référence et lier les commits/PR par app au fur et à mesure. Lors du diagnostic, déterminer les dépôts touchés, vérifier les dépendances et planifier les validations. Une nouvelle app n'est inscrite au registre Forge qu'une fois son dépôt et son contexte existants. Les issues demeurent publiques ; aucune donnée confidentielle d'autres apps.
