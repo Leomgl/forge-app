@@ -4,7 +4,7 @@
 
 ## NEXUS — Leomgl/nexus-app
 
-- **App actuelle documentée :** V0.17.2 pour les contacts (en-tête README parfois moins récent) ; URL PWA : https://leomgl.github.io/nexus-app/
+- **Version de code vérifiée :** V0.21.9 après fusion de la PR #11 (12/11/2026). Le titre du README indique encore V0.21.5 et n'est pas une source de version suffisante ; suivre les commits et `docs/PROJECT-HANDOFF.md`. URL PWA : https://leomgl.github.io/nexus-app/ ; cache iPhone à contrôler séparément.
 - HTML/CSS/JS natifs, IndexedDB ; GitHub Pages ; backend Cloudflare Workers/D1.
 - Modules : Notes, Agenda, Rappels, Contacts, Projets, Achats, Budget, capture intelligente, corbeille.
 - Coffre cloud *optionnel* : snapshots chiffrés localement AES-GCM ; stockage local en clair ; passkey WebAuthn serveur en bêta. Notification Web Push sous condition d'opt-in.
@@ -24,9 +24,9 @@
 
 ## RITUEL — Leomgl/rituel-app
 
-- **Version documentaire :** V1.5 ; PWA https://leomgl.github.io/rituel-app/
+- **Version du dépôt :** V1.7 ; PWA https://leomgl.github.io/rituel-app/
 - HTML/CSS/JS natifs, données routines/stock en localStorage, Worker Cloudflare + D1 pour Web Push.
-- Soins matin/soir, historique de stock manuel, réserve, estimations seulement à partir de relevés, statistiques 7/30 jours et rappels iPhone.
+- Soins matin/soir, historique de stock manuel, réserve, estimations seulement à partir de relevés, statistiques 7/30 jours et rappels iPhone. **V1.7** : collection de soins/parfums/accessoires, photos locales, liens boutiques et trousses de voyage avec checklist. L'import automatique d'un voyage Nexus dans Rituel n'est pas encore actif.
 - Fichiers/docs : `app.js`, `push-worker/`, `README.md`, `docs/PUSH.md`, `docs/ARCHITECTURE-APPS-GRATUITES.md`.
 - Risques : ne pas casser la clé `rituel_personal_v1`, les historiques locaux, les souscriptions push ; ne pas committer la clé VAPID ni inventer des consommations de produit.
 
