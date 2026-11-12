@@ -128,3 +128,10 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - LINK ajouté au registre FORGE et à la liste blanche de publication GitHub ; Worker forge-hub déployé en préservant les 3 bindings existants.
 - Le relais Santé reste isolé, aucune ancienne clé, base D1, connexion, notification ou menu n'a été supprimé.
 - Détails : https://github.com/Leomgl/link-app/blob/main/docs/ARCHITECTURE.md et FORGE #28.
+
+## Pilotage LINK V0.3 — premier observateur inter-apps (12/11/2026)
+
+- **LINK** : Worker `link-app` V0.3 (à 100 % sur workers.dev), UI Diagnostic accepte un code `LDO1` via `#observe=` ou copier/coller. Source : `Leomgl/link-app` (`src/observation.mjs`, `worker.mjs`). Le code n'est jamais envoyé au serveur, il est validé et conservé uniquement dans le localStorage de LINK. À supprimer explicitement depuis l'interface. Aucun pair réel n'est géré par LINK : `linksManaged=0`.
+- **GAMING** : entrée Réglages → LINK · Observateur, adossée à `GamingNexusSync.preview()` en lecture seule. Le diagnostic contient existence locale du jumelage, auto activé oui/non, nombre de scopes, comptes de propositions et date de dernière publication locale. Jamais de secret, code NXL1, IDs, titres ou montants. Aucun appel de publication/ACK dans ce parcours. L'ancien Gaming → Nexus continue normalement.
+- **Cloudflare Gaming** : Worker `gaming-app` V0.12 recompilé avec backend push et routeurs existants. Bindings `DB`, `PUSH_RATE_PEPPER`, `VAPID_PRIVATE_JWK`, `VAPID_PUBLIC_KEY` et cron 5 minutes confirmés inchangés après déploiement.
+- **Tests** : LINK 28/28, Gaming 4/4 + build/check en CI. Recette iPhone V0.3 et la navigation Gaming → LINK **restent à confirmer** ; seul le bouton LINK V0.2.1 7/7 a été validé par l'utilisateur. Voir FORGE #28.
