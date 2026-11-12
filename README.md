@@ -21,6 +21,7 @@
 | VESTIAIRE | [Vestiaire-app](https://github.com/Leomgl/Vestiaire-app) | Dressing, Fits, mannequin, poses et looks |
 | GARAGE | [garage-app](https://github.com/Leomgl/garage-app) | Inventaire privé, emplacements, prêts, kits de départ (PWA Cloudflare) |
 | SANTÉ | [sante-app](https://github.com/Leomgl/sante-app) | Carnet médical chiffré, traitements, agenda, habitudes (boissons/hydratation) ; partage NEXUS sur consentement |
+| LINK | [link-app](https://github.com/Leomgl/link-app) | PWA de pilotage des liaisons inter-apps ; V0.1 validée iPhone, V0.2 contrats/SDK en lecture seule |
 
 Consulter [la cartographie](docs/APP-MAP.md) pour les liens techniques et [les dépendances](docs/DEPENDENCIES.md) pour les régressions possibles.
 
