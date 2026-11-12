@@ -83,3 +83,6 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 
 
 **FORGE Cloudflare V0.5 (12/11/2026)** : Worker `forge-hub` redéployé à 100 % (version `1157ecb4-8c83-4f4d-ba7f-ef6e6137792e`), trois bindings d'authentification conservés ; Pages Cloudflare : aucun projet listé dans le compte. La PWA FORGE sert les fichiers publics de GitHub `main` par proxy/cache court, et ne possède pas de base D1. Confirmation physique Safari V0.5 encore à faire.
+
+
+**FORGE V0.6 (ticket #15, 12/11/2026)** : ouverture interne d'un ticket, corps complet, commentaires publics en timeline, publication de commentaires authentifiée via `/api/comments`. `ticket-detail.js` ajouté, Worker `forge-hub` et service worker actualisés sans D1 ni changement de contrats des autres apps. Déploiement Cloudflare et recette Safari à noter séparément après vérification.

@@ -52,7 +52,17 @@ Les données locales de brouillon peuvent être effacées par iOS ; seul un tick
 
 ## Version
 
-**V0.5.0 — 12 novembre 2026 (Worker Cloudflare déployé à 100 %, recette Safari V0.5 en attente) :** refonte du tableau de tickets en colonnes par état, priorités visibles et filtrables, formulaire compact avec options avancées repliables, catalogue commun au suivi et à la saisie des tickets comprenant **SANTÉ et GARAGE**. Liste des projets gérée en un seul endroit dans `app.js`, acceptation des deux nouvelles apps dans la passerelle `edge-worker/index.mjs`, cache PWA actualisé. Les données et tickets restent exclusivement dans GitHub ; aucune migration de stockage, aucun secret OAuth modifié. Recette iPhone de cette version à effectuer.
+## FORGE V0.6 — fiche ticket et journal de livraison (12/11/2026)
+
+- Un titre de carte pointe désormais vers `#ticket/N` : consultation intégrée et navigation par URL partageable, avec retour au tableau ; lien GitHub externe conservé.
+- La fiche lit en direct le **corps complet de l'issue** et ses **commentaires GitHub** (pagination jusqu'à 1 000, limite signalée), avec auteur et date, affichage Markdown simplifié et sûr via nœuds DOM sans exécution de HTML.
+- Lorsqu'une session GitHub valide est présente, `POST /api/comments` permet de publier un commentaire sur une issue FORGE. La passerelle Cloudflare vérifie session, origine, en-tête de mutation, taille du commentaire et existence du ticket, puis utilise GitHub. Aucune donnée utilisateur ni token ne doit être placé dans l'UI.
+- L'assistant commente les tickets **lors de la conversation** avec une synthèse *Fait / Pourquoi / Comment / Tests / Recette iPhone / Suite*. FORGE n'écoute pas les conversations automatiquement et ne produit pas de compte rendu tout seul.
+- Architecture inchangée : une seule source de vérité GitHub Issues + commentaires, stockage local uniquement pour les brouillons et le cache existant des cartes, aucun stockage D1.
+- Risques testés statiquement : injection HTML dans commentaires, schéma des liens, accès non authentifié en lecture seule, protection des routes d'écriture. **Recette réelle sur Safari iPhone à confirmer.**
+
+
+**V0.5.0 (historique) — 12 novembre 2026 (Worker Cloudflare déployé à 100 %, recette Safari V0.5 en attente) :** refonte du tableau de tickets en colonnes par état, priorités visibles et filtrables, formulaire compact avec options avancées repliables, catalogue commun au suivi et à la saisie des tickets comprenant **SANTÉ et GARAGE**. Liste des projets gérée en un seul endroit dans `app.js`, acceptation des deux nouvelles apps dans la passerelle `edge-worker/index.mjs`, cache PWA actualisé. Les données et tickets restent exclusivement dans GitHub ; aucune migration de stockage, aucun secret OAuth modifié. Recette iPhone de cette version à effectuer.
 
 **Routine de synchronisation du contexte :** après tout chantier iPhone (nouveau dépôt, décision, changement de schéma, contrat LINK, correction critique ou déploiement), relire GitHub et, si utile, Cloudflare ; mettre à jour `docs/APP-MAP.md`, `docs/DEPENDENCIES.md`, `docs/EVOLUTION-HISTORY.md`, le registre `apps` de `app.js`, et le ticket concerné **dans la même intervention**. Voir `docs/AI-START-HERE.md`.
 

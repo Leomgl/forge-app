@@ -15,3 +15,7 @@ Pour ne pas exposer un token d'écriture dans une PWA publique, le propriétaire
 ## Règle de mise à jour
 
 Lorsqu'une évolution change un invariant, un contrat d'intégration ou un chemin critique, mettre à jour la cartographie/dépendances et ajouter un enregistrement daté ici. Ne pas considérer le journal comme un relevé automatique des commits.
+
+## 2026-11-12 — FORGE V0.6 : une fiche par issue, un journal de commentaires
+
+Décision : conserver GitHub Issues comme registre central et les commentaires GitHub comme journal des interventions et des retours utilisateurs. Le navigateur lit les tickets et commentaires publics et affiche le Markdown sous forme de nœuds texte sûrs. Seule la session OAuth GitHub App du Worker peut écrire via l'endpoint dédié. Aucun agent autonome ni base de données ne vient dupliquer les tickets. Les comptes rendus sont publiés volontairement dans les conversations de développement.

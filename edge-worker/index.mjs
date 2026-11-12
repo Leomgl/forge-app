@@ -1,4 +1,4 @@
-/* FORGE edge gateway v0.4 — GitHub App OAuth / dedicated origin.
+/* FORGE edge gateway v0.6 — GitHub App OAuth / dedicated origin.
    Configure secrets: GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET. Cookie key derived with HKDF.
    No GitHub personal access token and no token exposed to browser code. */
 const REPO = "Leomgl/forge-app";
@@ -160,6 +160,15 @@ async function action(req,env,kind){
  const title=String(data.title||"").trim(),body=String(data.body||"").trim();
  if(title.length<4||title.length>200||body.length<20||body.length>25000||!/^(?:\[(?:NEXUS|GAMING|RITUEL|VESTIAIRE|SANTE|GARAGE|FORGE)\])\[(?:BUG|EVOLUTION|IDEE|TEST)\]/.test(title)||!body.includes("FORGE_META"))return fail("Titre ou description invalide");
  endpoint="/repos/"+REPO+"/issues";options.body=JSON.stringify({title,body});
+ }else if(kind==="comment"){
+  const number=Number(data.number),body=String(data.body||"").trim();
+  if(!Number.isSafeInteger(number)||number<1||typeof data.body!=="string"||body.length<1||body.length>12000)return fail("Commentaire invalide (maximum 12 000 caractères)");
+  const check=await github("/repos/"+REPO+"/issues/"+number,session.access);
+  if(!check.ok)return fail("Ticket introuvable ou autorisation GitHub manquante",check.status===404?404:502);
+  const target=await check.json();
+  if(target.pull_request)return fail("Seuls les tickets FORGE peuvent être commentés",400);
+  endpoint="/repos/"+REPO+"/issues/"+number+"/comments";
+  options.body=JSON.stringify({body});
  }else return fail("Action inconnue",404);
  const result=await github(endpoint,session.access,options);
  if(!result.ok){
@@ -167,13 +176,17 @@ async function action(req,env,kind){
  return fail(err,result.status===401?401:result.status===403?403:502);
  }
  const issue=await result.json();
+ if(kind==="comment"){
+  if(!issue.id||typeof issue.body!=="string")return fail("GitHub n'a pas confirmé le commentaire",502);
+  return json({comment:issue,changed:true},200,cookie?{"Set-Cookie":cookie}:{});
+ }
  if(state&&statusIssue(issue)!==state)return fail("GitHub n'a pas confirmé le nouvel état",502);
  return json({issue,changed:true},200,cookie?{"Set-Cookie":cookie}:{});
 }
 async function staticFile(req){
  const url=new URL(req.url);let path=url.pathname==="/"?"index.html":decodeURIComponent(url.pathname.slice(1));
  // No arbitrary paths, dotfiles or private files. HTML/JS/CSS belong to repo main.
- if(!/^(?:index\.html|app\.js|styles\.css|sw\.js|manifest\.webmanifest|icon\.svg|icon-180\.png|docs\/[A-Za-z0-9_-]+\.md)$/.test(path))return fail("Introuvable",404);
+ if(!/^(?:index\.html|app\.js|ticket-detail\.js|styles\.css|sw\.js|manifest\.webmanifest|icon\.svg|icon-180\.png|docs\/[A-Za-z0-9_-]+\.md)$/.test(path))return fail("Introuvable",404);
  const upstream=await fetch(ROOT+path,{cf:{cacheTtl:30,cacheEverything:true}});
  if(!upstream.ok)return fail("Source FORGE indisponible",502);
  const types={html:"text/html; charset=utf-8",js:"text/javascript; charset=utf-8",css:"text/css; charset=utf-8",svg:"image/svg+xml",png:"image/png",webmanifest:"application/manifest+json",md:"text/plain; charset=utf-8"};
@@ -198,6 +211,7 @@ export default {
  }
  if(req.method==="POST"&&p==="/api/workflow")return action(req,env,"status");
  if(req.method==="POST"&&p==="/api/issues")return action(req,env,"create");
+ if(req.method==="POST"&&p==="/api/comments")return action(req,env,"comment");
  if(req.method==="GET"&&p.startsWith("/auth/"))return fail("Introuvable",404);
  if(req.method==="GET")return staticFile(req);
  return fail("Méthode non autorisée",405);

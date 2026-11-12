@@ -65,3 +65,16 @@ Pour passer de l'un à l'autre, modifier le commentaire HTML `FORGE_META` sans e
 2. Avant de terminer, mettre à jour le contexte FORGE si une nouvelle application, une version, une décision, un bug résolu ou un contrat technique a changé. Pour une nouvelle app, vérifier le registre unique `app.js`, les documents, et la liste blanche du Worker `edge-worker/index.mjs`.
 3. Lier la livraison à l'issue existante, préciser la PR/les commits, l'impact sur les données et ce qui est **réellement** validé sur iPhone. Ne pas ouvrir des tickets doublons.
 4. Ne pas attendre une exécution invisible après la conversation : la documentation et les changements doivent être effectués immédiatement dans le chantier.
+
+## Compte rendu de développement en commentaires GitHub (V0.6)
+
+**Toute intervention liée à un ticket** doit laisser, avant la fin de la conversation, un commentaire clair dans l'issue d'origine. Format de référence :
+
+- **Fait** : modifications fonctionnelles visibles.
+- **Pourquoi** : cause, arbitrage, choix retenu.
+- **Comment** : fichiers concernés, commits/PR, Worker ou déploiement.
+- **Vérifié** : tests réellement exécutés, niveau de confiance, risques.
+- **À vérifier sur iPhone** : recette concrète à réaliser par le propriétaire.
+- **Suite** : points ouverts, ou aucune suite si terminé.
+
+La V0.6 permet de lire la demande et les échanges depuis la fiche intégrée et, une fois connecté, de commenter en direct via `POST /api/comments`. L'authentification et les en-têtes anti-CSRF restent côté Worker. GitHub conserve la source de vérité ; ne jamais stocker un token dans le navigateur ni promettre une automatisation des réponses entre threads.

@@ -85,3 +85,10 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 | GARAGE | V0.1.0 | Inventaire, lieux, prêts, kits, photos locales et sauvegarde JSON | Aucun lien Nexus activé, IndexedDB local, exports non chiffrés |
 | FORGE | V0.5.0 | Colonnes par état, filtres/priorités, formulaire compact, suivi des 6 apps | OAuth GitHub, tickets et métadonnées, workflow, aucune donnée privée |
 | RITUEL | V1.7 | Collection, photos locales, parfums et trousses de voyage avec checklist | Préserver `rituel_personal_v1`, photos dans sauvegardes personnelles, aucun lien Agenda Nexus activé sans consentement |
+
+
+## FORGE V0.6 — 12/11/2026
+
+- Issue `#15` : fiche ticket intégrée `#ticket/N`, lecture du Markdown et des commentaires GitHub, ajout de réponses par l'utilisateur connecté.
+- Commentaires structurés de l'assistant après chaque travail, à publier explicitement pendant la conversation.
+- Aucun nouveau service de stockage, OAuth inchangé. Points sensibles : affichage sans XSS, pagination GitHub, session expirée, cache PWA, rendu Safari.
