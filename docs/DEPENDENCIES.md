@@ -29,3 +29,11 @@ FORGE ne synchronise aucune donnée applicative ; il suit les changements et leu
 7. Comment restaurer l'état précédent si la recette iPhone échoue ?
 
 Toute modification de contrat est à documenter ici **dans le même chantier**.
+
+
+## GARAGE (V0.1.0 — 12/11/2026)
+
+- Application indépendante sur une nouvelle origine `garage-app.q9pfwtztsc.workers.dev`, sans dépendance aux bases ni endpoints des apps existantes.
+- Inventaire local IndexedDB privé ; **aucun lien inter-app actif**. Les ensembles et mouvements sont gérés uniquement dans Garage.
+- Projet futur `GARAGE → NEXUS` : résumés d'ensembles pour événements de voyage, uniquement après consentement explicite, jumelage chiffré et scopes séparés. Ne pas partager photos, numéros de série, factures ou inventaire complet par défaut.
+- **Risque :** l'origine PWA iPhone peut perdre son stockage ; sauvegarde JSON personnelle manuelle et migrations additives obligatoires. Le Worker et le dépôt sont indépendants d'un déploiement automatique.
