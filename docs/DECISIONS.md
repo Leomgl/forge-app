@@ -44,3 +44,7 @@ Première interface réelle Gaming → LINK, mais **pas de transfert de données
 ## 2026-11-12 — LINK V0.4, comparaison croisée sans extrapolation
 
 Choix confirmé pour le pilote : les diagnostics de Gaming et Nexus restent **manuels, locaux et non signés**. LINK compare volumes/permissions/horodatages mais n'affirme jamais que des comptes identiques prouvent une bonne synchronisation. Les ID de paires et des messages, ainsi que les secrets NXL1, ne sont pas transférés. L'automatisation et la migration des anciens panneaux sont volontairement reportées à une phase avec consentement fort, contrôle d'identité, revue des conflits et restauration testée. Le ticket #28 reste ouvert.
+
+## 2026-11-12 — LINK V0.5 — vérification par événement avant automatisation
+
+Décision d'architecture : approfondir d'abord le contrôle en lecture seule. Gaming et Nexus produisent volontairement des empreintes HMAC éphémères, calculées avec la **clé de paire déjà détenue localement**, mais dérivées dans un domaine de sécurité distinct. LINK peut comparer présence/révision des événements, avec signalement des différences de jour, paire, révision et de la troncature. Les rapports manuels sont **non signés et ne prouvent jamais les ACK ou la livraison réseau**. Aucun secret NXL1, sourceKey, contenu métier ou nouvelle permission ne transite par LINK ; aucun ancien jumelage ou menu supprimé. Le développement d'une preuve d'ACK authentifiée reste un jalon ultérieur sous consentement strict et rollback.
