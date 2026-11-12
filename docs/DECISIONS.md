@@ -31,4 +31,8 @@ Décision : l'accueil est réservé au travail actif (`doing`, `todo`), tandis q
 
 ## 2026-11-12 — LINK : plan de contrôle séparé, pas une base centrale
 
-Décision du propriétaire : créer une PWA dédiée à la gestion des relations inter-applications et de la synchronisation. LINK remplacera à terme la dispersion des menus LINK, mais **aucune ancienne connexion ne sera supprimée avant migration et vérification complète**. Les données restent propriétaires des apps, avec chiffrement E2EE client et séparation de Santé. La première version indépendante V0.1 est **lecture seule** ; la création d'un dépôt séparé reste à faire, source provisoire versionnée dans FORGE. Voir `docs/LINK-V01.md` et ticket #28. Ni FORGE ni LINK ne deviennent une base de données utilisateurs unifiée.
+Décision du propriétaire : créer une PWA dédiée à la gestion des relations inter-applications et de la synchronisation. LINK remplacera à terme la dispersion des menus LINK, mais **aucune ancienne connexion ne sera supprimée avant migration et vérification complète**. Les données restent propriétaires des apps, avec chiffrement E2EE client et séparation de Santé. La première version indépendante V0.1 est **lecture seule** ; le dépôt officiel privé Leomgl/link-app est désormais créé et remplace la copie d'incubation dans FORGE comme source de vérité. Voir `docs/LINK-V01.md` et ticket #28. Ni FORGE ni LINK ne deviennent une base de données utilisateurs unifiée.
+
+## 2026-11-12 — LINK V0.2 et Forge
+
+Le propriétaire a validé la V0.1 sur iPhone et créé le dépôt privé LINK. La V0.2 publie un SDK de contrat/ACK et une API documentaire sans migrer aucun jumelage. Forge référence LINK et le backend forge-hub a été redéployé en préservant ses 3 bindings GitHub. V0.2 et les flux futurs restent soumis à recette Safari, sauvegarde et retour arrière.
