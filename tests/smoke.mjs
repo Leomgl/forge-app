@@ -6,7 +6,7 @@ const src=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 new vm.Script(src,{filename:"app.js"});
 const needle='if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();';
 assert.ok(src.includes(needle),"entrypoint UI changed: adapt test extraction");
-const isolated=src.replace(needle,'globalThis.FORGE_TEST = {parseMeta,issueBody,clean,workflow,updateWorkflowBody,priorityOf,PRIORITIES,apps};');
+const isolated=src.replace(needle,'globalThis.FORGE_TEST = {parseMeta,issueBody,clean,workflow,updateWorkflowBody,priorityOf,PRIORITIES,apps,issueMatches,prioritySort,ticketCard,render,showView,routeView,setIssuesForTest:function(items){issues=items;},getView:function(){return activeView;}};');
 const context=vm.createContext({});
 new vm.Script(isolated,{filename:"app-tests.js"}).runInContext(context);
 const api=context.FORGE_TEST;
@@ -99,7 +99,7 @@ assert.match(edge,/checkMutation\(req\)/);
 assert.match(edge,/target\.pull_request/);
 assert.match(edge,/ticket-detail\\\.js/);
 assert.match(sw,/ticket-detail\.js/);
-assert.match(sw,/forge-v0\.6\.0/);
+assert.match(sw,/ticket-detail\.js/);
 
 // Exercise the Markdown sanitizer without a browser: strings become text nodes.
 function fakeNode(tag){
@@ -154,5 +154,73 @@ assert.match(html,/id="generalScopeFields"/);
 assert.match(html,/id="tScope"/);
 assert.match(html,/id="tScopeDetails"/);
 assert.match(edge,/FORGE\|GENERAL/);
-assert.match(sw,/forge-v0\.7\.0/);
+assert.match(sw,/forge-v0\.8\.0/);
 console.log("FORGE V0.7: general ticket creation, scope, filters, and existing apps OK");
+
+
+// FORGE V0.8 — home only shows À faire + En cours, completed archive is separate.
+assert.match(html,/id="completed"/);
+assert.match(html,/id="completedIssues"/);
+assert.match(html,/id="completedSearch"/);
+assert.match(html,/id="completedProjectFilter"/);
+assert.match(html,/id="completedPriorityFilter"/);
+assert.match(html,/id="navActiveCount"/);
+assert.match(html,/class="bottom-nav"/);
+assert.match(html,/data-view="tickets"/);
+assert.match(html,/data-view="completed"/);
+assert.match(html,/data-view="composer"/);
+assert.match(html,/data-view="context"/);
+assert.match(html,/id="composer" hidden/);
+assert.match(html,/id="context" hidden/);
+assert.doesNotMatch(html.match(/id="statusFilter"[\s\S]*?<\/select>/)?.[0]||"",/value="done"/);
+assert.match(src,/window\.addEventListener\("hashchange",routeView\)/);
+assert.match(src,/id\("completedIssues"\)\.addEventListener\("change",onStatusChange\)/);
+assert.match(detail,/returnHash=selected\?\.getAttribute\("href"\)/);
+assert.match(sw,/forge-v0\.8\.0/);
+const domKeys=["search","projectFilter","statusFilter","priorityFilter","workflowSummary","issueCount",
+ "issues","completedSearch","completedProjectFilter","completedPriorityFilter","completedCount",
+ "completedIssues","navActiveCount","tickets","completed","composer","context","homeIntro"];
+const fakeElements=Object.fromEntries(domKeys.map(k=>[k,{value:k.includes("Search")||k==="search"?"":"all",
+ innerHTML:"",textContent:"",hidden:k==="completed"||k==="composer"||k==="context"}]));
+const navs=["tickets","completed","composer","context"].map(view=>{
+ const attrs={},classes=new Set(view==="tickets"?["active"]:[]);
+ return {dataset:{view},classList:{toggle(name,on){if(on)classes.add(name);else classes.delete(name);},contains(name){return classes.has(name);}},
+ setAttribute(name,value){attrs[name]=value;},removeAttribute(name){delete attrs[name];},getAttribute(name){return attrs[name];}};
+});
+context.document={getElementById:key=>fakeElements[key],querySelectorAll:sel=>sel===".bottom-nav-item"?navs:[]};
+context.window={scrollTo:()=>{}};
+context.location={hash:"#tickets"};
+const sampleIssues=[
+ {number:101,title:"[NEXUS][BUG] À faire sample",state:"open",body:'<!-- FORGE_META: {"project":"NEXUS","priority":"haute","workflow":"todo"} -->\nA faire',updated_at:"2026-11-12T10:00:00Z"},
+ {number:102,title:"[GENERAL][EVOLUTION] En cours sample",state:"open",body:'<!-- FORGE_META: {"project":"GENERAL","priority":"normale","workflow":"doing","scope":"all"} -->\nEn cours',updated_at:"2026-11-12T11:00:00Z"},
+ {number:103,title:"[SANTE][TEST] Terminé sample",state:"closed",body:'<!-- FORGE_META: {"project":"SANTE","priority":"basse","workflow":"done"} -->\nTerminé',updated_at:"2026-11-12T12:00:00Z"}
+];
+api.setIssuesForTest(sampleIssues);
+api.render();
+assert.match(fakeElements.issues.innerHTML,/À faire sample/);
+assert.match(fakeElements.issues.innerHTML,/En cours sample/);
+assert.doesNotMatch(fakeElements.issues.innerHTML,/Terminé sample/,"completed must never appear on home");
+assert.match(fakeElements.completedIssues.innerHTML,/Terminé sample/);
+assert.doesNotMatch(fakeElements.completedIssues.innerHTML,/En cours sample/);
+assert.equal(fakeElements.issueCount.textContent,2);
+assert.equal(fakeElements.completedCount.textContent,1);
+assert.equal(fakeElements.navActiveCount.textContent,2);
+assert.doesNotMatch(fakeElements.workflowSummary.innerHTML,/Terminé/,"home summary is active-only");
+fakeElements.completedSearch.value="inexistant";
+api.render();
+assert.match(fakeElements.completedIssues.innerHTML,/Aucun ticket terminé/);
+fakeElements.completedSearch.value="";
+api.showView("completed");
+assert.equal(fakeElements.tickets.hidden,true);
+assert.equal(fakeElements.completed.hidden,false);
+assert.equal(fakeElements.homeIntro.hidden,true);
+assert.equal(navs[1].getAttribute("aria-current"),"page");
+context.location.hash="#composer";api.routeView();
+assert.equal(fakeElements.composer.hidden,false);
+assert.equal(fakeElements.completed.hidden,true);
+context.location.hash="#ticket/103";api.routeView();
+assert.equal(api.getView(),"composer","detail deep link must preserve underlying view");
+context.location.hash="#tickets";api.routeView();
+assert.equal(fakeElements.tickets.hidden,false);
+assert.equal(fakeElements.homeIntro.hidden,false);
+console.log("FORGE V0.8: active-only home, completed archive, filtering and tab navigation OK");
