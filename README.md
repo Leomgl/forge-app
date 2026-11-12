@@ -52,6 +52,8 @@ Les données locales de brouillon peuvent être effacées par iOS ; seul un tick
 
 ## Version
 
+**Version active : FORGE V0.7.0 (12 novembre 2026).** Tickets généraux et transversaux, Cloudflare `forge-hub` déployé à 100 % ; recette de création depuis Safari iPhone encore à confirmer. Historique ci-dessous.
+
 ## FORGE V0.6 — fiche ticket et journal de livraison (12/11/2026)
 
 - Un titre de carte pointe désormais vers `#ticket/N` : consultation intégrée et navigation par URL partageable, avec retour au tableau ; lien GitHub externe conservé.
