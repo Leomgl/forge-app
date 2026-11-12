@@ -173,3 +173,10 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Nexus `link-import.js` : ajoute « Diagnostic LINK » dans Propositions Gaming ; code non sensible sans IDs ni montants ; cache `nexus-v0.21.12.1` et script versionné. Aucun nouveau stockage, schéma, relay ou secret.
 - Source : dépôts privés `Leomgl/link-app` et `Leomgl/nexus-app`. Worker LINK version `9e3b99e8-c77d-49f2-9b9c-065a00ee7397` déployé 100 %. Tests automatisés Nexus et LINK verts ; **recette Safari iPhone de V0.4 et de la nouvelle action Nexus non encore confirmée**.
 - Ancienne liaison Gaming → Nexus intacte. Prochaine étape : preuves de réception authentifiées, consenties et réversibles.
+
+## 2026-11-12 — Recette LINK V0.4 et incident Face ID Nexus (#30)
+
+- Retour iPhone utilisateur : rapport Nexus → LINK V0.4 importé et affiché. Instantané du **12/11/2026 22:44** : paire Gaming configurée, 7 permissions, **12 propositions conservées**, dont **9 à examiner, 2 acceptées, 1 ignorée**, dernière création locale 11/11/2026 17:13. Ce relevé est un état local, pas une preuve d'ACK ou de livraison cryptographique.
+- Incident distinct : **Face ID / passkeys Nexus ne fonctionne plus**. Aucun changement de `passkey-client.js` dans LINK V0.4. Risque WebAuthn iOS (challenges et digest asynchrones avant `navigator.credentials.get/create`) identifié.
+- Correctif NEXUS : préparer le défi avant clic, appeler WebAuthn dans le geste, gérer expiration/erreurs, préserver le fallback récupération. Script versionné `passkey-client.js?v=02114`, SW `nexus-v0.21.12.2`. **CI 85/85 et GitHub Pages verts** ; recette Face ID sur iPhone encore à confirmer, Forge #30 **ouvert**.
+- LINK #28 reste EN COURS ; les anciens liens/chiffrements/secrets et l'API Nexus sont inchangés.
