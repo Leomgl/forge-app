@@ -92,3 +92,5 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 
 
 **FORGE V0.7 (ticket #18)** : une catégorie `GÉNÉRAL` distincte du catalogue des 6 apps et de Forge lui-même. Permet de suivre une future app ou des modifications transversales avec un `scope` explicite. Seuls Forge (front, Worker, docs) et son registre de tickets sont modifiés ; aucun worker ou schéma d'une app spécialisée n'est changé. Déploiement et recette Safari à vérifier séparément.
+
+**FORGE Cloudflare V0.7 déployée (12/11/2026)** : PR #20 fusionnée (squash `c9a23901bb78cbb7222a7da36e336c07d0ecd261`), Worker `forge-hub` sur la version `8115f368-e14d-4fc0-8344-5aee6e9a072d` à **100 %** (déploiement `9d8fe30a-26f7-4290-b799-0ed2026e4e9f`). Trois bindings OAuth conservés, aucune app ni D1 supplémentaires. Ticket #18 clôturé, commentaire de livraison publié. Tests de syntaxe et génération de tickets effectués dans V8 ; test de création connecté depuis la PWA et recette Safari iPhone restent à confirmer.
