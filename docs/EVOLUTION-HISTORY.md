@@ -114,3 +114,11 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - NEXUS : date/heure/lieu de rendez-vous médicaux exportés et importés via Santé LINK, activation par consentement, case Médical dans Agenda, imports des anciens titres explicites, réplication des modifications et suppressions, notifications Agenda inchangées. PR #12 `f241030a67`, tests et Pages GitHub en succès.
 - SANTÉ : réception `nexus.calendar.v1` dans coffre AES-GCM par lots validés, déduplication de rendez-vous identiques, traitement conservateur des conflits, sauvegardes/médicaments/Face ID conservés. PR #4 `5e06706898`, Worker Cloudflare 100 % version `c0e22389-f469-40e0-a014-5b31ef86e562` ; 47 tests + smoke Chromium validés.
 - Risques : ancienne PWA mise en cache, absence de synchro native en arrière-plan, titres ambigus, conflits concurrents, origin de Nexus non chiffré, récupération/export des données. Recette iPhone physique non effectuée par l'assistant ; ne pas inventer des rendez-vous dans les tickets publics.
+
+## GARAGE V0.2 et dépendances du ticket #24 (12/11/2026)
+
+| Application | Version | Évolution | À préserver / non-régression |
+|---|---|---|---|
+
+| GARAGE | V0.2.0 | Lieux ajoutables pendant la saisie/déplacement, recherche de visuels Wikimedia Commons + URL/photo locale, liens réciproques avec option suivre les déplacements | IndexedDB + export V1 inchangés ; photo locale prioritaire ; déplacements historisés ; prêtés non déplacés automatiquement. PR garage-app#1, `12ccbdbd3e`, Worker `265ee24b` à 100 %, CI verte, Safari non vérifié |
+
