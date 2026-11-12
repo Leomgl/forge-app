@@ -118,3 +118,9 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - **RITUEL V1.9.0** (PR #1 `5172c36d3f63434ceaae09637e12361f1172b745`), Github Pages et CI vertes ; Worker de proxy `rituel-web` version `da933ca4-ad98-4461-8e1f-b53e5b079d31` à 100 %. Ajout du panneau Garage dans Trousse et des changements de lieux, anciens stocks et trousses conservés.
 - **NEXUS V0.21.12** (PR #13 `5ef0b3369d4c81f7a947615858f950f85d9d9f63`), Pages et CI vertes ; Workers `nexus-app-api` version `39754953-124c-49d7-83a5-80912bd31cb7`, `nexus-link-api` version `b7d768a5-63df-46f3-9a97-08f83ff65df8`, tous à 100 %. Nouvelle proposition voyage vers Garage indépendante de Rituel.
 - Base D1 du relais migrée avec sauvegarde/export et bookmark présents ; **4 jumelages et 51 messages chiffrés conservés** avant/après, aucune violation FK. Aucune photo/stock envoyés par le nouveau lien. Vérification du fonctionnement réel des deux PWA + voyage Garage sur Safari iPhone **encore nécessaire**, le ticket FORGE #24 reste En cours.
+
+## LINK — V0.1 temporairement hébergée en incubation (12/11/2026)
+
+- **PWA de pilotage cible** : https://link-app.q9pfwtztsc.workers.dev/ ; Worker Cloudflare distinct `link-app`, déployé 100 %. Mode inventaire **en lecture seule** : 6 apps et 7 flux, diagnostic du Worker et suivi local de préparation, aucun jumelage/sync administré à ce stade.
+- **Source versionnée provisoire** : `incubation/link-app/worker.mjs` (dans FORGE) ; tests `incubation/link-app/smoke.test.mjs` ; voir `docs/LINK-V01.md`. Un dépôt `Leomgl/link-app` **n'existe pas encore** et devra être créé avant inscription de LINK dans le catalogue FORGE.
+- Aucune modification des clients historiques, leurs codes d'appairage, Workers/D1, données privées, sauvegardes ou notifications. Rendu Safari et fonctionnement HTTP externe à confirmer sur appareil.
