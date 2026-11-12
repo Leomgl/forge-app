@@ -114,3 +114,11 @@ body.ticket-open{overflow:hidden}
  .ticket-section+.ticket-section{border-left:0;border-top:1px solid var(--edge)}
  .ticket-close{min-width:44px}
 }
+
+/* FORGE V0.7 — tickets généraux transversaux */
+.pill.app.general{background:#433846;color:#e9c9e8;border:1px solid #775d7e}
+.issue-scope{display:inline-flex;margin-top:9px;font-size:10px;font-weight:750;color:#c7b0d8}
+.general-scope{display:grid;grid-template-columns:minmax(150px,1fr) minmax(180px,1.4fr);gap:11px;border:1px solid #62516e;background:#242331;border-radius:12px;padding:14px}
+.general-scope p{grid-column:1/-1;font-size:11px;color:var(--muted);margin:0}
+.general-scope[hidden]{display:none}
+@media(max-width:650px){.general-scope{grid-template-columns:1fr}.general-scope p{grid-column:auto}}
