@@ -25,11 +25,11 @@
 
 ## RITUEL — Leomgl/rituel-app
 
-- **Version du dépôt :** V1.7 ; PWA https://leomgl.github.io/rituel-app/
+- **Version du dépôt :** V1.10.0 sur `main` (PR #2 / `a81fa45ea7b4c3fef646d10ae8e8926ab8134dce`, 12/11/2026) ; PWA GitHub Pages https://leomgl.github.io/rituel-app/ et origine isolée https://rituel-web.q9pfwtztsc.workers.dev/ . CI JS validée, déploiement Pages à vérifier indépendamment, recette Safari iPhone à confirmer.
 - HTML/CSS/JS natifs, données routines/stock en localStorage, Worker Cloudflare + D1 pour Web Push.
-- Soins matin/soir, historique de stock manuel, réserve, estimations seulement à partir de relevés, statistiques 7/30 jours et rappels iPhone. **V1.7** : collection de soins/parfums/accessoires, photos locales, liens boutiques et trousses de voyage avec checklist. L'import automatique d'un voyage Nexus dans Rituel n'est pas encore actif.
+- Soins matin/soir, historique de stock manuel, réserve, estimations seulement à partir de relevés, statistiques 7/30 jours et rappels iPhone. V1.7 : collection de soins/parfums/accessoires, photos locales, liens boutiques et trousses de voyage avec checklist ; V1.8 : voyages Nexus optionnels via relais chiffré ; V1.9 : localisation des produits via Garage après autorisation. V1.10 : lotion corps Sport 70 ml (alternative Sakura après douche) et baume mains Ayurveda 70 ml (optionnel le soir), chacun avec fiche, stock indépendant, lien officiel et visuel ; catégorie Mains ajoutée au formulaire.
 - Fichiers/docs : `app.js`, `push-worker/`, `README.md`, `docs/PUSH.md`, `docs/ARCHITECTURE-APPS-GRATUITES.md`.
-- Risques : ne pas casser la clé `rituel_personal_v1`, les historiques locaux, les souscriptions push ; ne pas committer la clé VAPID ni inventer des consommations de produit.
+- Risques : ne pas casser la clé `rituel_personal_v1`, les historiques locaux, les souscriptions push ; ne pas committer la clé VAPID ni inventer des consommations de produit. V1.10 conserve la coche historique `sakura` pour la nouvelle étape partagée « Sport ou Sakura » et ne préremplit aucun pourcentage des deux nouveaux produits.
 
 ## VESTIAIRE — Leomgl/Vestiaire-app
 
