@@ -12,6 +12,7 @@ var apps=[
  {id:"VESTIAIRE",mark:"V",repo:"Leomgl/Vestiaire-app",desc:"Dressing, import Fits, mannequin et superposition des tenues."},
  {id:"SANTE",mark:"S",repo:"Leomgl/sante-app",desc:"Carnet de santé chiffré, traitements, habitudes et liaison NEXUS."},
  {id:"GARAGE",mark:"G",repo:"Leomgl/garage-app",desc:"Inventaire privé, localisation des objets, prêts et kits de départ."},
+ {id:"LINK",mark:"L",repo:"Leomgl/link-app",desc:"Centre des relations et protocoles de synchronisation entre les apps."},
  {id:"FORGE",mark:"F",repo:"Leomgl/forge-app",desc:"Mémoire des tickets, connexion GitHub et pilotage du développement."}
 ];
 function id(n){return document.getElementById(n);}
