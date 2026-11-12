@@ -15,3 +15,10 @@ Le code principal de chaque app vit dans ses propres dépôts GitHub (liens dans
 8. Statuts FORGE V0.3 : `closed` = Terminé ; `open` avec `FORGE_META.workflow=doing` = En cours ; autre `open` = À faire. Pour mettre à jour, préserver le corps existant et vérifier l'écriture distante. Ne jamais se fier à un statut local non publié.
 
 9. Depuis FORGE V0.4, aucune saisie de jeton GitHub dans la PWA : utiliser la GitHub App avec OAuth et un Worker Cloudflare à origine dédiée. La mise en route initiale de la GitHub App et des secrets est requise et ne doit jamais être déclarée validée sans recette. Détails : `docs/GITHUB-AUTH.md`.
+
+
+## Contrat permanent de tenue de contexte (12/11/2026)
+
+À chaque conversation qui intervient sur une app iPhone, penser à FORGE **sans attendre que le propriétaire le redemande**. À la fin d'une intervention substantielle, vérifier le dépôt courant et l'infrastructure Cloudflare utile, puis mettre à jour si nécessaire : `docs/APP-MAP.md` (app/version/modules/URL), `docs/DEPENDENCIES.md` (contrats, risques, consentement), `docs/EVOLUTION-HISTORY.md` (décisions), la liste `apps` dans `app.js` (interface et formulaire), et le ticket de suivi GitHub, avec liens commits/PR et statut fidèle. Pour une nouvelle app, penser également à son nom dans la liste blanche `edge-worker/index.mjs` et au déploiement de ce Worker. Garder `SANTE` et `GARAGE` (repos privés) présents dans l'interface, tout en excluant les données de production ou personnelles des issues publiques.
+
+La synchronisation est une **opération explicite de l'assistant au cours de la conversation**, jamais une tâche autonome en arrière-plan. Relire le code GitHub plutôt que recopier une version documentaire périmée ; ne jamais marquer une recette iPhone comme réussie sans validation physique. Ne pas déclarer un déploiement effectif à partir d'un simple commit GitHub.
