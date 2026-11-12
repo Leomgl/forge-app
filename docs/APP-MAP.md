@@ -86,3 +86,5 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 
 
 **FORGE V0.6 (ticket #15, 12/11/2026)** : ouverture interne d'un ticket, corps complet, commentaires publics en timeline, publication de commentaires authentifiée via `/api/comments`. `ticket-detail.js` ajouté, Worker `forge-hub` et service worker actualisés sans D1 ni changement de contrats des autres apps. Déploiement Cloudflare et recette Safari à noter séparément après vérification.
+
+**Déploiement FORGE V0.6 (12/11/2026)** : PR #16 fusionnée, commit `2f07eeb8a9a72b1579e97fa113166adbd3e4d33f`. Worker Cloudflare `forge-hub` mis à jour avec conservation des trois bindings OAuth ; déploiement `2faa5604-d579-4de0-81e9-1a94850d36ac`, version `1bc69bf1-c134-4f84-806d-74b9c299bd12`, trafic à 100 %. Ticket #15 clôturé avec un commentaire de livraison. Les contrôles de syntaxe et simulation Markdown sont passés ; recette physique Safari iPhone, connexion/commentaire via l'UI et suite Node complète restent à confirmer.
