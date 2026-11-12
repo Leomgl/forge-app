@@ -52,7 +52,7 @@ Les données locales de brouillon peuvent être effacées par iOS ; seul un tick
 
 ## Version
 
-**V0.5.0 — 12 novembre 2026 :** refonte du tableau de tickets en colonnes par état, priorités visibles et filtrables, formulaire compact avec options avancées repliables, catalogue commun au suivi et à la saisie des tickets comprenant **SANTÉ et GARAGE**. Liste des projets gérée en un seul endroit dans `app.js`, acceptation des deux nouvelles apps dans la passerelle `edge-worker/index.mjs`, cache PWA actualisé. Les données et tickets restent exclusivement dans GitHub ; aucune migration de stockage, aucun secret OAuth modifié. Recette iPhone de cette version à effectuer.
+**V0.5.0 — 12 novembre 2026 (Worker Cloudflare déployé à 100 %, recette Safari V0.5 en attente) :** refonte du tableau de tickets en colonnes par état, priorités visibles et filtrables, formulaire compact avec options avancées repliables, catalogue commun au suivi et à la saisie des tickets comprenant **SANTÉ et GARAGE**. Liste des projets gérée en un seul endroit dans `app.js`, acceptation des deux nouvelles apps dans la passerelle `edge-worker/index.mjs`, cache PWA actualisé. Les données et tickets restent exclusivement dans GitHub ; aucune migration de stockage, aucun secret OAuth modifié. Recette iPhone de cette version à effectuer.
 
 **Routine de synchronisation du contexte :** après tout chantier iPhone (nouveau dépôt, décision, changement de schéma, contrat LINK, correction critique ou déploiement), relire GitHub et, si utile, Cloudflare ; mettre à jour `docs/APP-MAP.md`, `docs/DEPENDENCIES.md`, `docs/EVOLUTION-HISTORY.md`, le registre `apps` de `app.js`, et le ticket concerné **dans la même intervention**. Voir `docs/AI-START-HERE.md`.
 
