@@ -33,7 +33,7 @@ function updateWorkflowBody(item,target){
  return marker+"\n\n"+body;
 }
 function age(date){try{return new Date(date).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"});}catch(e){return "—";}}
-function setStatus(text){id("loadInfo").textContent=text;}
+function setStatus(text){id("loadInfo").textContent=text;id("completedInfo").textContent=text;}
 const PRIORITIES={critique:{label:"Critique",rank:0},haute:{label:"Haute",rank:1},normale:{label:"Normale",rank:2},basse:{label:"Basse",rank:3}};
 function projectLabel(project){return project==="GENERAL"?"GÉNÉRAL":project==="SANTE"?"SANTÉ":project;}
 function scopeLabel(scope){return SCOPE_TYPES[scope]||SCOPE_TYPES.all;}
