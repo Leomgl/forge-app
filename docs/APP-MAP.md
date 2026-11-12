@@ -32,9 +32,10 @@
 
 ## VESTIAIRE — Leomgl/Vestiaire-app
 
-- **Version documentaire :** V0.4 ; PWA https://vestiaire-app.q9pfwtztsc.workers.dev/
+- **Version documentaire :** V0.7.1 ; PWA https://vestiaire-app.q9pfwtztsc.workers.dev/
 - HTML/CSS/JS natifs, IndexedDB (fiches, looks, médias, planning), Worker statique ; photos locales WebP, import privé Fits.
-- Studio : mannequin personnalisable, ancrages et ordre de superposition via `fit-engine.js`, miniatures communes, recalage des looks importés, retour arrière ciblé.
+- Studio : mannequin personnalisable, ancrages et ordre de superposition via `fit-engine.js`, glisser/pincer, ✓ pour terminer l'édition d'une pièce, zones immédiatement au-dessus du mannequin, miniatures communes, recalage des looks importés.
+- **NEXUS LINK actif** : opt-in V0.7.1 → Nexus V0.21.8, résumés de toutes les tenues en lots chiffrés, réception atomique sans photo ; Nexus conserve agenda/météo et recommandations.
 - Sauvegarde `.vestiaire` VST1/manifeste : **non chiffrée** ; conserver privées les images et exports.
 - Fichiers/docs : `app.js`, `fit-engine.js`, `fits-import.js`, `README.md`, `docs/FITTING-V04.md`, `edge-web/`.
 - Risques : positions vestes/pantalons/ceintures, miniatures, origine des photos, migration IndexedDB ; sauvegarde obligatoire avant recalage massif. Validation iPhone avec mannequin/looks réels encore nécessaire.
