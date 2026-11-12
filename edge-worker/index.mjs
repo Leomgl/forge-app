@@ -158,7 +158,7 @@ async function action(req,env,kind){
  state=target;
  }else if(kind==="create"){
  const title=String(data.title||"").trim(),body=String(data.body||"").trim();
- if(title.length<4||title.length>200||body.length<20||body.length>25000||!/(NEXUS|GAMING|RITUEL|VESTIAIRE|FORGE)/.test(title.slice(0,16))||!body.includes("FORGE_META"))return fail("Titre ou description invalide");
+ if(title.length<4||title.length>200||body.length<20||body.length>25000||!/^(?:\[(?:NEXUS|GAMING|RITUEL|VESTIAIRE|SANTE|GARAGE|FORGE)\])\[(?:BUG|EVOLUTION|IDEE|TEST)\]/.test(title)||!body.includes("FORGE_META"))return fail("Titre ou description invalide");
  endpoint="/repos/"+REPO+"/issues";options.body=JSON.stringify({title,body});
  }else return fail("Action inconnue",404);
  const result=await github(endpoint,session.access,options);
