@@ -29,7 +29,7 @@ Le propriétaire dépose des idées, bugs et demandes d'évolutions. **L'assista
 
 | Type | Autorité |
 |---|---|
-| Code et versions réellement livrées | Dépôts GitHub des 4 apps + configuration de déploiement |
+| Code et versions réellement livrées | Dépôts GitHub des 6 apps (NEXUS, GAMING, RITUEL, VESTIAIRE, SANTÉ, GARAGE) et de FORGE + configuration de déploiement |
 | Demandes / bugs / arbitrages | Issues et commentaires de `Leomgl/forge-app` |
 | Contrats techniques inter-apps | Code des deux côtés + docs des dépôts |
 | Inventaire d'architecture transversal | `docs/APP-MAP.md`, `docs/DEPENDENCIES.md` (à actualiser) |
@@ -52,6 +52,8 @@ Le propriétaire dépose des idées, bugs et demandes d'évolutions. **L'assista
 - [GAMING](https://github.com/Leomgl/gaming-app)
 - [RITUEL](https://github.com/Leomgl/rituel-app)
 - [VESTIAIRE](https://github.com/Leomgl/Vestiaire-app)
+- [SANTÉ (privé)](https://github.com/Leomgl/sante-app)
+- [GARAGE (privé)](https://github.com/Leomgl/garage-app)
 
 Voir aussi `docs/TICKET-PROTOCOL.md` pour le cycle complet et `docs/DECISIONS.md` pour les choix transversaux.
 
@@ -63,3 +65,12 @@ Les états visibles dans la PWA sont `À faire`, `En cours`, `Terminé`. Les tic
 ## Mise à jour FORGE V0.4 — édition sans PAT dans la PWA
 
 Source serveur dans `edge-worker/index.mjs`, adresse dédiée `https://forge-hub.q9pfwtztsc.workers.dev/`. Une fois une GitHub App installée sur le **seul** repo `Leomgl/forge-app` avec droits Issues et les deux identifiants configurés dans les secrets Cloudflare, l'utilisateur peut se connecter via OAuth et piloter les tickets sans saisir de PAT. **À la date du 11/11/2026, le Worker est déployé mais la GitHub App et les secrets restent à configurer** ; ne pas présenter l'authentification comme déjà fonctionnelle. Lire `docs/GITHUB-AUTH.md`. L'assistant continue d'opérer directement avec son outil GitHub et de relire le code réel de l'app concernée.
+
+
+## Routine obligatoire pour les prochains threads « Apps iPhone » (12/11/2026)
+
+- Quand un chantier touche une app existante : consulter sa branche actuelle, les PR fusionnées et si nécessaire ses Workers/D1/Pages Cloudflare ; ne pas supposer que l'instantané FORGE est à jour.
+- À l'arrivée d'une nouvelle app : l'ajouter à `app.js` (registre unique alimentant **cartes + filtres + formulaire**), et autoriser son préfixe dans `edge-worker/index.mjs` pour publier un ticket depuis la PWA ; déployer le Worker si ce code change. Mettre à jour `README.md`, `docs/APP-MAP.md`, `docs/DEPENDENCIES.md` et `docs/EVOLUTION-HISTORY.md`.
+- En cas d'évolution importante, de correction ou de contrat NEXUS LINK : synchroniser contexte, suivi et dépendances **pendant la conversation**, et créer/compléter la GitHub Issue appropriée sans duplication. Documenter version réellement livrée, tests automatiques et recette Safari iPhone restant à effectuer.
+- Garder la confidentialité : issues/docs FORGE publics, repos `sante-app` et `garage-app` privés ; aucun détail médical, identifiant d'objet, photo, secret ou export utilisateur dans FORGE.
+- FORGE ne se met pas à jour tout seul quand un thread se termine. Le rituel est une action de développement à exécuter dans le même chantier, pas une promesse de veille automatique.
