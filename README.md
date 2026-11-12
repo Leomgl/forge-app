@@ -90,3 +90,13 @@ V0.2 — 11 novembre 2026 : mémoire de tickets et documentation inter-applicati
 [Historique par version et points de non-régression](docs/EVOLUTION-HISTORY.md) et [AGENTS.md](AGENTS.md) complètent les instructions de reprise. Ces documents sont des instantanés ; contrôler les sources actuelles avant de modifier du code.
 
 **Déploiement FORGE V0.6 (12/11/2026)** : PR #16 fusionnée, commit `2f07eeb8a9a72b1579e97fa113166adbd3e4d33f`. Worker Cloudflare `forge-hub` mis à jour avec conservation des trois bindings OAuth ; déploiement `2faa5604-d579-4de0-81e9-1a94850d36ac`, version `1bc69bf1-c134-4f84-806d-74b9c299bd12`, trafic à 100 %. Ticket #15 clôturé avec un commentaire de livraison. Les contrôles de syntaxe et simulation Markdown sont passés ; recette physique Safari iPhone, connexion/commentaire via l'UI et suite Node complète restent à confirmer.
+
+## FORGE V0.7 — Tickets GÉNÉRAL, multi-app et nouvelles apps (12/11/2026)
+
+- Un **ticket GÉNÉRAL** est un ticket de suivi transversal, pas une application supplémentaire du catalogue.
+- Le formulaire et les filtres ont une option `GÉNÉRAL`, avec périmètre conditionnel : *Toutes les apps*, *Plusieurs apps*, *Nouvelle app*, *Projet / réflexion générale*. Un texte libre facultatif documente les apps concernées ou l'idée.
+- Le ticket est créé avec le préfixe `[GENERAL]`, `FORGE_META.project=GENERAL`, `scope` et éventuellement `scopeDetails`. Le corps Markdown reprend le périmètre.
+- **Aucun repo n'est supposé exister** si le ticket porte sur une nouvelle app. Au début du chantier, identifier les projets pertinents, lire leur code actuel et les déploiements liés (Cloudflare si utile), puis créer le nouveau repo seulement quand on traite le sujet.
+- Les tickets classiques existants, leur format et les brouillons locaux restent compatibles ; `GENERAL` est accepté par la passerelle GitHub OAuth de Forge, sans nouveaux droits ni D1.
+- Exemple envisagé par le propriétaire : refonte de tous les logos des PWA sous un seul ticket général. **Ne pas créer cette refonte ni modifier les logos à ce stade** : la demande actuelle concerne le dispositif de suivi.
+- Tests JS : génération d'un ticket pour toutes les apps, pour une nouvelle app, comparaison avec un ticket NEXUS, absence de lien de repo inventé ; recette Safari iPhone à confirmer.

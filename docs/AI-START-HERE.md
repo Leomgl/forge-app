@@ -78,3 +78,7 @@ Source serveur dans `edge-worker/index.mjs`, adresse dédiée `https://forge-hub
 ## FORGE V0.6 — journal des interventions
 
 La fiche interne `#ticket/N` affiche la description entière ainsi que les commentaires de l'issue GitHub. **Lire les commentaires précédents** pour éviter de reposer des questions déjà tranchées ou de dupliquer un correctif. Après une intervention, **ajouter réellement un commentaire GitHub** (ce que j'ai fait, pourquoi, comment, PR/commit, tests, recette iPhone, suite). Quand l'issue est terminée, mettre à jour son état avec preuve de livraison. Une réponse dans le chat n'est pas automatiquement visible dans FORGE : il faut publier le commentaire pendant le chantier. Ne jamais publier de données privées (notamment Santé ou Garage).
+
+## FORGE V0.7 — traiter les tickets GÉNÉRAL
+
+Les tickets `[GENERAL]` ne désignent **aucun dépôt unique**. Lire `FORGE_META.scope` (`all`, `multiple`, `newapp`, `other`) et `scopeDetails`, ainsi que le corps et les commentaires. Pour un chantier transversal : identifier les dépôts réellement impactés, synchroniser la cartographie/contrats, préparer la cohérence et les risques de régression pour chaque app. Pour une création : le dépôt peut ne pas exister ; ne pas inventer une URL ni ajouter une app au catalogue avant création effective. Garder un seul ticket central pour la coordination, avec commentaires de livraison par étape. Source de vérité GitHub et recette iPhone séparées.

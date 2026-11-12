@@ -19,3 +19,7 @@ Lorsqu'une évolution change un invariant, un contrat d'intégration ou un chemi
 ## 2026-11-12 — FORGE V0.6 : une fiche par issue, un journal de commentaires
 
 Décision : conserver GitHub Issues comme registre central et les commentaires GitHub comme journal des interventions et des retours utilisateurs. Le navigateur lit les tickets et commentaires publics et affiche le Markdown sous forme de nœuds texte sûrs. Seule la session OAuth GitHub App du Worker peut écrire via l'endpoint dédié. Aucun agent autonome ni base de données ne vient dupliquer les tickets. Les comptes rendus sont publiés volontairement dans les conversations de développement.
+
+## 2026-11-12 — Ticket GÉNÉRAL plutôt qu'un ticket par application
+
+Décision : ajouter une catégorie de **tickets transversaux** sans en faire une septième application métier. Elle peut piloter une refonte des logos de toutes les PWA, la création d'une nouvelle app ou une évolution multi-repos. Le périmètre est une métadonnée supplémentaire, et les commentaires GitHub servent au suivi commun. Les tickets existants conservent leur format et chaque application garde son propre dépôt/source de vérité.

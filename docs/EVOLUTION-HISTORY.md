@@ -92,3 +92,10 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Issue `#15` : fiche ticket intégrée `#ticket/N`, lecture du Markdown et des commentaires GitHub, ajout de réponses par l'utilisateur connecté.
 - Commentaires structurés de l'assistant après chaque travail, à publier explicitement pendant la conversation.
 - Aucun nouveau service de stockage, OAuth inchangé. Points sensibles : affichage sans XSS, pagination GitHub, session expirée, cache PWA, rendu Safari.
+
+
+## FORGE V0.7 — 12/11/2026
+
+- Nouveau type de rattachement `GÉNÉRAL` pour les chantiers transversaux et les futures apps, sans entrée fictive au catalogue des applications.
+- Portée optionnelle (toutes, plusieurs, création, autre) avec détail libre ; filtres, cartes et API GitHub alignés.
+- Pas de nouveau stockage, pas de migration, OAuth conservé. Recette : créer un ticket général connecté, le lire, filtrer, changer de statut, et contrôler sa présence sur GitHub puis tester un ticket NEXUS classique.

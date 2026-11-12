@@ -1,4 +1,4 @@
-/* FORGE v0.6 — fiche ticket accessible, GitHub comme source unique. */
+/* FORGE v0.7 — fiche ticket accessible, compatible GENERAL. */
 (function () {
 "use strict";
 const ROOT="https://api.github.com/repos/Leomgl/forge-app/issues/";
@@ -120,7 +120,7 @@ function open(number){
    const marker=String(it.body||"").match(/<!-- FORGE_META:\s*(\{[^\n]+\})\s*-->/);
    let m={};if(marker){try{m=JSON.parse(marker[1]);}catch{}}
    const label=it.state==="closed"?"Terminé":m.workflow==="doing"?"En cours":"À faire";
-   $("ticketCaption").textContent="#"+number+" · "+(m.project||"FORGE")+" · "+(m.type||"Ticket")+" · "+label+" · "+(m.priority||"normale")+" · actualisé "+date(it.updated_at);
+   $("ticketCaption").textContent="#"+number+" · "+(m.project==="GENERAL"?"GÉNÉRAL":m.project||"FORGE")+(m.project==="GENERAL"&&m.scope?" · "+({all:"Toutes les apps",multiple:"Plusieurs apps",newapp:"Nouvelle app",other:"Projet général"}[m.scope]||"Projet général"):"")+" · "+(m.type||"Ticket")+" · "+label+" · "+(m.priority||"normale")+" · actualisé "+date(it.updated_at);
    markdown($("ticketBody"),it.body||"Aucune description.");
   }else {
    $("ticketBody").textContent="Impossible de charger la demande. Utilise « Voir sur GitHub » pour y accéder.";
