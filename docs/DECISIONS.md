@@ -40,3 +40,7 @@ Le propriétaire a validé la V0.1 sur iPhone et créé le dépôt privé LINK. 
 ## 2026-11-12 — LINK V0.3 : observation technique opt-in avant tout jumelage central
 
 Première interface réelle Gaming → LINK, mais **pas de transfert de données métier** : le propriétaire déclenche un code `LDO1` à usages diagnostiques (paires oui/non, volumes, date locale, nombre de permissions), passé uniquement dans un fragment d'URL ou par copie manuelle. Aucune écriture serveur, aucune nouvelle permission et aucun ancien lien supprimé. Les informations ne sont ni signées ni en temps réel ; le statut LINK reste read-only. Préserver les clés locales et le relay push Gaming, avec recette sur Safari iPhone avant progression vers un adaptateur automatique réellement authentifié.
+
+## 2026-11-12 — LINK V0.4, comparaison croisée sans extrapolation
+
+Choix confirmé pour le pilote : les diagnostics de Gaming et Nexus restent **manuels, locaux et non signés**. LINK compare volumes/permissions/horodatages mais n'affirme jamais que des comptes identiques prouvent une bonne synchronisation. Les ID de paires et des messages, ainsi que les secrets NXL1, ne sont pas transférés. L'automatisation et la migration des anciens panneaux sont volontairement reportées à une phase avec consentement fort, contrôle d'identité, revue des conflits et restauration testée. Le ticket #28 reste ouvert.
