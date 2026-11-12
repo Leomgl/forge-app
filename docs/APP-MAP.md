@@ -4,7 +4,7 @@
 
 ## NEXUS — Leomgl/nexus-app
 
-- **Version de code vérifiée :** V0.21.10 sur `main` (12/11/2026), avec simulateur de remboursements anticipés, plan révisable et revenus variables ; précédemment V0.21.9 après PR #11. Le titre du README indique encore V0.21.5 et n'est pas une source de version suffisante ; suivre les commits et `docs/PROJECT-HANDOFF.md`. URL PWA : https://leomgl.github.io/nexus-app/ ; cache iPhone à contrôler séparément.
+- **Version de code vérifiée :** V0.21.11 sur `main` (12/11/2026, PR #12 / `f241030a67`), avec Agenda médical bidirectionnel via Santé et simulateur de remboursements anticipés, plan révisable et revenus variables ; précédemment V0.21.9 après PR #11. Le titre du README indique encore V0.21.5 et n'est pas une source de version suffisante ; suivre les commits et `docs/PROJECT-HANDOFF.md`. URL PWA : https://leomgl.github.io/nexus-app/ ; cache iPhone à contrôler séparément.
 - HTML/CSS/JS natifs, IndexedDB ; GitHub Pages ; backend Cloudflare Workers/D1.
 - Modules : Notes, Agenda, Rappels, Contacts, Projets, Achats, Budget, capture intelligente, corbeille.
 - Coffre cloud *optionnel* : snapshots chiffrés localement AES-GCM ; stockage local en clair ; passkey WebAuthn serveur en bêta. Notification Web Push sous condition d'opt-in.
@@ -43,7 +43,7 @@
 
 ## SANTÉ — Leomgl/sante-app
 
-- **Code Santé V0.7.0 fusionné sur `main` le 12/11/2026** (PR #3, commit `1e528f3`), Worker Cloudflare `sante-app` **déployé à 100 %** (version `49103383-b962-43ca-86f2-a58b4013bff7`) ; dépôt privé. Adresse : https://sante-app.q9pfwtztsc.workers.dev/ . Bindings D1/secret VAPID/PEPPER et cron vérifiés inchangés. Recette Face ID Safari iPhone non encore confirmée.
+- **Santé V0.8.0 sur `main`** (PR #4 / `5e06706898`), Worker Cloudflare `sante-app` déployé à **100 %** (version `c0e22389-f469-40e0-a014-5b31ef86e562`), code Face ID V0.7 préservé ; dépôt privé. PWA : https://sante-app.q9pfwtztsc.workers.dev/ . D1, secrets VAPID/PEPPER et cron `/5 min` vérifiés inchangés. CI 47/47 + smoke navigateur réussis. Recette réelle Safari iPhone ↔ Nexus non confirmée.
 - **Face ID (V0.7.0)** : passkey WebAuthn PRF facultative chiffrant localement une copie de la phrase secrète pour ouvrir le coffre AES-GCM lui-même ; la phrase reste indispensable comme secours, aucun nouvel endpoint, aucun schéma ni contrat Nexus modifié. Tests CI 44/44, vraie reconnaissance Face ID iPhone à confirmer ; consulter sante-app/docs/PASSKEYS-V07.md et ticket FORGE #17.
 - **Modules** : traitements et prises, rendez-vous, vaccins, documents chiffrés, dossier ; V0.4 ajoute mesures/constantes et poids, journal de santé, professionnels, analyses/valeurs, préparation de consultation. Data médicales restent dans le coffre IndexedDB AES-256-GCM local, migration additive et sauvegarde existantes conservées.
 - **Traitements V0.5.3** : nouveau formulaire iPhone sauvegardé dans le coffre chiffré, sélecteurs d'heures, dosage numérique mg/g/µg/mL/UI et unités par prise, rappels par traitement (jusqu'à 180 min avant + relance 15/30/60/120 min), stock de boîtes/plaquettes/flacons/sachets et prise confirmée = stock décrémenté. Anciennes fiches migrées sans perte, test d'enregistrement/déverrouillage simulé. Version Cloudflare active à 100 %, bindings Web Push et cron préservés ; recette réelle iPhone à faire.
@@ -98,3 +98,9 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 
 
 **FORGE V0.8 (ticket #22, 12/11/2026)** : le cockpit possède quatre vues `Accueil` (tickets `todo`/`doing`), `Terminés` (issues GitHub closes sans suppression), `Nouveau` (formulaire actuel), `Apps` (catalogue + mémoire), avec une barre d'onglets en bas. Les cartes peuvent toujours ouvrir une fiche `#ticket/N`, puis retourner à l'onglet source. `app.js`, `index.html`, `ticket-detail.js`, `styles.css`, `sw.js` changés. Pas d'impact sur les dépôts/deployments des six apps, la passerelle OAuth, les commentaires ni les données privées. Tests et recette Safari consignés dans l'issue #22.
+
+## Chantier transversal #25 — Agenda médical NEXUS V0.21.11 ↔ Santé V0.8.0 (12/11/2026)
+
+- NEXUS PR #12 fusionnée `f241030a67` : tests JavaScript et Pages GitHub réussis, `nexus-v0.21.11.0`. Bouton d'activation bidirectionnelle dans Réglages → Santé, case « Rendez-vous médical » dans Agenda, détection des anciens RDV, envoi chiffré par lots de 12 et gestion des révisions/suppressions/restaurations ; évite les doublons strictement identiques.
+- SANTÉ PR #4 fusionnée `5e06706898`, Worker Cloudflare version `c0e22389-f469-40e0-a014-5b31ef86e562` à 100 %, réception du même canal dans le coffre chiffré, détection/conservation des conflits et notifications médicaments inchangées. Aucun changement de relais, secrets, D1 ou VAPID.
+- Le rendez-vous local précis de l'iPhone n'est **pas consultable par l'assistant** : transfert effectif seulement lorsque l'utilisateur ouvre successivement les deux PWAs et déverrouille Santé ; pour les titres ambigus cocher « médical ». Pas de sync native iOS en arrière-plan. Recette Safari sur appareils à confirmer, ne jamais réinstaller les PWAs sans sauvegarde.
