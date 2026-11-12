@@ -1,0 +1,25 @@
+name: LINK incubation smoke tests
+on:
+  push:
+    paths:
+      - "incubation/link-app/**"
+      - ".github/workflows/link-smoke.yml"
+  pull_request:
+    paths:
+      - "incubation/link-app/**"
+      - ".github/workflows/link-smoke.yml"
+  workflow_dispatch:
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Test LINK PWA and API
+        run: node --test incubation/link-app/smoke.test.mjs
