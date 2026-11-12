@@ -122,3 +122,11 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 
 | GARAGE | V0.2.0 | Lieux ajoutables pendant la saisie/déplacement, recherche de visuels Wikimedia Commons + URL/photo locale, liens réciproques avec option suivre les déplacements | IndexedDB + export V1 inchangés ; photo locale prioritaire ; déplacements historisés ; prêtés non déplacés automatiquement. PR garage-app#1, `12ccbdbd3e`, Worker `265ee24b` à 100 %, CI verte, Safari non vérifié |
 
+
+
+## Intégration Garage V0.3 (12/11/2026)
+
+| Application | Version | Fonction | Tests / vigilance |
+|---|---|---|---|
+
+| GARAGE / RITUEL / NEXUS | V0.3 / V1.9 / V0.21.12 | Liaison chiffrée du catalogue Rituel et des emplacements Garage, demandes de mouvement dans les deux sens et création consentie d'ensemble pour séjour Nexus | Garage PR #2 `20341c5b02`, Rituel PR #1 `5172c36d3f`, Nexus PR #13 `5ef0b3369d`, Workers à 100 %, D1 migration contrôlée 4/51 et FK 0, CI/Pages réussies ; recette iPhone E2E en attente |
