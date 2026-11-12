@@ -124,3 +124,35 @@ assert.match(node.textContent,/Validé/);
 assert.doesNotMatch(node.textContent,/FORGE_META/);
 assert.ok(!node.children.some(x=>x.tag==="script"),"HTML must remain literal text");
 console.log("FORGE V0.6: detail view, safe Markdown and comments API OK");
+
+
+// FORGE V0.7 — GENERAL is a ticket scope, not a fake application.
+const globalTicket={
+ tProject:"GENERAL",tType:"evolution",tPriority:"haute",tScope:"all",
+ tScopeDetails:"Refonte de tous les logos",tVersion:"",tTitle:"Logos",
+ tDescription:"Créer une identité cohérente sur toutes les PWA",
+ tSteps:"",tExpected:"Logos harmonisés",tConstraints:"Préserver les reconnaissances visuelles"
+};
+const generalBody=api.issueBody(globalTicket);
+assert.match(generalBody,/"project":"GENERAL"/);
+assert.match(generalBody,/"scope":"all"/);
+assert.match(generalBody,/Portée : Toutes les apps/);
+assert.match(generalBody,/Refonte de tous les logos/);
+assert.doesNotMatch(generalBody,/https:\/\/github\.com\/undefined/);
+assert.match(generalBody,/Dépôts à identifier lors du diagnostic/);
+const newAppBody=api.issueBody({...globalTicket,tScope:"newapp",tScopeDetails:"Nouvelle idée"});
+assert.match(newAppBody,/"scope":"newapp"/);
+assert.match(newAppBody,/Nouvelle app/);
+assert.doesNotMatch(newAppBody,/Dépôt à analyser :/);
+const legacyBody=api.issueBody({...globalTicket,tProject:"NEXUS"});
+assert.match(legacyBody,/github.com\/Leomgl\/nexus-app/);
+assert.doesNotMatch(legacyBody,/"scope":/);
+assert.ok(!api.apps.some(a=>a.id==="GENERAL"),"GENERAL must not appear in the application catalog");
+assert.match(src,/id\("tProject"\)\.addEventListener\("change",toggleGeneral\)/);
+assert.match(src,/value="GENERAL"/);
+assert.match(html,/id="generalScopeFields"/);
+assert.match(html,/id="tScope"/);
+assert.match(html,/id="tScopeDetails"/);
+assert.match(edge,/FORGE\|GENERAL/);
+assert.match(sw,/forge-v0\.7\.0/);
+console.log("FORGE V0.7: general ticket creation, scope, filters, and existing apps OK");
