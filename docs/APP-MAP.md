@@ -57,3 +57,13 @@
 ## Quand ajouter une autre application ?
 
 Mettre à jour ce fichier, `docs/DEPENDENCIES.md`, et la liste de projets de la PWA. **Ne jamais importer des données privées** depuis l'app dans FORGE pour l'y enregistrer.
+
+
+## GARAGE — Leomgl/garage-app
+
+- **V0.1.0 livrée le 12/11/2026** : https://garage-app.q9pfwtztsc.workers.dev/ ; repo **privé** https://github.com/Leomgl/garage-app .
+- Application PWA autonome, Cloudflare Worker dédié, IndexedDB local `garage_personal_v1` (items/places/kits/history/meta), photos compressées et sauvegarde/restauration JSON.
+- Fonctions : inventaire, lieux et sous-lieux, déplacements historisés, prêts et retours, ensembles de préparation, recherche et filtres.
+- Pas de cloud sync ni liaison NEXUS dans V0.1 ; contrat NEXUS voyage à définir et à implémenter après validation, avec jumelage E2EE et permissions explicites.
+- Worker actif sur workers.dev, déployé 100 % le 12/11/2026. **Pas de déploiement automatique relié aux commits du dépôt** : le build `npm run build` produit `dist/worker.js` à publier manuellement.
+- Détails techniques et limites : `garage-app/docs/PROJECT-HANDOFF.md`. Test Safari réel en attente ; sauvegarde privée conseillée pour éviter les pertes de données iOS.
