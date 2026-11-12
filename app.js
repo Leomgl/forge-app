@@ -1,4 +1,4 @@
-/* FORGE v0.4 — same-origin GitHub App OAuth, no client-side tokens. */
+/* FORGE v0.5 — workflow board, priority, centralized app registry; OAuth unchanged. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
@@ -9,6 +9,8 @@ var apps=[
  {id:"GAMING",mark:"G",repo:"Leomgl/gaming-app",desc:"Jeux, stockage PS5, saisons, notifications et liens NEXUS."},
  {id:"RITUEL",mark:"R",repo:"Leomgl/rituel-app",desc:"Routines, stocks, statistiques et push iPhone."},
  {id:"VESTIAIRE",mark:"V",repo:"Leomgl/Vestiaire-app",desc:"Dressing, import Fits, mannequin et superposition des tenues."},
+ {id:"SANTE",mark:"S",repo:"Leomgl/sante-app",desc:"Carnet de santé chiffré, traitements, habitudes et liaison NEXUS."},
+ {id:"GARAGE",mark:"G",repo:"Leomgl/garage-app",desc:"Inventaire privé, localisation des objets, prêts et kits de départ."},
  {id:"FORGE",mark:"F",repo:"Leomgl/forge-app",desc:"Mémoire des tickets, connexion GitHub et pilotage du développement."}
 ];
 function id(n){return document.getElementById(n);}
@@ -31,32 +33,41 @@ function updateWorkflowBody(item,target){
 }
 function age(date){try{return new Date(date).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"});}catch(e){return "—";}}
 function setStatus(text){id("loadInfo").textContent=text;}
+const PRIORITIES={critique:{label:"Critique",rank:0},haute:{label:"Haute",rank:1},normale:{label:"Normale",rank:2},basse:{label:"Basse",rank:3}};
+function priorityOf(item){var raw=String(parseMeta(item).priority||"normale").toLowerCase();return PRIORITIES[raw]?raw:"normale";}
+function ticketCard(item){
+ var m=parseMeta(item),published=item.html_url||("https://github.com/"+REPO+"/issues/"+item.number),state=workflow(item),priority=priorityOf(item);
+ return '<article class="issue" data-issue="'+Number(item.number)+'">'
+ +'<div class="issue-top"><span class="issue-num">#'+Number(item.number)+'</span><span class="pill priority '+priority+'">'+PRIORITIES[priority].label+'</span></div>'
+ +'<a class="issue-title" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">'+esc(item.title)+'</a>'
+ +'<div class="issue-preview">'+esc(clean(item.body).slice(0,150))+'</div>'
+ +'<div class="issue-meta"><span class="pill app">'+esc(m.project||"AUTRE")+'</span><span class="pill">'+esc(m.type||"Ticket")+'</span><span class="age">'+esc(age(item.updated_at))+'</span></div>'
+ +'<div class="issue-actions"><label class="status-label">État <select class="status-picker" data-number="'+Number(item.number)+'" aria-label="État du ticket '+Number(item.number)+'" '+(saving?"disabled":"")+'>'+
+ ["todo","doing","done"].map(function(st){return '<option value="'+st+'" '+(st===state?'selected':'')+'>'+WORKFLOW[st]+'</option>';}).join("")
+ +'</select></label><a class="issue-link" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></article>';
+}
 function render(){
- var q=id("search").value.toLocaleLowerCase("fr").trim(),project=id("projectFilter").value,status=id("statusFilter").value;
- var counting=issues.filter(function(item){return project==="all"||parseMeta(item).project===project;});
+ var q=id("search").value.toLocaleLowerCase("fr").trim(),project=id("projectFilter").value,status=id("statusFilter").value,priority=id("priorityFilter").value;
+ var scoped=issues.filter(function(item){
+  var m=parseMeta(item);
+  return (project==="all"||m.project===project)&&(priority==="all"||priorityOf(item)===priority)
+   &&(!q||String(item.number).includes(q.replace("#",""))||[item.title,item.body,m.project].join(" ").toLocaleLowerCase("fr").includes(q));
+ });
  var totals={todo:0,doing:0,done:0};
- counting.forEach(function(item){totals[workflow(item)]++;});
+ scoped.forEach(function(item){totals[workflow(item)]++;});
  id("workflowSummary").innerHTML=["todo","doing","done"].map(function(st){
   return '<button type="button" class="statbox '+st+(status===st?' selected':'')+'" data-filter="'+st+'" aria-pressed="'+(status===st)+'"><span>'+WORKFLOW[st]+'</span><strong>'+totals[st]+'</strong></button>';
  }).join("");
- var filtered=issues.filter(function(item){
- var meta=parseMeta(item);
- return (project==="all"||meta.project===project)&&(status==="all"||workflow(item)===status)&&(!q||String(item.number).includes(q.replace("#",""))||[item.title,item.body,meta.project].join(" ").toLocaleLowerCase("fr").includes(q));
- });
  id("issueCount").textContent=issues.length;
- if(!filtered.length){id("issues").innerHTML='<div class="empty">Aucune issue ne correspond aux filtres. Pour un nouveau signalement, utilise le formulaire ci-dessous.</div>';return;}
- id("issues").innerHTML=filtered.map(function(item){
- var m=parseMeta(item),published=item.html_url||("https://github.com/"+REPO+"/issues/"+item.number),state=workflow(item);
- return '<article class="issue" data-issue="'+Number(item.number)+'">'
- +'<span class="issue-num">#'+Number(item.number)+'</span><div class="issue-body">'
- +'<a class="issue-title" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">'+esc(item.title)+'</a>'
- +'<div class="issue-preview">'+esc(clean(item.body).slice(0,230))+'</div><div class="issue-meta"><span class="pill app">'+esc(m.project||"AUTRE")+'</span>'
- +'<span class="pill">'+esc(m.type||"Ticket")+'</span><span class="age">Mis à jour '+esc(age(item.updated_at))+'</span></div>'
- +'<div class="issue-actions"><label class="status-label">État <select class="status-picker" data-number="'+Number(item.number)+'" aria-label="État du ticket '+Number(item.number)+'" '+(saving?"disabled":"")+'>'+
- ["todo","doing","done"].map(function(st){return '<option value="'+st+'" '+(st===state?'selected':'')+'>'+WORKFLOW[st]+'</option>';}).join("")+
- '</select></label><a class="issue-link" href="'+esc(published)+'" target="_blank" rel="noopener noreferrer">Voir dans GitHub ↗</a></div></div></article>';
+ var states=status==="all"?["todo","doing","done"]:[status];
+ id("issues").innerHTML=states.map(function(st){
+  var group=scoped.filter(function(item){return workflow(item)===st;}).sort(function(a,b){
+    return PRIORITIES[priorityOf(a)].rank-PRIORITIES[priorityOf(b)].rank||new Date(b.updated_at)-new Date(a.updated_at);
+  });
+  return '<section class="issue-column col-'+st+'" aria-label="'+WORKFLOW[st]+'">'
+   +'<div class="column-heading"><span class="column-indicator"></span><h3>'+WORKFLOW[st]+'</h3><span class="column-count">'+group.length+'</span></div>'
+   +'<div class="column-list">'+(group.length?group.map(ticketCard).join(""):'<div class="column-empty">Aucun ticket ici.</div>')+'</div></section>';
  }).join("");
-
 }
 async function load(){
  if(loading)return;loading=true;id("refresh").disabled=true;setStatus("Connexion aux issues publiques GitHub…");
@@ -159,6 +170,13 @@ function onStatusChange(e){
  const number=Number(e.target.getAttribute("data-number")),target=e.target.value;
  if(Number.isSafeInteger(number)&&number>=1&&WORKFLOW[target])saveWorkflow(number,target);
 }
+function populateProjects(){
+ ["projectFilter","tProject"].forEach(function(key){
+  var el=id(key),previous=el.value,all=key==="projectFilter";
+  el.innerHTML=(all?'<option value="all">Toutes les apps</option>':"")+apps.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(p.id==="SANTE"?"SANTÉ":p.id)+'</option>';}).join("");
+  el.value=previous&&Array.from(el.options).some(function(o){return o.value===previous;})?previous:(all?"all":"NEXUS");
+ });
+}
 function makeApps(){
  id("apps").innerHTML=apps.filter(function(p){return p.id!=="FORGE";}).map(function(p){
  return '<article class="appcard"><span class="appmark">'+p.mark+'</span><b>'+p.id+'</b><p>'+esc(p.desc)+'</p>'
@@ -219,7 +237,7 @@ function reset(){
  id("composeMessage").textContent="Brouillon effacé.";
 }
 function start(){
- makeApps();restore();editMode();authCheck();
+ populateProjects();makeApps();restore();editMode();authCheck();
  id("issues").addEventListener("change",onStatusChange);
  id("workflowSummary").addEventListener("click",function(e){
   var btn=e.target.closest("[data-filter]");if(!btn)return;
@@ -227,7 +245,7 @@ function start(){
   id("statusFilter").value=id("statusFilter").value===next?"all":next;render();
  });
  id("editMode").addEventListener("click",editClick);
- ["search","projectFilter","statusFilter"].forEach(function(k){id(k).addEventListener(k==="search"?"input":"change",render);});
+ ["search","projectFilter","statusFilter","priorityFilter"].forEach(function(k){id(k).addEventListener(k==="search"?"input":"change",render);});
  fields.forEach(function(k){id(k).addEventListener("input",persist);id(k).addEventListener("change",persist);});
  id("refresh").addEventListener("click",load);id("publish").addEventListener("click",publish);id("resetDraft").addEventListener("click",reset);
  load();
