@@ -100,3 +100,11 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Nouveau type de rattachement `GÉNÉRAL` pour les chantiers transversaux et les futures apps, sans entrée fictive au catalogue des applications.
 - Portée optionnelle (toutes, plusieurs, création, autre) avec détail libre ; filtres, cartes et API GitHub alignés.
 - Pas de nouveau stockage, pas de migration, OAuth conservé. Recette : créer un ticket général connecté, le lire, filtrer, changer de statut, et contrôler sa présence sur GitHub puis tester un ticket NEXUS classique.
+
+
+## FORGE V0.8 — navigation à 4 onglets (12/11/2026)
+
+- Accueil recentré sur les états `À faire` et `En cours` ; les cartes `closed` ne sont plus mélangées aux actives.
+- Onglet Terminés : archives filtrables, liens GitHub et journal intégral conservés ; retour du détail à l'onglet source.
+- Onglets Nouveau (formulaire inchangé) et Apps (catalogue/documentation), navigation fixe responsive avec safe area iOS.
+- Aucun changement de données, de GitHub OAuth ou du Worker. Cache PWA incrémenté. À vérifier : actualisation et retour depuis archives sur Safari iPhone.
