@@ -36,3 +36,7 @@ Décision du propriétaire : créer une PWA dédiée à la gestion des relations
 ## 2026-11-12 — LINK V0.2 et Forge
 
 Le propriétaire a validé la V0.1 sur iPhone et créé le dépôt privé LINK. La V0.2 publie un SDK de contrat/ACK et une API documentaire sans migrer aucun jumelage. Forge référence LINK et le backend forge-hub a été redéployé en préservant ses 3 bindings GitHub. V0.2 et les flux futurs restent soumis à recette Safari, sauvegarde et retour arrière.
+
+## 2026-11-12 — LINK V0.3 : observation technique opt-in avant tout jumelage central
+
+Première interface réelle Gaming → LINK, mais **pas de transfert de données métier** : le propriétaire déclenche un code `LDO1` à usages diagnostiques (paires oui/non, volumes, date locale, nombre de permissions), passé uniquement dans un fragment d'URL ou par copie manuelle. Aucune écriture serveur, aucune nouvelle permission et aucun ancien lien supprimé. Les informations ne sont ni signées ni en temps réel ; le statut LINK reste read-only. Préserver les clés locales et le relay push Gaming, avec recette sur Safari iPhone avant progression vers un adaptateur automatique réellement authentifié.
