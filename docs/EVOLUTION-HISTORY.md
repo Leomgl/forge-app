@@ -180,3 +180,11 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Incident distinct : **Face ID / passkeys Nexus ne fonctionne plus**. Aucun changement de `passkey-client.js` dans LINK V0.4. Risque WebAuthn iOS (challenges et digest asynchrones avant `navigator.credentials.get/create`) identifié.
 - Correctif NEXUS : préparer le défi avant clic, appeler WebAuthn dans le geste, gérer expiration/erreurs, préserver le fallback récupération. Script versionné `passkey-client.js?v=02114`, SW `nexus-v0.21.12.2`. **CI 85/85 et GitHub Pages verts** ; recette Face ID sur iPhone encore à confirmer, Forge #30 **ouvert**.
 - LINK #28 reste EN COURS ; les anciens liens/chiffrements/secrets et l'API Nexus sont inchangés.
+
+## 2026-11-12 — LINK V0.5 — concordance événement par événement
+
+- Validation utilisateur V0.4 par capture : Nexus 12 messages conservés (9 à examiner, 2 acceptés, 1 ignoré), 7 permissions ; Gaming 12 possibles, 0 à republier, 7 permissions. Confirmation du parcours d'import Nexus → LINK ; identité exacte des propositions et ACK non démontrés par cette capture.
+- Déploiement V0.5 : `link-app` Worker Cloudflare `7ab8b192-8014-4352-b963-1ea11e412bde` à 100 % avec panneau « Concordance des événements », validation des rapports LDA1, correspondance des événements/révisions en lecture seule et stockage local effaçable. CI LINK **44/44** réussis.
+- `gaming-app` Worker `c3eca787-7949-4607-8764-f0353eb5f37e` à 100 %, nouvelle action Réglages → LINK · Vérifier les événements, sans action sur l'ancien envoi. CI Gaming **9/9** réussis. D1, deux secrets push, variable VAPID et cron `*/5 * * * *` conservés après déploiement.
+- `nexus-app` sur GitHub Pages : `link-audit.js` chargé avant `link-import.js`, cache versionné, nouveau bouton « Vérifier les événements » dans le panneau Propositions Gaming. Suite Nexus **90/90** et Pages vertes lors du contrôle, sans changement de schéma, clé ou service de synchronisation.
+- Portée : comparaison **indicative et manuelle** des alias HMAC temporaires, ne prouve ni ACK serveur ni authentification de l'exportateur ; recettage iPhone V0.5 encore à faire, retour arrière permanent jusqu'à migration E2E. FORGE #28 reste ouvert.
