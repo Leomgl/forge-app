@@ -80,3 +80,47 @@ assert.match(src,/function populateProjects\(/);
 assert.match(src,/class="issue-column col-/);
 assert.match(edge,/NEXUS\|GAMING\|RITUEL\|VESTIAIRE\|SANTE\|GARAGE\|FORGE/);
 console.log("FORGE V0.5: catalog, priorities, board and compact form OK");
+
+
+// FORGE V0.6 — syntax, accessible detail, safe Markdown and comment API.
+const detail=fs.readFileSync(new URL("../ticket-detail.js",import.meta.url),"utf8");
+new vm.Script(detail,{filename:"ticket-detail.js"});
+assert.match(detail,/\/issues\//);
+assert.match(detail,/comments\?per_page=100&page=/);
+assert.match(detail,/\/api\/comments/);
+assert.doesNotMatch(detail,/innerHTML|outerHTML|insertAdjacentHTML/,"untrusted Markdown must use DOM text nodes");
+assert.match(html,/id="ticketDialog"/);
+assert.match(html,/id="ticketReplyForm"/);
+assert.match(html,/src="\.\/ticket-detail\.js"/);
+assert.match(src,/href="#ticket\//);
+assert.match(edge,/p==="\/api\/comments"/);
+assert.match(edge,/kind==="comment"/);
+assert.match(edge,/checkMutation\(req\)/);
+assert.match(edge,/target\.pull_request/);
+assert.match(edge,/ticket-detail\\\.js/);
+assert.match(sw,/ticket-detail\.js/);
+assert.match(sw,/forge-v0\.6\.0/);
+
+// Exercise the Markdown sanitizer without a browser: strings become text nodes.
+function fakeNode(tag){
+ const node={tag,children:[],_text:"",appendChild(child){this.children.push(child);return child;},replaceChildren(){this.children=[];this._text="";}};
+ Object.defineProperty(node,"textContent",{get(){return this._text+this.children.map(x=>x.textContent).join("");},set(v){this._text=String(v);this.children=[];}});
+ return node;
+}
+const mock={createElement:tag=>fakeNode(tag),createTextNode:s=>{const n=fakeNode("#text");n.textContent=s;return n;}};
+const startDetail=detail.indexOf("function safeUrl("),endDetail=detail.indexOf("function date(");
+assert.ok(startDetail>=0&&endDetail>startDetail);
+const markdownContext=vm.createContext({URL,document:mock});
+new vm.Script(detail.slice(startDetail,endDetail)+"\nglobalThis.MD_TEST={safeUrl,markdown};").runInContext(markdownContext);
+const mdTest=markdownContext.MD_TEST;
+assert.equal(mdTest.safeUrl("javascript:alert(1)"),null);
+assert.equal(mdTest.safeUrl("data:text/html,<script>"),null);
+assert.match(mdTest.safeUrl("https://github.com/Leomgl/forge-app"),/^https:\/\//);
+const node=fakeNode("root");
+mdTest.markdown(node,'<!-- FORGE_META: {"project":"FORGE"} -->\n## Livraison\n- [x] **Validé**\n<script>alert(1)</script>\n[malveillant](javascript:alert(1))');
+assert.ok(node.children.some(x=>x.tag==="h3"));
+assert.match(node.textContent,/Livraison/);
+assert.match(node.textContent,/Validé/);
+assert.doesNotMatch(node.textContent,/FORGE_META/);
+assert.ok(!node.children.some(x=>x.tag==="script"),"HTML must remain literal text");
+console.log("FORGE V0.6: detail view, safe Markdown and comments API OK");
