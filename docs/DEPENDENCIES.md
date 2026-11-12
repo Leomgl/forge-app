@@ -115,3 +115,10 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - Source Gaming : `linkOutbox` des messages déjà publiés ; source Nexus : `linkInbox` des messages déjà persistés. Le même tag et la même révision indiquent une correspondance locale indicative. Tags différents, versions différentes, jour UTC ou clé différents sont explicitement signalés. Rapports partiels au-delà de 128 événements.
 - **Important :** les codes LDA1 sont transportés *volontairement*, sans signature d'origine, exclusivement dans un fragment URL ou par copier-coller. Ils restent dans `localStorage` de LINK après validation et peuvent être effacés. Comparaison **non opposable**, jamais une attestation d'ACK serveur, de délai réseau ou d'identité humaine.
 - Aucune modification des tables D1, données utilisateurs, protocoles existants, clés, permissions, copies IndexedDB ni endpoints de synchronisation. La V0.5 ne doit jamais servir à autoriser automatiquement une suppression d'ancien Link. Ne pas confondre développement du diagnostic et migration du transport.
+
+## LINK V0.6 — contrôle central sécurisé, non destructif (12/11/2026)
+
+- `link.management.v1` n'autorise que les intentions connues, avec nonce et metadata sans secrets. Le pont Gaming/Nexus n'envoie aucune clé, seed, ID de pair, nom de jeu ou donnée médicale.
+- Chaque action commence dans LINK, nécessite un accord visible dans l'app, puis renvoie un statut local déclaratif. Le retour ne prouve pas l'identité ni le succès de livraison distante ; iOS peut ouvrir Safari et isoler les données des PWA.
+- Pour les autres flux, aucune commande opérationnelle avant adaptateur, tests, consentement et rollback ; les boutons sont désactivés plutôt que présenter un faux succès.
+- Aucune suppression ni migration d'anciens relais, D1, pairings NXL1/NXS1/GRL1, ACK, coffres, push ou menus en production avant parité physique iPhone. Voir Leomgl/link-app/docs/CENTRAL-CONTROL-V06.md.
