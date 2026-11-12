@@ -119,8 +119,12 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - **NEXUS V0.21.12** (PR #13 `5ef0b3369d4c81f7a947615858f950f85d9d9f63`), Pages et CI vertes ; Workers `nexus-app-api` version `39754953-124c-49d7-83a5-80912bd31cb7`, `nexus-link-api` version `b7d768a5-63df-46f3-9a97-08f83ff65df8`, tous à 100 %. Nouvelle proposition voyage vers Garage indépendante de Rituel.
 - Base D1 du relais migrée avec sauvegarde/export et bookmark présents ; **4 jumelages et 51 messages chiffrés conservés** avant/après, aucune violation FK. Aucune photo/stock envoyés par le nouveau lien. Vérification du fonctionnement réel des deux PWA + voyage Garage sur Safari iPhone **encore nécessaire**, le ticket FORGE #24 reste En cours.
 
-## LINK — V0.1 temporairement hébergée en incubation (12/11/2026)
+## LINK — V0.2 (12/11/2026) : Leomgl/link-app
 
-- **PWA de pilotage cible** : https://link-app.q9pfwtztsc.workers.dev/ ; Worker Cloudflare distinct `link-app`, déployé 100 %. Mode inventaire **en lecture seule** : 6 apps et 7 flux, diagnostic du Worker et suivi local de préparation, aucun jumelage/sync administré à ce stade.
-- **Source versionnée provisoire** : `incubation/link-app/worker.mjs` (dans FORGE) ; tests `incubation/link-app/smoke.test.mjs` ; voir `docs/LINK-V01.md`. Un dépôt `Leomgl/link-app` **n'existe pas encore** et devra être créé avant inscription de LINK dans le catalogue FORGE.
-- Aucune modification des clients historiques, leurs codes d'appairage, Workers/D1, données privées, sauvegardes ou notifications. Rendu Safari et fonctionnement HTTP externe à confirmer sur appareil.
+- **Dépôt privé officiel** : https://github.com/Leomgl/link-app ; PWA : https://link-app.q9pfwtztsc.workers.dev/ . La copie dans incubation/link-app/ de FORGE est historique et n'est plus la source de vérité.
+- **V0.1 validée sur iPhone par le propriétaire.** V0.2 déployée sur Cloudflare à 100 %, validation Safari V0.2 encore attendue.
+- Les 6 apps métier et 7 relations restent documentées. API read-only : GET /api/v1/catalog, GET /api/v1/contracts, GET /api/v1/status ; linksManaged=0.
+- SDK expérimental src/protocol.mjs : permissions, conflits/révisions, ACK après écriture durable, replay idempotent, validation explicite avant migration. Aucun client historique n'a été modifié.
+- LINK ajouté au registre FORGE et à la liste blanche de publication GitHub ; Worker forge-hub déployé en préservant les 3 bindings existants.
+- Le relais Santé reste isolé, aucune ancienne clé, base D1, connexion, notification ou menu n'a été supprimé.
+- Détails : https://github.com/Leomgl/link-app/blob/main/docs/ARCHITECTURE.md et FORGE #28.
