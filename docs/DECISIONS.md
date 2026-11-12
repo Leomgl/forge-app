@@ -28,3 +28,7 @@ Décision : ajouter une catégorie de **tickets transversaux** sans en faire une
 ## 2026-11-12 — FORGE V0.8 : séparation opérationnel / historique
 
 Décision : l'accueil est réservé au travail actif (`doing`, `todo`), tandis que les tickets terminés rejoignent un onglet d'historique indépendant. Garder un formulaire de création autonome et un catalogue documentaire distinct, accessibles par une barre inférieure sur iPhone. **Pas d'archivage dans une seconde base** : une issue close reste un ticket GitHub consultable, modifiable et réouvrable. Le statut GitHub reste prioritaire sur les métadonnées locales.
+
+## 2026-11-12 — LINK : plan de contrôle séparé, pas une base centrale
+
+Décision du propriétaire : créer une PWA dédiée à la gestion des relations inter-applications et de la synchronisation. LINK remplacera à terme la dispersion des menus LINK, mais **aucune ancienne connexion ne sera supprimée avant migration et vérification complète**. Les données restent propriétaires des apps, avec chiffrement E2EE client et séparation de Santé. La première version indépendante V0.1 est **lecture seule** ; la création d'un dépôt séparé reste à faire, source provisoire versionnée dans FORGE. Voir `docs/LINK-V01.md` et ticket #28. Ni FORGE ni LINK ne deviennent une base de données utilisateurs unifiée.
