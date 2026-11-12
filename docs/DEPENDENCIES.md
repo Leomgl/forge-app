@@ -12,6 +12,12 @@ FORGE ne synchronise aucune donnée applicative ; il suit les changements et leu
 | VESTIAIRE → RITUEL | Idée future/non activée | Aucune intégration active à supposer | Effets de bord et données liées sans consentement |
 | SANTÉ → NEXUS (E2EE) | Actif V0.6 Santé + Nexus V0.21.9 ; retour Nexus→Santé NON livré | Santé source dossier, Nexus affiche le suivi des prises et importe RDV/vaccins avec consentement ; Nexus notifie Agenda, Santé notifie médicaments, scopes dose_summary/health_calendar et agrégat d'hydratation facultatif, IDs/revisions/tombstones, arrêt sur conflits | Secrets de jumelage dans Nexus local non chiffré, exposition des titres de RDV importés, perte de données iOS, divergences d'édition, doublons de notifications si une ancienne version est utilisée |
 
+## Sécurité Santé V0.7 — déverrouillage local via passkey PRF (FORGE #17)
+
+- Face ID/passkey en option, WebAuthn PRF compatible iPhone : phrase secrète Santé enveloppée localement sous AES-GCM, après authentification de l'appareil, pour **ouvrir réellement** le coffre chiffré existant. Contrairement à Nexus V0.5, ce n'est pas un simple verrou visuel ; aucune donnée de ce parcours dans D1 ou NEXUS LINK.
+- Les tables IndexedDB Santé, les sauvegardes et le contrat E2EE Santé→Nexus restent inchangés ; la phrase secrète historique est toujours le recours en cas d'absence de PRF, nouvel iPhone ou restauration. La clé locale Face ID facultative n'est pas dans l'export.
+- Worker Cloudflare Santé version `49103383-b962-43ca-86f2-a58b4013bff7` activée à 100 % après CI (44 tests réussis). Aucun nouveau binding. Recette réelle passkey Safari iPhone **en attente** ; rollback Worker sans toucher les données. Détails : `Leomgl/sante-app/docs/PASSKEYS-V07.md` (dépôt privé).
+
 ## Frontières d'hébergement
 
 - `leomgl.github.io/nexus-app` et `/rituel-app` partagent **une même origine** malgré leurs sous-chemins. Ne pas considérer les chemins comme une isolation de sécurité du navigateur.
