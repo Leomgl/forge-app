@@ -135,5 +135,12 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 
 - Worker Cloudflare `link-app` autonome déployé 100 % sur workers.dev ; site PWA avec navigation mobile, icône, manifest et cache offline.
 - Registre documentaire 6 apps / 7 relations, API lecture seule, diagnostic LINK, préparation locale ; **0 connexion migrée**.
-- Dépôt futur indépendant encore à créer, source intermédiaire `incubation/link-app/worker.mjs` et recette `docs/LINK-V01.md`.
+- Dépôt officiel privé Leomgl/link-app créé ; copie d'incubation FORGE désormais historique.
 - Aucun ancien relais, jumelage, menu, IndexedDB, D1 ni notification modifié. Vérification réelle sur iPhone en attente.
+
+## 2026-11-12 — LINK V0.2 / catalogue FORGE
+
+- V0.1 validée sur iPhone par le propriétaire. V0.2 : source autonome dans Leomgl/link-app, 7 contrats, SDK et suite de tests de déduplication, conflits, ACK durable et rollback.
+- API documentaire /api/v1/contracts ; LINK reste en lecture seule, zéro paire migrée et aucun ancien relais modifié.
+- Forge : app LINK ajoutée au registre/filtre/formulaire, backend redéployé en préservant ses 3 bindings et nouveau cache PWA.
+- Recette tactile Safari V0.2 et essai de publication d'un ticket LINK dans Forge encore à confirmer.
