@@ -1,4 +1,4 @@
-# Cartographie des applications (instantané du 11/11/2026)
+# Cartographie des applications (révision du 12/11/2026)
 
 **Toujours vérifier le README et les commits actuels du dépôt ciblé :** ces notes sont un instantané historique, pas une version garantie.
 
@@ -42,14 +42,14 @@
 
 ## SANTÉ — Leomgl/sante-app
 
-- **Déployée V0.5.3** sur Cloudflare Worker sante-app (12/11/2026), dépôt privé. Adresse : https://sante-app.q9pfwtztsc.workers.dev/ . Version de production confirmée via Cloudflare API, sauvegarde des bindings D1 et secrets VAPID vérifiée.
+- **Code V0.6.1 fusionné sur `main` le 12/11/2026**, Worker Cloudflare `sante-app` présent (réactualisé le 12/11/2026), dépôt privé. Ne pas déduire la version réellement servie du seul horodatage de ce Worker. Adresse : https://sante-app.q9pfwtztsc.workers.dev/ . Version de production confirmée via Cloudflare API, sauvegarde des bindings D1 et secrets VAPID vérifiée.
 - **Modules** : traitements et prises, rendez-vous, vaccins, documents chiffrés, dossier ; V0.4 ajoute mesures/constantes et poids, journal de santé, professionnels, analyses/valeurs, préparation de consultation. Data médicales restent dans le coffre IndexedDB AES-256-GCM local, migration additive et sauvegarde existantes conservées.
 - **Traitements V0.5.3** : nouveau formulaire iPhone sauvegardé dans le coffre chiffré, sélecteurs d'heures, dosage numérique mg/g/µg/mL/UI et unités par prise, rappels par traitement (jusqu'à 180 min avant + relance 15/30/60/120 min), stock de boîtes/plaquettes/flacons/sachets et prise confirmée = stock décrémenté. Anciennes fiches migrées sans perte, test d'enregistrement/déverrouillage simulé. Version Cloudflare active à 100 %, bindings Web Push et cron préservés ; recette réelle iPhone à faire.
 - **Correctifs iPhone V0.5.2** : saisie de `1` unité validée (ancien input min 0.01/step 0.25 incompatible), 5 sections plus lisibles, édition complète avec conservation des prises, jusqu'à 8 rappels par horaire (décalages avant/à l'heure/après), stock tenant compte de la quantité historiquement consommée lors d'une annulation. CI GitHub réussie et Worker Cloudflare 100 % ; recette tactile/push iPhone à confirmer. Ticket FORGE #9.
 - **Sauvegarde V0.5.3** : correction du bouton silencieux dans Safari en remplaçant la soumission native par `data-act='med-save'` (JS), validation manuelle et erreurs visibles dans la fiche sans perdre la saisie. CSP `form-action 'none'` maintenue. 34 tests Node et **vrai test DOM Chromium** (clic, ajout, modification, IndexedDB chiffré) réussis ; Cloudflare 100 %, D1/VAPID/cron conservés ; **recette Safari iPhone non encore confirmée**. FORGE #10.
 - **Notifications :** Santé n'envoie plus que les push des **prises de traitements** ; rendez-vous et rappels de vaccins doivent venir de **NEXUS Agenda/Push** lorsque les événements Santé sont importés dans Nexus. Éviter les double notifications. Serveur Santé ne planifie plus les types non médicamenteux, D1 vidée de ces types.
 - **Lien Santé ↔ Nexus actuellement disponible en sens Santé → Nexus seulement** : relais E2EE *distinct* sante-nexus-link.q9pfwtztsc.workers.dev, base D1 UE sante-nexus-link-db, scopes dose_summary/health_calendar, code privé NXS1. Santé choisit de partager les noms des médicaments ou non (désactivé par défaut). Nexus stocke le résumé et les RDV importés localement en **clair** (avec consentement), affiche Pulse prises faites/planifiées et gère les alertes Agenda. Authentification par pairing et AES-GCM ; pas de docs/analyses/ordonnances partagés.
-- **Correspondance Nexus :** V0.21.5, fichiers sante-link-core.js, nexus-sante.js/css, app.js, pulse-v018.js, settings-v0214.js, index.html, sw.js. Import calendrier manuel ou opt-in automatique, IDs stables et conflits sans écraser les éditions locales.
+- **Correspondance Nexus :** base V0.21.5, complétée par la V0.21.9 pour le bloc hydratation Pulse ; fichiers sante-link-core.js, nexus-sante.js/css, app.js, pulse-v018.js, settings-v0214.js, index.html, sw.js. Import calendrier manuel ou opt-in automatique, IDs stables et conflits sans écraser les éditions locales.
 - **Pas encore livré :** modifications du calendrier Nexus répercutées vers Santé (vraie écriture bidirectionnelle), temps réel quand les deux PWAs sont fermées, validation iPhone E2E.
 - **Important** : ne jamais modifier le relais LINK commun Gaming/Rituel/Vestiaire pour Santé ; ne jamais redéployer Santé sans ses DEUX modules worker.mjs et push.js et sans conserver bindings DB/VAPID/PEPPER. Références : sante-app/docs/PROJECT-HANDOFF.md, nexus-app/docs/PROJECT-HANDOFF.md, FORGE #4/#6.
 
@@ -67,3 +67,16 @@ Mettre à jour ce fichier, `docs/DEPENDENCIES.md`, et la liste de projets de la 
 - Pas de cloud sync ni liaison NEXUS dans V0.1 ; contrat NEXUS voyage à définir et à implémenter après validation, avec jumelage E2EE et permissions explicites.
 - Worker actif sur workers.dev, déployé 100 % le 12/11/2026. **Pas de déploiement automatique relié aux commits du dépôt** : le build `npm run build` produit `dist/worker.js` à publier manuellement.
 - Détails techniques et limites : `garage-app/docs/PROJECT-HANDOFF.md`. Test Safari réel en attente ; sauvegarde privée conseillée pour éviter les pertes de données iOS.
+
+
+## Mises à jour vérifiées sur GitHub le 12/11/2026
+
+- **SANTÉ V0.6 (PR #1 fusionnée)** : nouvel onglet Habitudes avec saisie eau/café/soda et autres boissons, caféine estimée, objectif, tendances sur sept jours, bilans bien-être optionnels. Tout demeure dans le coffre local chiffré ; seuls les agrégats quotidiens peuvent être envoyés à Nexus après consentement explicite. Pas de comptage de macros.
+- **SANTÉ V0.6.1 (PR #2 fusionnée)** : correctif « Enregistrer » Agenda et Carnet sur iPhone, y compris dossiers, consultations, vaccins, mesures et documents. Cause identifiée : collision d'un champ `name=id` avec `form.id`. L'accès à l'attribut `id`, `novalidate`, les boutons JavaScript directs et les messages d'erreur explicites ont été ajoutés ; tests Chromium étendus. Confirmation Safari physique de la V0.6.1 toujours distincte des tests automatisés.
+- **NEXUS V0.21.9 (PR #11 fusionnée)** : réception et validation facultative du résumé d'hydratation Santé dans Pulse, sans exposition des journaux détaillés et sans supprimer le lien Vestiaire V0.21.8.
+- **GARAGE V0.1** : repo privé, Worker dédié et stockage local, sans lien Nexus activé. Statut prêt à tester sur iPhone, pas de synchronisation serveur.
+- **FORGE V0.5 (ticket #12)** : tableau par états, tri des cartes par priorité, filtre priorité, formulaire compact ; Santé et Garage référencées dans le registre applicatif et dans le formulaire de tickets.
+
+### Inventaire Cloudflare (API consultée le 12/11/2026)
+
+Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app`, `rituel-app`, `rituel-web`, `vestiaire-app`, `vestiaire-fits-bridge`, `sante-app`, `sante-nexus-link`, `garage-app`. Bases D1 visibles : `nexus-app-db`, `nexus-link-db`, `gaming-push-db`, `rituel-push-db`, `sante-push-db`, `sante-nexus-link-db`. Cet inventaire décrit uniquement les ressources (pas leurs contenus ni un test de disponibilité des PWAs). Pas de D1 nécessaire pour GARAGE ni FORGE.
