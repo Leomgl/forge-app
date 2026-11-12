@@ -82,6 +82,7 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 | SANTÉ | V0.6 | Habitudes : boissons, eau, caféine estimée, tendances et partage facultatif de résumé NEXUS | Coffre chiffré, consommation saisie manuellement, consentement, aucun journal détaillé exporté |
 | SANTÉ | V0.6.1 | Boutons Enregistrer Agenda/Carnet/dossier sécurisés, validation JS et retour d'erreur | Données existantes, CSP, traitements, rappels push, tests iPhone physiques encore nécessaires |
 | NEXUS | V0.21.9 | Bloc de synthèse hydratation Santé dans Pulse, après opt-in | Vestiaire V0.21.8, données reçues minimales, liaison E2EE |
+| NEXUS | V0.21.10 | Remboursements anticipés : capital/taux déclarés, durée ou mensualités recalculées, correction manuelle ; revenus réguliers en pause et versements variables | Écritures historiques immuables, non-double comptage, nouvelles prévisions/push par échéance, calcul bancaire indicatif, test Safari à faire |
 | GARAGE | V0.1.0 | Inventaire, lieux, prêts, kits, photos locales et sauvegarde JSON | Aucun lien Nexus activé, IndexedDB local, exports non chiffrés |
 | FORGE | V0.5.0 | Colonnes par état, filtres/priorités, formulaire compact, suivi des 6 apps | OAuth GitHub, tickets et métadonnées, workflow, aucune donnée privée |
 | RITUEL | V1.7 | Collection, photos locales, parfums et trousses de voyage avec checklist | Préserver `rituel_personal_v1`, photos dans sauvegardes personnelles, aucun lien Agenda Nexus activé sans consentement |
