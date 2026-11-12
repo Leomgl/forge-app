@@ -44,3 +44,6 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - SANTÉ V0.6 partage **uniquement sur opt-in** un résumé quotidien d'hydratation / caféine vers NEXUS V0.21.9. Aucun journal de boissons, ordonnance ou document clinique ne doit partir vers le stockage non chiffré de NEXUS. Le bloc Pulse ne doit pas régresser le catalogue Vestiaire (transfert paginé V2).
 - GARAGE reste indépendant, aucun lien NEXUS actif ; si un futur événement Agenda déclenche une proposition de kit, prévoir permission par catégorie et transfert minimal chiffré, jamais les photos/numéros de série.
 - FORGE V0.5 est uniquement un tableau de tickets publics. L'ajout SANTÉ/GARAGE n'autorise **aucune lecture de données privées**. Le Worker `forge-hub` doit accepter leurs préfixes dans les tickets sans être connecté aux Workers/D1 des apps elles-mêmes.
+
+
+- **NEXUS → RITUEL (trousse de voyage) : prévu, non actif en RITUEL V1.7.** Ne pas faire croire que l'agenda Nexus remplit déjà une trousse ; futurs échanges par permissions, sans export de photos ni inventaires personnels complets.
