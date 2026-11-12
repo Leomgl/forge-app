@@ -150,3 +150,11 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Signalement iPhone : « Vérifier les contrats » visible mais sans réaction. Cause probable : HTML nouveau et JavaScript ancien simultanés, car le Service Worker servait `/app.js` en cache-first.
 - Correctif uniquement dans `Leomgl/link-app/worker.mjs` : URL de script versionnée `/app.js?v=0.2.1`, stratégie réseau d'abord pour JS/CSS, nouveau cache `link-shell-v0.2.1`, clic délégué et message immédiat de chargement/résultat/échec.
 - GitHub Actions LINK : **19/19 tests réussis** (https://github.com/Leomgl/link-app/actions/runs/43300049906), dont simulation du clic et erreur réseau. Worker Cloudflare version `c2f46e21-6fc5-4c86-aed0-7e121cae7409` à 100 %, aucune modification des Workers/D1 hérités. Recette Safari V0.2.1 à confirmer sur le téléphone ; ticket transversal #28 toujours en cours.
+
+## 2026-11-12 — LINK V0.3 + GAMING Observateur V0.12 (FORGE #28)
+
+- Validation utilisateur : « 7/7 » des contrats dans LINK V0.2.1, correctif cache précédent confirmé sur iPhone.
+- LINK V0.3 déployée : écran d'observation Gaming → Nexus, code LDO1 validé localement et stockage effaçable, aucun nouveau relais ou D1. CI 28/28 : https://github.com/Leomgl/link-app/actions/runs/43307349058 .
+- Gaming : option Réglages → LINK · Observateur ; production d'un relevé anonymisé en lecture seule, ouverture de LINK via fragment URL et code copie/collage. CI 4/4 + build Worker : https://github.com/Leomgl/gaming-app/actions/runs/43307457130 .
+- Workers Cloudflare `link-app` et `gaming-app` publiés chacun à 100 %. Bindings (D1, 2 secrets, VAPID public) + cron 5 min Gaming préservés et vérifiés après déploiement. Aucun Worker Nexus/Santé, clé de jumelage ou donnée métier modifié.
+- L'export de diagnostic est manuel et l'état est déclaratif ; aucun lien véritable n'a changé de transport. **Recette Safari LINK V0.3 et Gaming V0.12 restant à effectuer**, ainsi que la vérification des push depuis l'appareil.
