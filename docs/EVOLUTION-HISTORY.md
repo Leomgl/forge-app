@@ -160,3 +160,9 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Gaming : option Réglages → LINK · Observateur ; production d'un relevé anonymisé en lecture seule, ouverture de LINK via fragment URL et code copie/collage. CI 4/4 + build Worker : https://github.com/Leomgl/gaming-app/actions/runs/43307457130 .
 - Workers Cloudflare `link-app` et `gaming-app` publiés chacun à 100 %. Bindings (D1, 2 secrets, VAPID public) + cron 5 min Gaming préservés et vérifiés après déploiement. Aucun Worker Nexus/Santé, clé de jumelage ou donnée métier modifié.
 - L'export de diagnostic est manuel et l'état est déclaratif ; aucun lien véritable n'a changé de transport. **Recette Safari LINK V0.3 et Gaming V0.12 restant à effectuer**, ainsi que la vérification des push depuis l'appareil.
+
+## 2026-11-12 — Recette iPhone validée : observateur LINK V0.3
+
+- **Validation du propriétaire par capture iPhone** : diagnostic Gaming → Nexus importé et affiché dans LINK V0.3. Instantané local horodaté 12/11/2026 22:19 : jumelage configuré, auto activée, 12 propositions possibles, 0 à actualiser, 7 permissions ; dernière publication déclarée dans Gaming le 11/11/2026 à 17:14. Les valeurs sont un relevé local, pas de la télémétrie temps réel.
+- V0.2.1 « Vérifier les contrats » 7/7 déjà confirmée précédemment. Les systèmes historiques restent en place.
+- **Non attesté** : réception effective de chaque proposition côté Nexus, notifications push et synchronisation automatique orchestrée par LINK, révocation/rollback. Projet #28 toujours ouvert.
