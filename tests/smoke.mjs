@@ -6,7 +6,7 @@ const src=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 new vm.Script(src,{filename:"app.js"});
 const needle='if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start);else start();';
 assert.ok(src.includes(needle),"entrypoint UI changed: adapt test extraction");
-const isolated=src.replace(needle,'globalThis.FORGE_TEST = {parseMeta,issueBody,clean,workflow,updateWorkflowBody};');
+const isolated=src.replace(needle,'globalThis.FORGE_TEST = {parseMeta,issueBody,clean,workflow,updateWorkflowBody,priorityOf,PRIORITIES,apps};');
 const context=vm.createContext({});
 new vm.Script(isolated,{filename:"app-tests.js"}).runInContext(context);
 const api=context.FORGE_TEST;
@@ -66,3 +66,17 @@ assert.match(sw,/u\.pathname\.startsWith\("\/api\/"\)/);
 const manifest=JSON.parse(fs.readFileSync(new URL("../manifest.webmanifest",import.meta.url),"utf8"));
 assert.equal(manifest.display,"standalone");
 console.log("FORGE smoke: syntax, workflow, body preservation, token-free OAuth UI, edge gateway, SW exclusions OK");
+
+// V0.5: project registry, priorities and board markers.
+assert.ok(api.apps.some(x=>x.id==="SANTE"&&x.repo==="Leomgl/sante-app"));
+assert.ok(api.apps.some(x=>x.id==="GARAGE"&&x.repo==="Leomgl/garage-app"));
+assert.equal(api.priorityOf({title:"[SANTE][BUG] Traitement",body:'<!-- FORGE_META: {"project":"SANTE","priority":"critique"} -->'}),"critique");
+assert.equal(api.priorityOf({title:"[GARAGE][EVOLUTION] Kit",body:""}),"normale");
+assert.equal(api.PRIORITIES.critique.rank,0);
+assert.match(html,/id="priorityFilter"/);
+assert.match(html,/id="advancedOptions"/);
+assert.match(html,/id="projectFilter"/);
+assert.match(src,/function populateProjects\(/);
+assert.match(src,/class="issue-column col-/);
+assert.match(edge,/NEXUS\|GAMING\|RITUEL\|VESTIAIRE\|SANTE\|GARAGE\|FORGE/);
+console.log("FORGE V0.5: catalog, priorities, board and compact form OK");
