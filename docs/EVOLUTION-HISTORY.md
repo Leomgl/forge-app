@@ -42,6 +42,8 @@ Code/docs : [README](https://github.com/Leomgl/gaming-app/blob/main/README.md).
 |---|---|---|
 | Versions de base | Routines matin/soir, stock manuel, export JSON, PWA offline | Conservation de la clé historique localStorage |
 | V1.5 | Notifications intelligentes et push iOS Worker/D1, prévision stock à partir de relevés, statistiques 7/30 jours | Ne pas déduire du stock automatiquement, conserver historique et souscriptions |
+| V1.7–V1.9 | Trousse, photos et kits locaux ; voyages Nexus opt-in ; emplacement partagé avec Garage, stock restant à Rituel | Clé locale historique, consentements des liens et non-transfert des photos |
+| V1.10 (PR #2, 12/11) | Lotion Sport 70 ml et baume Ayurveda 70 ml : fiches, stocks indépendants, photos officielles ; routine corps Sport ou Sakura et mains optionnelles | Coche historique `sakura` conservée, deux stocks inconnus au départ, pas d'écriture dans les autres apps ; CI JS validée |
 
 Code/docs : [README](https://github.com/Leomgl/rituel-app/blob/main/README.md) · [Architecture gratuite](https://github.com/Leomgl/rituel-app/blob/main/docs/ARCHITECTURE-APPS-GRATUITES.md).
 
