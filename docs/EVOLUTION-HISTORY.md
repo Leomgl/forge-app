@@ -227,3 +227,10 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Configuration Cloudflare : `HUB_DB` conservé, secret `LINK_HUB_OWNER_TOKEN` non divulgué, `LINK_HUB_ADMIN_ENABLED=true`, `LINK_OWNER_BOOTSTRAP_ENABLED=true`, **aucun `LINK_HUB_ENABLED`** et aucun `LINK_HUB_LEGACY_ADMIN_ENABLED`. Administration accessible uniquement après inscription passkey ; transport de messages réel toujours désactivé.
 - CI V0.8.1 : **83/83 tests verts** ; Worker LINK déployé à 100 %, aucune autre PWA/Worker métier redéployée. Four crons push toujours désactivés, gardes 503 non modifiées.
 - À valider sur iPhone : activation de la première passkey, connexion Face ID, création d'une invitation Gaming puis enrolment dans sa propre PWA. Le pilote Gaming → LINK → Nexus en shadow et les autres relations sont encore à faire. FORGE #28 reste ouvert, #32 notifications suspendues.
+
+## 2026-11-13 — LINK V0.8.2 : assistant local de premier accès propriétaire
+
+- Un mécanisme de génération/transmission du code via la connexion Cloudflare n'a pas pu aboutir ; aucun secret permanent n'a été dévoilé.
+- LINK `src/owner-ui.mjs` génère désormais sur l'iPhone un code 256 bits, sa seule empreinte SHA-256 et une commande d'initialisation D1. L'utilisateur exécute lui-même la commande dans sa console Cloudflare (ou transmet seulement la commande à un opérateur autorisé), puis complète l'enregistrement Face ID dans LINK. Code valable 15 minutes et usage unique ; clé serveur permanente et tokens d'app restent côté Cloudflare.
+- LINK V0.8.2 Worker `634506db-530e-4e4b-abc2-a66162e074ec` déployé 100 %, même DB `HUB_DB`, admin/bootstrap disponible et transport `LINK_HUB_ENABLED` absent. Tests 83/83 réussis. Quatre crons de notifications toujours à zéro ; aucune autre app touchée.
+- **Aucun code temporaire n'a été émis via le connecteur ; aucune passkey propriétaire confirmée à ce stade.** Forge #28 reste en cours, premier test iPhone attendu.
