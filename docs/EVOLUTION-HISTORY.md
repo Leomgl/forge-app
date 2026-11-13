@@ -234,3 +234,11 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - LINK `src/owner-ui.mjs` génère désormais sur l'iPhone un code 256 bits, sa seule empreinte SHA-256 et une commande d'initialisation D1. L'utilisateur exécute lui-même la commande dans sa console Cloudflare (ou transmet seulement la commande à un opérateur autorisé), puis complète l'enregistrement Face ID dans LINK. Code valable 15 minutes et usage unique ; clé serveur permanente et tokens d'app restent côté Cloudflare.
 - LINK V0.8.2 Worker `634506db-530e-4e4b-abc2-a66162e074ec` déployé 100 %, même DB `HUB_DB`, admin/bootstrap disponible et transport `LINK_HUB_ENABLED` absent. Tests 83/83 réussis. Quatre crons de notifications toujours à zéro ; aucune autre app touchée.
 - **Aucun code temporaire n'a été émis via le connecteur ; aucune passkey propriétaire confirmée à ce stade.** Forge #28 reste en cours, premier test iPhone attendu.
+
+## 2026-11-13 — LINK V0.9 : première passerelle E2EE disponible pour test iPhone
+
+- Face ID propriétaire en base D1 vérifiée ; LINK expose les invitations Gaming/Nexus, le statut manuel des clients/grants/messages et le contrôle `installed_summary`. HMAC sur jetons avant lecture D1, sans nouvelles tâches cron.
+- LINK Worker v0.9 `18d95cc4-c232-4c11-9613-758a8efb2054` à 100 %, transport `LINK_HUB_ENABLED=true` activé après vérification **clients=0, grants=0, messages=0**. Les permissions restent fermées par défaut.
+- Gaming Worker v0.17 `0ec47346-bec0-447f-835c-47922a2f5d09` à 100 % : SDK LINK dans le panneau de liaison existant, invitation temporaire dans PWA installée, outbox IndexedDB et publication manuelle d'un résumé chiffré. Nexus GitHub Pages inclut son adaptateur dans Propositions Gaming, avec validation E2EE et ACK après persistance vérifiée, jamais d'import financier automatique.
+- CI LINK, Gaming et Nexus verts ; recette réelle iPhone à faire. **Aucun client/grant/message réel au dernier contrôle ; aucune ancienne route migrée.** Les six autres relations nécessitent encore adaptateurs et tests.
+- Crons LINK + 4 Workers notifications toujours à zéro, secrets VAPID et protections `503 PUSH_TEMPORARILY_PAUSED` non modifiés, aucune ligne push écrite par LINK. Forge #28 reste actif, #32 attend.
