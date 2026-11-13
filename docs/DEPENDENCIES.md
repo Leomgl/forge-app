@@ -131,3 +131,11 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - Destinataire déchiffre, déduplique, persiste puis ACK. ACK `persisted` ne signifie pas achat accepté ni rendez-vous confirmé. Santé et ses données privées restent sous un verrou supplémentaire, et le consentement reste explicite.
 - Mode shadow Gaming → Nexus à tester avant tout basculement, puis 6 relations restantes. Limitations iOS PWA : le serveur peut conserver/dispatcher pendant la fermeture, mais application locale du message seulement quand le client fonctionne, sauf traitement backend métier déjà prévu.
 - Aucune ancienne connexion supprimée, aucun secret déplacé, aucune synchronisation centrale mise en production à ce stade. Référence : Leomgl/link-app/docs/HUB-V07.md.
+
+## LINK V0.7.1 — activation préparée et système push indépendant (13/11/2026)
+
+- D1 `link-hub-db` complètement initialisée et liée au seul Worker LINK. Six tables, dont invitations à usage unique ; zéro lecture/purge d'anciennes bases. Aucune écriture métier réelle par le hub, routes toutes verrouillées.
+- Le contrôle propriétaire et le transport sont **deux autorisations séparées** : `LINK_HUB_ADMIN_ENABLED` et `LINK_HUB_ENABLED`, toutes deux absentes/désactivées. Le transport ne peut démarrer sans propriétaire, tokens apps et grants explicites ; les enrollements peuvent ultérieurement être effectués à transport coupé.
+- `src/envelope.mjs` propose une enveloppe AES-GCM dérivée du secret NXL1 existant, avec ID d'événement stable, métadonnées liées par AAD et payload chiffré. Pour un retry, réutiliser la première enveloppe persistée (même nonce/ciphertext), sans réencryptage à révision inchangée.
+- Aucun cron ni sondage automatique LINK. Budget de 150 nouveaux messages par application par jour, déduplication sans INSERT supplémentaire, UPDATE de grant seulement lors d'un vrai changement ; seuils D1 gratuits partagés au compte.
+- Les quatre crons historiques restent à zéro et les gardes `503 PUSH_TEMPORARILY_PAUSED` Nexus/Santé/Gaming sont intacts conformément à la dernière note Forge #28 / #32. Les fonctions de synchronisation métier historiques restent indépendantes de LINK.
