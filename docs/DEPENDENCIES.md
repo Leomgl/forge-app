@@ -210,3 +210,36 @@ Après validation iPhone de toutes les interfaces, **les publications automatiqu
 **Validation restante** : actualiser les trois PWA iPhone, produire une modification fictive ou un envoi chiffré autorisé via LINK, vérifier la proposition reçue dans Nexus sans doublon, le secours manuel toujours accessible, et comparer l'activité D1 (aucun nouveau message historique automatique). Si le Hub tombe, la synchro automatique attend sa reprise au lieu d'utiliser le relais historique ; c'est volontaire et réversible.
 
 **Prochaine vague** : éliminer les replis automatiques de *réception* Gaming/Rituel/Vestiaire dans Nexus **après** cette validation ; traiter séparément les 3 demandes de lieu Rituel/Garage et les 22 envois Santé (ACK/déduplication/tombstones/consentements) avant toute coupure de leurs anciens canaux. Notifications toujours en pause, #32.
+
+## 13/11/2026 — #28 : extinction effective des anciens relais, après feu vert explicite pour perdre les données de test
+
+**Autorisation propriétaire :** « tu peux sauter tout les anciens relais, on avisera directement si ça deconne […] je vais reset les données des apps […] ce n'était que des test ». L'utilisateur n'a PAS encore confirmé de recette iPhone après cette nouvelle migration. Ne pas présenter cette phase comme une recette mobile réussie.
+
+### Réalisations vérifiées
+
+1. Six PR de bascule fusionnées avec tests verts :
+   - Nexus [#22](https://github.com/Leomgl/nexus-app/pull/22), merge `8d3108a4dfb2a7595844cd19587b6fe9145d2fd7` ; code E2EE local, aucun ancien fallback reçu, voyages Nexus→Rituel désormais via le contrat Hub `nexus-rituel`, voyages Garage via `nexus-garage`, agenda Santé bidirectionnel via Hub
+   - Gaming [#3](https://github.com/Leomgl/gaming-app/pull/3), merge `58d55c9af7b54d8ba84a3b36e386edaf39e0679b`, Worker version `9a3897e7-31d0-469c-80d0-15608277469f` à 100 %
+   - Rituel [#5](https://github.com/Leomgl/rituel-app/pull/5), merge `54a0c8271bb87fdd9e4f2fd926b19a1a1052e80a` ; reçus voyages Hub persistés avant ACK, tombstones, garage Hub
+   - Vestiaire [#5](https://github.com/Leomgl/Vestiaire-app/pull/5), merge `69029203eff0642ede4dbcf113f2c1eecfc617d4`
+   - Garage [#7](https://github.com/Leomgl/garage-app/pull/7), merge `b31eaafe2d5336b812906967377a7ce3e4637ea0`, Worker `2883890e-77cd-4699-85d3-9f1d329db32a` à 100 %
+   - Santé [#11](https://github.com/Leomgl/sante-app/pull/11), merge `dfa5049a7367658824465628260c1283550bc9f4`, Worker `db19cc87-a333-4ac2-83c7-569673e59b53` à 100 %, consentement, coffre et crons conservés
+2. Routes Link Hub D1 `link-hub-db` : contrat personnalisé `nexus-rituel` / `trip_context` ajouté et autorisé ; `sante-summary-nexus` / `dose_summary` autorisé. LINK Hub Worker `link-app` inchangé, credentials admin et D1 conservés.
+3. Retrait des dépendances Workers :
+   - Nexus API [#23](https://github.com/Leomgl/nexus-app/pull/23) merge `ce1d8816985312d90e6d0df36db8b2f077dff045` ; `/api/v1/link/*` répond HTTP 410, service binding `LINK_RELAY` supprimé ; `nexus-app-api` version `f933786a-6a61-407b-9586-3a22e1c12500` à 100 %, bindings coffre DB et VAPID conservés, aucun cron
+   - Rituel web [#6](https://github.com/Leomgl/rituel-app/pull/6) merge `9e9737345824c5864b2a186028dda84e6f1c7a22` ; proxy `/api/v1/link/*` répond 410, binding `NEXUS_API` supprimé, `RITUEL_PUSH` conservé ; `rituel-web` version `04bce9d0-07cb-4eca-ac8c-02d58f66b412` à 100 %
+4. **Suppression effective et vérifiée via API Cloudflare :**
+   - Workers `nexus-link-api` et `sante-nexus-link`
+   - D1 `nexus-link-db` UUID `54b69647-2935-4693-82c2-eeec8ff7fa77` et `sante-nexus-link-db` UUID `5dc83559-bd23-437b-8e0b-b5bf0c5bfff3`
+   - Inventaire Cloudflare après purge : **10 Workers**, aucun de ces deux scripts, **5 bases D1** (`link-hub-db`, `nexus-app-db`, `gaming-push-db`, `rituel-push-db`, `sante-push-db`), les anciens D1 totalement absents. Plus aucun service binding vers eux. Crons vérifiés à zéro pour LINK, Nexus API, Gaming, Garage, Santé et Rituel web. **Aucune base d'application, de hub ou de notifications supprimée.**
+
+### Procédure de remise à zéro / réinscription iPhone après migration
+
+- Actualiser les six PWA pour charger le **nouveau code** avant toute nouvelle liaison (le cache/service worker peut garder l'ancien JavaScript). Ne pas se fier au seul numéro de commit.
+- **Ne pas effacer l'administration de LINK, son propriétaire/passkey ou `link-hub-db` sans avoir une méthode de récupération vérifiée.** Le reset des données locales des six apps ne réinitialise pas automatiquement les identifiants/permissions/anciens messages chiffrés stockés sur le serveur Hub.
+- Ouvrir LINK, vérifier les six inscriptions Nexus/Gaming/Rituel/Vestiaire/Garage/Santé, renouveler les invitations LHI1 côté Hub si les identifiants locaux ont été réinitialisés ; autoriser les contrats et scopes souhaités, y compris les routes de voyage et les scopes médicaux uniquement avec consentement explicite.
+- Créer les **nouvelles clés E2EE locales** après reset : Nexus→Gaming, Nexus→Rituel, Nexus→Vestiaire, Nexus↔Santé, Nexus→Garage voyages, Nexus→Rituel voyages ; Garage→Rituel pour emplacements/collections. Transmettre les invitations privées dans les écrans des apps, jamais dans Forge ni le chat.
+- Refaire des tests fictifs : Gaming→Nexus propositions, Vestiaire→Nexus lots, Rituel→Nexus achat/routine, Rituel↔Garage déplacements, Nexus→Garage voyage, Nexus→Rituel voyage, Santé↔Nexus RDV/édition/suppression/conflit, Santé→Nexus résumé doses et consentements. Après succès, purger si nécessaire les anciennes **enveloppes de test du Hub seulement** sans effacer propriétaire/registrations/grants par accident.
+- Notifications toujours débranchées selon #32 ; **aucun cron réactivé**. Recette PWA sur iPhone après ce cutover et reset utilisateur : **en attente** ; conserver #28 en cours jusqu'à cette vérification.
+
+**Note sécurité :** l'ancien endpoint ne sert plus à créer/révoquer les clés. `NexusLinkCore.status` et `SanteLinkCore.status` attestent seulement qu'une clé locale est bien formée ; l'inscription et les droits réels sont vérifiés par LINK Hub. Une dissociation locale n'est pas à elle seule une révocation des permissions LINK au niveau serveur.
