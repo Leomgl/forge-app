@@ -181,3 +181,12 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - Sécurité : écriture différentielle, 150 messages max/app/jour, 100 répétitions / ACK sans écritures supplémentaires, grants inchangés sans UPDATE, données Santé bloquées sauf autorisation spéciale. `src/envelope.mjs` chiffre Gaming → Nexus avec clé dérivée NXL1 ; `/admin/invitations` et `/enroll` préparent des inscriptions d'apps à usage unique, uniquement depuis l'origine locale de la PWA.
 - **FORGE #32 / push** : les quatre crons Nexus API, Santé, Gaming et Rituel sont **toujours désactivés** après cette livraison ; les protections `503 PUSH_TEMPORARILY_PAUSED` n'ont pas été touchées. Aucun des quatre Workers n'a été redéployé. Le centre de notifications est reporté.
 - CI **76/76** : https://github.com/Leomgl/link-app/actions/runs/43339019620. Le propriétaire sécurisé, l'activation d'identités/app et la recette Gaming → Nexus en shadow sur iPhone restent à faire. LINK est prioritaire jusqu'à clôture du #28.
+
+## LINK V0.9 — pilotes et état des flux (13/11/2026)
+
+- LINK reste la seule interface d'administration des passerelles. Face ID propriétaire confirmé. Six apps enregistrées dans le registre, sept contrats déclarés.
+- **Transport disponible mais fermé par défaut** : le secret `LINK_HUB_ENABLED=true` n'a été posé qu'après `clients=0,grants=0,messages=0`. La permission `gaming-nexus/installed_summary` ne peut être créée que par le propriétaire Face ID ; toutes les autres routes sont désactivées.
+- **Premier adaptateur développé** : Gaming V0.17 et Nexus GitHub Pages possèdent un SDK d'inscription à LINK dans leur écran de liaison existant (pas de nouvelle page permanente), messages chiffrés par l'ancien secret de paire NXL1, envoi manuel/différentiel avec outbox durable et ACK par Nexus après sauvegarde locale vérifiée.
+- **Important** : les PWA n'ont pas encore été enrôlées sur le véritable iPhone ; aucune réception E2E n'a été confirmée et **aucun contrat n'est déclaré migré**. Les six autres relations (Rituel, Vestiaire, Santé, Garage) doivent recevoir leur adaptateur métier et leur recette.
+- CI validée : LINK **88/88**, Gaming **16/16**, Nexus **97/97**. Cinq Workers concernés (LINK + quatre moteurs push) : crons vides, notifications toujours suspendues. Aucun ancien relay/D1 métier supprimé. Lire Forge #28 pour la recette et l'ordre de bascule.
+
