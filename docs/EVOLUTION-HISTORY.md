@@ -211,3 +211,11 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - D1 indépendante EU `link-hub-db` créée (UUID `d81d8dbe-1167-477e-a41b-8db74f5eec45`), mais migration SQL impossible : limite quotidienne D1 gratuite dépassée, API code 7500. Pas de passage payant ou contournement.
 - Worker LINK V0.7 `20ef81a9-a51a-4e51-9a13-4803972a61c9` à 100 %, API hub **non activée / staged** faute de DB initialisée et de secrets propriétaire ; anciens relais inchangés. Documentation archivée dans LINK/docs/HUB-V07.md, détail et état dans Forge #28.
 - Prochain jalon unique : SQL D1 → binding/identité propriétaire → apps enrôlées → Gaming ↔ Nexus en shadow mode → iPhone E2E + rollback → 6 autres flux. Aucun chantier hors #28 avant stabilisation.
+
+## 2026-11-13 — LINK V0.7.1 : reprise D1, verrouillage sécurité, invitations PWA
+
+- Dernier commentaire Forge #28 lu et appliqué : retrait des 4 crons push confirmé, aucun Worker Nexus/Santé/Gaming/Rituel modifié ni gardes 503 retirés ; la migration inter-app reste séparée du futur moteur de notifications.
+- D1 EU `link-hub-db` initialisée après reset du quota, six tables + six apps vérifiées. Seul binding `HUB_DB` ajouté à LINK ; Worker `6f11ba5b-382b-4630-9e23-23693985e416` à 100 %.
+- Activation du contrôle propriétaire séparée de celle du transport, toutes deux **OFF**. Appairage futur par invitation à usage unique 15 minutes depuis la PWA installée ; tokens individuels non codés en dur.
+- Module E2EE `src/envelope.mjs` Gaming → Nexus prêt pour shadow mode avec chiffrement NXL1 et identifiants stables. Protection D1 : 150 nouveaux messages/app/jour, 100 retries idempotents sans écritures supplémentaires, grants inchangés non réécrits, refus Santé par défaut.
+- CI LINK **76/76** verts. **Aucun vrai échange via LINK, aucune migration d'ancien lien, aucune modification notifications.** Étape suivante : authentification propriétaire, enrôlement depuis vraies PWA, shadow Gaming → Nexus, recette/rollback iPhone, puis autres flux.
