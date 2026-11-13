@@ -173,3 +173,11 @@ Workers vérifiés : `forge-hub`, `nexus-app-api`, `nexus-link-api`, `gaming-app
 - Nouveau **D1 EU `link-hub-db`** (`d81d8dbe-1167-477e-a41b-8db74f5eec45`) créé. **Migrations SQL BLOQUÉES** par la limite quotidienne d'écritures D1 gratuites (erreur Cloudflare 7500). Aucun upgrade payant et aucun ancien stockage modifié.
 - Worker LINK V0.7 `20ef81a9-a51a-4e51-9a13-4803972a61c9` à 100 %, **sans binding D1 / secret / activation** : statut `staged`, aucun message métier transmis par LINK. App conserve ses 7 contrats et les contrôles Safari trompeurs sont suspendus.
 - CI LINK **63/63** : https://github.com/Leomgl/link-app/actions/runs/43331793183. Docs détaillées : https://github.com/Leomgl/link-app/blob/main/docs/HUB-V07.md. Forge #28 reste prioritaire et EN COURS.
+
+## LINK V0.7.1 — reprise contrôlée après note #28 (13/11/2026)
+
+- **D1 LINK désormais prête** : base EU `link-hub-db` (UUID `d81d8dbe-1167-477e-a41b-8db74f5eec45`), six tables y compris `hub_enrollment_tickets` vérifiées, six apps enregistrées, binding `HUB_DB` du Worker LINK vérifié. Aucune autre D1 modifiée.
+- **LINK Worker V0.7.1** `6f11ba5b-382b-4630-9e23-23693985e416` déployé 100 %. **Administration et transport restent inactifs : zéro flux et zéro donnée métier migrés**, anciens liens intacts.
+- Sécurité : écriture différentielle, 150 messages max/app/jour, 100 répétitions / ACK sans écritures supplémentaires, grants inchangés sans UPDATE, données Santé bloquées sauf autorisation spéciale. `src/envelope.mjs` chiffre Gaming → Nexus avec clé dérivée NXL1 ; `/admin/invitations` et `/enroll` préparent des inscriptions d'apps à usage unique, uniquement depuis l'origine locale de la PWA.
+- **FORGE #32 / push** : les quatre crons Nexus API, Santé, Gaming et Rituel sont **toujours désactivés** après cette livraison ; les protections `503 PUSH_TEMPORARILY_PAUSED` n'ont pas été touchées. Aucun des quatre Workers n'a été redéployé. Le centre de notifications est reporté.
+- CI **76/76** : https://github.com/Leomgl/link-app/actions/runs/43339019620. Le propriétaire sécurisé, l'activation d'identités/app et la recette Gaming → Nexus en shadow sur iPhone restent à faire. LINK est prioritaire jusqu'à clôture du #28.
