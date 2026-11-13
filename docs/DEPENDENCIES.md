@@ -147,3 +147,11 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - L'admin autorisée par `LINK_HUB_ADMIN_ENABLED` ne doit jamais déclencher le transport : `LINK_HUB_ENABLED` reste absent, grants existants fermés. Les permissions/invitations ne seront accessibles qu'après connexion Face ID.
 - Un token individuel d'app reste nécessaire pour Gaming et Nexus. Les deux PWAs doivent pouvoir l'enregistrer dans leur contexte installé ; conserver les anciens liens et chiffrer les événements avant envoi.
 - Notifications : ne modifier aucun cron, scheduler, VAPID, subscription, traitement ou gardes `503 PUSH_TEMPORARILY_PAUSED` tant que le hub des données n'est pas validé.
+
+## LINK V0.9 — premier hub E2EE Gaming → Nexus (test uniquement)
+
+- App source et app destinataire s'inscrivent par invitation de 15 minutes **dans leurs PWA respectives**, et non via un lien Safari. Le jeton signé HMAC reste stocké dans un IndexedDB local dédié à l'app ; LINK ne reçoit pas la paire NXL1 ni les données métier en clair.
+- Le hub est disponible réseau mais `deny by default`. Seule permission proposée depuis LINK : `gaming-nexus / installed_summary`. Publication du seul résumé Gaming en E2EE via bouton manuel ; Nexus le déchiffre et l'inscrit comme proposition à examiner. ACK D1 seulement après vérification de sauvegarde locale.
+- Même message/révision : la source réutilise l'enveloppe chiffrée sauvegardée dans son outbox. Ne pas ré-encrypter avant retry : sinon conflit de fingerprint. Aucun cron/polling, plafond 150 messages/app/jour, rejet de jetons invalides avant toute lecture D1.
+- Réception depuis Nexus installée, pas Safari ; iOS peut différer la réception tant que la PWA est fermée. Pas de validation automatique de dépenses, d'agendas, ni de données Santé.
+- Les anciens relais, D1 métier, gestion des notifications et 4 crons suspendus restent inchangés. Aucune suppression tant que les 7 relations n'ont pas passé la recette iPhone, la déduplication, le rollback et le consentement.
