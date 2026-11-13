@@ -139,3 +139,11 @@ Toute modification de contrat est à documenter ici **dans le même chantier**.
 - `src/envelope.mjs` propose une enveloppe AES-GCM dérivée du secret NXL1 existant, avec ID d'événement stable, métadonnées liées par AAD et payload chiffré. Pour un retry, réutiliser la première enveloppe persistée (même nonce/ciphertext), sans réencryptage à révision inchangée.
 - Aucun cron ni sondage automatique LINK. Budget de 150 nouveaux messages par application par jour, déduplication sans INSERT supplémentaire, UPDATE de grant seulement lors d'un vrai changement ; seuils D1 gratuits partagés au compte.
 - Les quatre crons historiques restent à zéro et les gardes `503 PUSH_TEMPORARILY_PAUSED` Nexus/Santé/Gaming sont intacts conformément à la dernière note Forge #28 / #32. Les fonctions de synchronisation métier historiques restent indépendantes de LINK.
+
+## LINK V0.8.1 — accès propriétaire sans secret navigateur
+
+- WebAuthn de LINK est lié uniquement à `link-app.q9pfwtztsc.workers.dev`. Le navigateur transmet les réponses de la passkey ; LINK les vérifie sur le serveur avec la clé publique de l'authentificateur et une session courte en cookie HttpOnly. Aucune clé privée Face ID, clé NXL1 ni token propriétaire n'est stocké dans LINK localStorage.
+- L'activation initiale est séparée du secret de signature serveur : code aléatoire de 64 caractères hex, valable 15 min, hashé dans la D1 dédiée, consommé après inscription d'une seule passkey. Aucune navigation Safari inter-PWA pour la gestion quotidienne.
+- L'admin autorisée par `LINK_HUB_ADMIN_ENABLED` ne doit jamais déclencher le transport : `LINK_HUB_ENABLED` reste absent, grants existants fermés. Les permissions/invitations ne seront accessibles qu'après connexion Face ID.
+- Un token individuel d'app reste nécessaire pour Gaming et Nexus. Les deux PWAs doivent pouvoir l'enregistrer dans leur contexte installé ; conserver les anciens liens et chiffrer les événements avant envoi.
+- Notifications : ne modifier aucun cron, scheduler, VAPID, subscription, traitement ou gardes `503 PUSH_TEMPORARILY_PAUSED` tant que le hub des données n'est pas validé.
