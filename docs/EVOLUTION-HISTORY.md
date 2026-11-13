@@ -219,3 +219,11 @@ Après une livraison qui change le comportement ou la structure, ajouter le jalo
 - Activation du contrôle propriétaire séparée de celle du transport, toutes deux **OFF**. Appairage futur par invitation à usage unique 15 minutes depuis la PWA installée ; tokens individuels non codés en dur.
 - Module E2EE `src/envelope.mjs` Gaming → Nexus prêt pour shadow mode avec chiffrement NXL1 et identifiants stables. Protection D1 : 150 nouveaux messages/app/jour, 100 retries idempotents sans écritures supplémentaires, grants inchangés non réécrits, refus Santé par défaut.
 - CI LINK **76/76** verts. **Aucun vrai échange via LINK, aucune migration d'ancien lien, aucune modification notifications.** Étape suivante : authentification propriétaire, enrôlement depuis vraies PWA, shadow Gaming → Nexus, recette/rollback iPhone, puis autres flux.
+
+## 2026-11-13 — LINK V0.8.1 : accès propriétaire Face ID sécurisé, sans migration des flux
+
+- LINK `src/owner-auth.mjs` : validation serveur WebAuthn ES256 avec user verification, origine/RP stricts, challenge signé, compteur et anti-rejeu ; cookie de session HttpOnly/Secure/SameSite Strict valable 15 minutes. `src/owner-ui.mjs` place l'administration **uniquement dans LINK → Connexions**.
+- D1 LINK seule : tables `hub_owner_passkeys`, `hub_owner_used_challenges`, `hub_owner_setup_codes` ajoutées (pas d'impact sur les anciennes DB). Initialisation par code à usage unique 15 min, haché SHA-256 en D1 ; le secret de signature propriétaire reste exclusivement dans Cloudflare.
+- Configuration Cloudflare : `HUB_DB` conservé, secret `LINK_HUB_OWNER_TOKEN` non divulgué, `LINK_HUB_ADMIN_ENABLED=true`, `LINK_OWNER_BOOTSTRAP_ENABLED=true`, **aucun `LINK_HUB_ENABLED`** et aucun `LINK_HUB_LEGACY_ADMIN_ENABLED`. Administration accessible uniquement après inscription passkey ; transport de messages réel toujours désactivé.
+- CI V0.8.1 : **83/83 tests verts** ; Worker LINK déployé à 100 %, aucune autre PWA/Worker métier redéployée. Four crons push toujours désactivés, gardes 503 non modifiées.
+- À valider sur iPhone : activation de la première passkey, connexion Face ID, création d'une invitation Gaming puis enrolment dans sa propre PWA. Le pilote Gaming → LINK → Nexus en shadow et les autres relations sont encore à faire. FORGE #28 reste ouvert, #32 notifications suspendues.
