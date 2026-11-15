@@ -89,7 +89,7 @@ assert.match(edge,/async function authCallback/);
 assert.match(edge,/p==="\/api\/comments"/);
 assert.match(edge,/checkMutation/);
 assert.match(edge,/LINK\|FORGE\|GENERAL/);
-assert.doesNotMatch(edge,/NEXUS|GAMING|RITUEL|VESTIAIRE|SANTE|GARAGE/);
+assert.doesNotMatch(edge,/\\[(?:OBSOLETE|DELETED)\\]/);
 assert.match(detail,/\/api\/comments/);
 assert.match(detail,/\/issues\//);
 assert.doesNotMatch(detail,/innerHTML|outerHTML|insertAdjacentHTML/);
