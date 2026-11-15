@@ -1,5 +1,12 @@
 # Historique des livraisons — nouveau cycle
 
+## 15 novembre 2026 — Feuille 03 « Me notifier » / LAB et BLOCKS V0.2.0
+
+- BLOCKS V0.2.0, commit `755c6f2387d6ccb21a6fca6ad00f3a54523d0b2f` : éditeur de rappels universel, plusieurs décalages, rendez-vous / pass / stock, sortie locale neutre, CSS à tokens, tests GitHub Actions verts.
+- LABORATOIRE V0.2.0, commit `213ea7e900f5efe9f31852478e3d116ca6e24d28` : troisième feuille et 11 ressources compilées, cache SW versionné, [CI verte](https://github.com/Leomgl/laboratoire-app/actions/runs/43766395358).
+- Cloudflare `laboratoire-app` version `007915c9-31f0-4079-8bc7-18238735b581` déployée à 100 %, Worker existant, zéro nouveau binding/D1. Aucun redéploiement LINK/FORGE.
+- Recette iPhone encore à effectuer ; adaptateur LINK et notifications réelles non implémentés. Aucun Push local.
+
 ## 15 novembre 2026 — Migration des sources GitHub et LABORATOIRE V0.1.1
 
 - L'utilisateur a créé les repos privés `Leomgl/laboratoire-app` et `Leomgl/blocks-app`. Code source officiellement migré ; `forge-app/bootstrap/laboratoire-v0-1` n'est plus source de vérité.
