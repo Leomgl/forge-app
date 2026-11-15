@@ -93,12 +93,41 @@
     <a href="./docs/TICKET-PROTOCOL.md" target="_blank" class="contextlink"><span>03</span><b>Méthode de livraison</b><small>Analyse, migration, tests et décision</small></a>
     <a href="./docs/DECISIONS.md" target="_blank" class="contextlink"><span>04</span><b>Arbitrages techniques</b><small>Pourquoi nous avons fait certains choix</small></a></div>
   </section>
+  <section class="section forge-settings" id="settings" hidden aria-label="Réglages Forge">
+   <div class="section-heading"><div><p class="eyebrow">PRÉFÉRENCES · FORGE</p><h2>Réglages</h2></div></div>
+   <div class="forge-settings-version"><div><small>VERSION ACTUELLE</small><strong>FORGE</strong></div><span>V0.9.0</span></div>
+   <label class="forge-settings-search"><span class="sr-only">Rechercher dans les réglages</span><input type="search" id="forge-settings-search" placeholder="Rechercher un réglage…" autocomplete="off" aria-controls="forge-settings-groups"></label>
+   <p id="forge-settings-search-status" class="micro" aria-live="polite"></p>
+   <div id="forge-settings-groups">
+    <details class="forge-settings-group" data-settings-keywords="connexion github oauth autorisations authentification lien link" open>
+     <summary><strong>LINK et connexions</strong><small>Compte GitHub et sécurité de la publication</small></summary>
+     <div class="forge-settings-content"><p>GitHub fait foi pour les tickets. La connexion OAuth passe par le Worker sécurisé FORGE ; aucun jeton personnel n’est saisi dans l’application.</p><button type="button" class="outline" id="forge-settings-auth">Gérer ma connexion GitHub</button><p class="micro">Cette application ne crée aucune notification Push. Les notifications inter-applications sont centralisées dans LINK.</p></div>
+    </details>
+    <details class="forge-settings-group" data-settings-keywords="preferences interface vue demarrage accueil terminer archives tickets navigation">
+     <summary><strong>Préférences et interface</strong><small>Navigation et vue d’ouverture</small></summary>
+     <div class="forge-settings-content"><label class="forge-settings-select">Vue au démarrage<select id="forge-start-view"><option value="tickets">Accueil · À suivre</option><option value="completed">Tickets terminés</option><option value="context">Applications et contexte</option></select></label><p class="micro">Ce choix est enregistré uniquement sur cet appareil et ne change pas les tickets GitHub.</p></div>
+    </details>
+    <details class="forge-settings-group" data-settings-keywords="donnees sauvegardes brouillon exporter restaurer tickets github">
+     <summary><strong>Données et sauvegardes</strong><small>Brouillons locaux et données GitHub</small></summary>
+     <div class="forge-settings-content"><p>Les tickets et commentaires sont conservés dans GitHub. Le brouillon du formulaire reste local à cet appareil et peut être modifié ou effacé depuis « Nouveau ticket ».</p><a class="outline forge-settings-link" href="#composer">Ouvrir mon brouillon</a></div>
+    </details>
+    <details class="forge-settings-group" data-settings-keywords="securite confidentialite autorisations donnees jeton connexion oauth cookies">
+     <summary><strong>Sécurité et confidentialité</strong><small>Accès, permissions et données locales</small></summary>
+     <div class="forge-settings-content"><p>Le Worker OAuth conserve la session sécurisée par cookie HttpOnly ; FORGE ne demande jamais de jeton GitHub personnel dans les réglages. Les brouillons et cette préférence de navigation restent sur ton appareil.</p><p class="micro">Les dépôts et tickets GitHub peuvent contenir des informations publiées selon leurs réglages de visibilité.</p></div>
+    </details>
+    <details class="forge-settings-group" data-settings-keywords="a propos version mise a jour service worker informations application">
+     <summary><strong>À propos</strong><small>Version et mises à jour de FORGE</small></summary>
+     <div class="forge-settings-content"><p>FORGE V0.9.0 · Pilotage des tickets, journal d’interventions et mémoire technique des applications iPhone.</p><button type="button" id="forge-check-update" class="bigbutton">Rechercher une mise à jour</button><p class="micro" id="forge-update-status" role="status" aria-live="polite"></p></div>
+    </details>
+   </div>
+  </section>
  </main>
  <nav class="bottom-nav" aria-label="Navigation principale">
   <a class="bottom-nav-item active" href="#tickets" data-view="tickets" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-7h6v7"/></svg><span>Accueil</span><b id="navActiveCount" class="nav-count" aria-label="Tickets actifs">0</b></a>
   <a class="bottom-nav-item" href="#completed" data-view="completed"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>Terminés</span></a>
   <a class="bottom-nav-item" href="#composer" data-view="composer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M12 7v10M7 12h10"/></svg><span>Nouveau</span></a>
   <a class="bottom-nav-item" href="#context" data-view="context"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg><span>Apps</span></a>
+  <a class="bottom-nav-item" href="#settings" data-view="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><span>Réglages</span></a>
  </nav>
  <section id="ticketDialog" class="ticket-overlay" role="dialog" aria-modal="true" aria-labelledby="ticketTitle" hidden>
    <div class="ticket-panel">
@@ -126,7 +155,7 @@
    </div>
   </section>
 
- <footer><span>FORGE <strong>v0.8.0</strong> · GitHub Issues fait foi</span><span>Connexion GitHub sécurisée · sans jeton à saisir · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
+ <footer><span>FORGE <strong>v0.9.0</strong> · GitHub Issues fait foi</span><span>Connexion GitHub sécurisée · sans jeton à saisir · <a href="https://github.com/Leomgl/forge-app">Sources ↗</a></span></footer>
 </div>
 <script src="./app.js"></script>
 <script src="./ticket-detail.js"></script>
