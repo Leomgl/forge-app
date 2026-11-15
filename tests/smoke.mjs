@@ -13,10 +13,10 @@ const api=context.FORGE_TEST;
 assert.equal(api.parseMeta({title:"[NEXUS][BUG] Tri",body:'<!-- FORGE_META: {"project":"NEXUS","type":"bug","priority":"haute","format":2} -->'}).project,"NEXUS");
 assert.equal(api.parseMeta({title:"[RITUEL] Autre",body:""}).project,"RITUEL");
 assert.equal(api.clean('<!-- FORGE_META: {"project":"GAMING"} -->\n## Test'),"Test");
-const md=api.issueBody({tProject:"GAMING",tType:"evolution",tPriority:"normale",tVersion:"0.7",tDescription:"Évolution",tSteps:"1. Test",tExpected:"Doit marcher",tConstraints:"Préserver NEXUS LINK"});
-assert.match(md,/github.com\/Leomgl\/gaming-app/);
-assert.match(md,/"project":"GAMING"/);
-assert.match(md,/Préserver NEXUS LINK/);
+const md=api.issueBody({tProject:"LINK",tType:"evolution",tPriority:"normale",tVersion:"0.7",tDescription:"Évolution",tSteps:"1. Test",tExpected:"Doit marcher",tConstraints:"Préserver LINK"});
+assert.match(md,/github.com\/Leomgl\/link-app/);
+assert.match(md,/"project":"LINK"/);
+assert.match(md,/Préserver LINK/);
 
 const source={number:9,title:"[NEXUS][TEST] Déjà existant",state:"open",updated_at:"2026-11-11T12:00:00Z",
  body:'<!-- FORGE_META: {"project":"NEXUS","type":"test","priority":"normale","format":2} -->\\n## Demande\\nConserver les détails.'};
@@ -30,7 +30,7 @@ assert.equal((doingBody.match(/FORGE_META:/g)||[]).length,1,"only one metadata m
 assert.ok(doingBody.includes('"format":3'),"metadata upgraded without data loss");
 const noMarker={title:"[RITUEL] Bug",state:"open",body:"## Notes\\nOrigine"};
 assert.ok(api.updateWorkflowBody(noMarker,"doing").includes("## Notes\\nOrigine"),"unmarked legacy body preserved");
-assert.ok(api.issueBody({tProject:"NEXUS",tType:"test",tPriority:"normale",tVersion:"",tDescription:"a",tSteps:"",tExpected:"",tConstraints:""}).includes('"workflow":"todo"'),"new issues default to todo");
+assert.ok(api.issueBody({tProject:"LINK",tType:"test",tPriority:"normale",tVersion:"",tDescription:"a",tSteps:"",tExpected:"",tConstraints:""}).includes('"workflow":"todo"'),"new issues default to todo");
 const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 assert.match(html,/Content-Security-Policy/);
 assert.match(html,/https:\/\/api.github.com/);
@@ -68,8 +68,8 @@ assert.equal(manifest.display,"standalone");
 console.log("FORGE smoke: syntax, workflow, body preservation, token-free OAuth UI, edge gateway, SW exclusions OK");
 
 // V0.5: project registry, priorities and board markers.
-assert.ok(api.apps.some(x=>x.id==="SANTE"&&x.repo==="Leomgl/sante-app"));
-assert.ok(api.apps.some(x=>x.id==="GARAGE"&&x.repo==="Leomgl/garage-app"));
+assert.ok(api.apps.some(x=>x.id==="LINK"&&x.repo==="Leomgl/link-app"));
+assert.ok(api.apps.some(x=>x.id==="FORGE"&&x.repo==="Leomgl/forge-app"));
 assert.equal(api.priorityOf({title:"[SANTE][BUG] Traitement",body:'<!-- FORGE_META: {"project":"SANTE","priority":"critique"} -->'}),"critique");
 assert.equal(api.priorityOf({title:"[GARAGE][EVOLUTION] Kit",body:""}),"normale");
 assert.equal(api.PRIORITIES.critique.rank,0);
@@ -144,9 +144,9 @@ const newAppBody=api.issueBody({...globalTicket,tScope:"newapp",tScopeDetails:"N
 assert.match(newAppBody,/"scope":"newapp"/);
 assert.match(newAppBody,/Nouvelle app/);
 assert.doesNotMatch(newAppBody,/Dépôt à analyser :/);
-const legacyBody=api.issueBody({...globalTicket,tProject:"NEXUS"});
-assert.match(legacyBody,/github.com\/Leomgl\/nexus-app/);
-assert.doesNotMatch(legacyBody,/"scope":/);
+const activeBody=api.issueBody({...globalTicket,tProject:"LINK"});
+assert.match(activeBody,/github.com\/Leomgl\/link-app/);
+assert.doesNotMatch(activeBody,/"scope":/);
 assert.ok(!api.apps.some(a=>a.id==="GENERAL"),"GENERAL must not appear in the application catalog");
 assert.match(src,/id\("tProject"\)\.addEventListener\("change",toggleGeneral\)/);
 assert.match(src,/value="GENERAL"/);
@@ -154,7 +154,7 @@ assert.match(html,/id="generalScopeFields"/);
 assert.match(html,/id="tScope"/);
 assert.match(html,/id="tScopeDetails"/);
 assert.match(edge,/FORGE\|GENERAL/);
-assert.match(sw,/forge-v0\.9\.0/);
+assert.match(sw,/forge-v0\.9\.1/);
 console.log("FORGE V0.7: general ticket creation, scope, filters, and existing apps OK");
 
 
@@ -176,7 +176,7 @@ assert.doesNotMatch(html.match(/id="statusFilter"[\s\S]*?<\/select>/)?.[0]||"",/
 assert.match(src,/window\.addEventListener\("hashchange",routeView\)/);
 assert.match(src,/id\("completedIssues"\)\.addEventListener\("change",onStatusChange\)/);
 assert.match(detail,/returnHash=selected\?\.getAttribute\("href"\)/);
-assert.match(sw,/forge-v0\.9\.0/);
+assert.match(sw,/forge-v0\.9\.1/);
 const domKeys=["search","projectFilter","statusFilter","priorityFilter","workflowSummary","issueCount",
  "issues","completedSearch","completedProjectFilter","completedPriorityFilter","completedCount",
  "completedIssues","navActiveCount","tickets","completed","composer","context","settings","homeIntro"];
