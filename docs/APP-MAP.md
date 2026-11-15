@@ -1,6 +1,6 @@
 # Registre de la nouvelle génération
 
-Version du registre : **2026-11-15 / FORGE V0.10.0**.
+Version du registre : **2026-11-15 / FORGE V0.10.1**.
 
 | Identifiant | Produit | Fonction | Dépôt GitHub | Cloudflare |
 |---|---|---|---|---|
