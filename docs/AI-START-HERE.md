@@ -2,6 +2,8 @@
 
 **Dernière mise à jour : 15 novembre 2026.**
 
+**LIVRAISON EFFECTIVE (15/11/2026) :** LABORATOIRE V0.1.0 est déployé sur https://laboratoire-app.q9pfwtztsc.workers.dev/ ; son code est dans la branche provisoire `bootstrap/laboratoire-v0-1` de `forge-app`, hors `main`, sous `bootstrap/laboratoire/`. CI [run 43762489809](https://github.com/Leomgl/forge-app/actions/runs/43762489809) réussie. **Recette iPhone encore nécessaire** ; source à migrer dans un dépôt distinct. Les blocs thème/shell/réglages v0.1.0 sont de vrais modules ESM partagés, pas encore promus comme paquet stable. Aucun D1 ni Push autonome.
+
 **NOUVELLE DÉCISION VALIDÉE (15/11/2026) :** LABORATOIRE est la première PWA à développer, et BLOCKS est la bibliothèque des modules réutilisables. Le Laboratoire sert à tester les blocs, pas à stocker des données métier. Lire [ARCHITECTURE-BLOCKS.md](ARCHITECTURE-BLOCKS.md) et [LABORATORY.md](LABORATORY.md) **avant tout nouveau développement**. Tickets : #41 (plan), #43 (LABORATOIRE), #44 (BLOCKS).
 
 Au démarrage d'une nouvelle conversation sur les apps iPhone :

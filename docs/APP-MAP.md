@@ -11,8 +11,10 @@ Version du registre : **2026-11-15 / FORGE V0.10.1**.
 
 | Projet | Statut | Rôle |
 |---|---|---|
-| BLOCKS | En construction, [FORGE #44](https://github.com/Leomgl/forge-app/issues/44) | Bibliothèque versionnée de composants et comportements personnalisables |
-| LABORATOIRE | En construction, [FORGE #43](https://github.com/Leomgl/forge-app/issues/43) | PWA légère, feuilles d’expérimentation pour tester et valider BLOCKS sur iPhone |
+| BLOCKS | Prototype v0.1.0 (theme/shell/settings), [FORGE #44](https://github.com/Leomgl/forge-app/issues/44) | Bibliothèque versionnée de composants et comportements personnalisables |
+| LABORATOIRE | Déployé V0.1.0 — recette iPhone en attente, [FORGE #43](https://github.com/Leomgl/forge-app/issues/43) | PWA légère, feuilles d’expérimentation pour tester et valider BLOCKS sur iPhone |
+
+**Laboratoire :** https://laboratoire-app.q9pfwtztsc.workers.dev/ ; Worker `laboratoire-app` (0 binding/D1). **Source temporaire :** branche `bootstrap/laboratoire-v0-1` de `Leomgl/forge-app`, répertoire `bootstrap/laboratoire/`, jamais fusionnée dans `main`. De vrais dépôts dédiés à créer/migrer.
 
 **Aucune application métier n'est validée à ce stade.** Ne pas inscrire d'autres noms avant notre travail commun de cadrage.
 

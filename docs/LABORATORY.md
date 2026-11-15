@@ -2,6 +2,14 @@
 
 **Validation produit :** l'utilisateur a décidé de construire en premier une PWA « Laboratoire », conçue comme une pile de feuilles vierges pour dessiner, tester et valider les blocs communs. Elle **n'est pas** une app métier définitive. Tickets : [#43](https://github.com/Leomgl/forge-app/issues/43) / [#44](https://github.com/Leomgl/forge-app/issues/44).
 
+## Livré — V0.1.0 (15/11/2026)
+
+- **URL** : https://laboratoire-app.q9pfwtztsc.workers.dev/ ; Worker Cloudflare indépendant `laboratoire-app`, 100 % du trafic, `workers.dev` activé.
+- **Deux feuilles déjà implémentées** : Shell + Réglages et deux thèmes Graphite/Papier. Modules ESM `theme.mjs`, `shell.mjs`, `settings.mjs` partagés avec de vrais imports.
+- **GitHub** : code source bootstrap sous `bootstrap/laboratoire/` dans la branche `bootstrap/laboratoire-v0-1` de `forge-app`. **NE PAS fusionner cette branche dans main.** Migrer ensuite vers `laboratoire-app` / `blocks` dédiés.
+- **Validation** : GitHub Actions `43762489809` SUCCESS ; tests Node : build Worker, CSP, shell, settings, thèmes et structure PWA. Test iPhone Safari/PWA non encore réalisé.
+- **Isolation** : aucun binding, D1, moteur Push ou contrat LINK actif.
+
 ## Expérience
 
 Accueil = carnet de feuilles. Une feuille = une expérience indépendante : nom du bloc, état (brouillon, essai, validé), zone de démonstration, variantes de thème, panneau de réglages et fiche de recette. On passe à la feuille suivante sans imposer une grosse navigation.
