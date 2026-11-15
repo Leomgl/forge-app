@@ -1,4 +1,4 @@
-/* FORGE v0.9.1 — Nexus-like settings, modular cockpit and safe GitHub OAuth. */
+/* FORGE v0.9.2 — unified settings, modular cockpit and safe GitHub OAuth. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";

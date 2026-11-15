@@ -4,6 +4,11 @@
 
 **Commencer ici : [docs/AI-START-HERE.md](docs/AI-START-HERE.md)** — ce fichier est le point d'entrée durable à consulter au début de toute nouvelle conversation de développement.
 
+## V0.9.2 — Version cohérente publiée en un commit (15/11/2026)
+
+- Publication atomique des identifiants de version du frontend, du cache et de la documentation ; aucune modification du moteur OAuth ou du stockage.
+- Reprise de la CI de release sans abaisser ses contrôles.
+
 ## V0.9.1 — Remise à zéro des anciennes PWA (15/11/2026)
 
 - Décision : ne conserver que LINK et FORGE ; arrêt des six PWA historiques et reconstruction unitaire à partir de nouveaux blocs communs.
