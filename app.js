@@ -1,7 +1,7 @@
-/* FORGE v0.9.2 — unified settings, modular cockpit and safe GitHub OAuth. */
+/* FORGE v0.10.0 — unified settings, modular cockpit and safe GitHub OAuth. */
 (function () {
 "use strict";
-var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
+var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-current-issues-v3", DRAFT_KEY="forge-draft-v3";
 var issues=[],loading=false,saving=false,auth={configured:false,authenticated:false,login:null,edge:false,missing:[],clientIdFormat:"unknown"};
 var GATEWAY="https://forge-hub.q9pfwtztsc.workers.dev/";
 var SCOPE_TYPES={all:"Toutes les apps",multiple:"Plusieurs apps",newapp:"Nouvelle app",other:"Projet / réflexion générale"};
@@ -20,6 +20,9 @@ function parseMeta(item){
 }
 const WORKFLOW={todo:"À faire",doing:"En cours",done:"Terminé"};
 function workflow(item){if(item.state==="closed")return "done";return parseMeta(item).workflow==="doing"?"doing":"todo";}
+// First new-generation issue: #40. Earlier tickets remain archived on GitHub.
+const NEW_ERA_FIRST_ISSUE=40;
+function currentEra(item){return Number(item.number)>=NEW_ERA_FIRST_ISSUE&&(parseMeta(item).project==="GENERAL"||apps.some(a=>a.id===parseMeta(item).project));}
 function updateWorkflowBody(item,target){
  var body=String(item.body||""),meta=parseMeta(item);
  meta.workflow=target;meta.format=Math.max(3,Number(meta.format)||0);
@@ -30,7 +33,7 @@ function updateWorkflowBody(item,target){
 function age(date){try{return new Date(date).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"});}catch(e){return "—";}}
 function setStatus(text){id("loadInfo").textContent=text;id("completedInfo").textContent=text;}
 const PRIORITIES={critique:{label:"Critique",rank:0},haute:{label:"Haute",rank:1},normale:{label:"Normale",rank:2},basse:{label:"Basse",rank:3}};
-function projectLabel(project){return project==="GENERAL"?"GÉNÉRAL":project==="SANTE"?"SANTÉ":project;}
+function projectLabel(project){return project==="GENERAL"?"GÉNÉRAL":project;}
 function scopeLabel(scope){return SCOPE_TYPES[scope]||SCOPE_TYPES.all;}
 function priorityOf(item){var raw=String(parseMeta(item).priority||"normale").toLowerCase();return PRIORITIES[raw]?raw:"normale";}
 function ticketCard(item){
@@ -53,7 +56,7 @@ function issueMatches(item,q,project,priority){
 function prioritySort(a,b){return PRIORITIES[priorityOf(a)].rank-PRIORITIES[priorityOf(b)].rank||new Date(b.updated_at)-new Date(a.updated_at);}
 function render(){
  var q=id("search").value.toLocaleLowerCase("fr").trim(),project=id("projectFilter").value,status=id("statusFilter").value,priority=id("priorityFilter").value;
- var active=issues.filter(function(item){return workflow(item)!=="done";});
+ var active=issues.filter(function(item){return currentEra(item)&&workflow(item)!=="done";});
  var scoped=active.filter(function(item){return issueMatches(item,q,project,priority);});
  var totals={todo:0,doing:0};scoped.forEach(function(item){totals[workflow(item)]++;});
  id("workflowSummary").innerHTML=["doing","todo"].map(function(st){
@@ -68,7 +71,7 @@ function render(){
    +'<div class="column-heading"><span class="column-indicator"></span><h3>'+WORKFLOW[st]+'</h3><span class="column-count">'+group.length+'</span></div>'
    +'<div class="column-list">'+(group.length?group.map(ticketCard).join(""):'<div class="column-empty">Aucun ticket ici.</div>')+'</div></section>';
  }).join("");
- var completed=issues.filter(function(item){return workflow(item)==="done";});
+ var completed=issues.filter(function(item){return currentEra(item)&&workflow(item)==="done";});
  id("completedCount").textContent=completed.length;
  var cq=id("completedSearch").value.toLocaleLowerCase("fr").trim(),cp=id("completedProjectFilter").value,pr=id("completedPriorityFilter").value;
  var archived=completed.filter(function(item){return issueMatches(item,cq,cp,pr);}).sort(function(a,b){return new Date(b.updated_at)-new Date(a.updated_at);});
@@ -247,11 +250,11 @@ function populateProjects(){
   el.innerHTML=(all?'<option value="all">Tous les tickets</option>':"")
     +'<option value="GENERAL">GÉNÉRAL · projets transversaux</option>'
     +apps.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(projectLabel(p.id))+'</option>';}).join("");
-  el.value=previous&&Array.from(el.options).some(function(o){return o.value===previous;})?previous:(all?"all":"LINK");
+  el.value=previous&&Array.from(el.options).some(function(o){return o.value===previous;})?previous:(all?"all":"GENERAL");
  });
 }
 function makeApps(){
- id("apps").innerHTML=apps.filter(function(p){return p.id!=="FORGE";}).map(function(p){
+ id("apps").innerHTML=apps.map(function(p){
  return '<article class="appcard"><span class="appmark">'+p.mark+'</span><b>'+p.id+'</b><p>'+esc(p.desc)+'</p>'
  +'<a target="_blank" rel="noopener noreferrer" href="https://github.com/'+p.repo+'">Voir le dépôt ↗</a></article>';
  }).join("");
@@ -267,7 +270,7 @@ function draft(){
  var r={};fields.forEach(function(k){r[k]=id(k).value;});return r;
 }
 function persist(){try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draft()));}catch(e){}}
-function restore(){try{var d=JSON.parse(localStorage.getItem(DRAFT_KEY)||"{}");fields.forEach(function(k){if(typeof d[k]==="string"&&id(k))id(k).value=d[k];});}catch(e){}}
+function restore(){try{var d=JSON.parse(localStorage.getItem(DRAFT_KEY)||"{}");fields.forEach(function(k){if(typeof d[k]==="string"&&id(k))id(k).value=d[k];});if(!apps.some(a=>a.id===id("tProject").value)&&id("tProject").value!=="GENERAL")id("tProject").value="GENERAL";}catch(e){}}
 function issueBody(d){
  var general=d.tProject==="GENERAL",p=apps.find(function(a){return a.id===d.tProject;});
  if(!general&&!p)throw Error("Application inconnue");
@@ -315,10 +318,10 @@ async function publish(){
  msg.textContent="Ouverture de GitHub : connecte-toi et confirme « Submit new issue ». Ce brouillon seul n'est pas encore publié.";
  window.open(url.href,"_blank","noopener,noreferrer");
 }
-function resetAfterPublication(){fields.forEach(k=>{id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"LINK",tType:"bug",tPriority:"normale",tScope:"all"}[k]):"";});try{localStorage.removeItem(DRAFT_KEY);}catch{}toggleGeneral();}
+function resetAfterPublication(){fields.forEach(k=>{id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"GENERAL",tType:"idee",tPriority:"normale",tScope:"newapp"}[k]):"";});try{localStorage.removeItem(DRAFT_KEY);}catch{}toggleGeneral();}
 function reset(){
  if(!confirm("Effacer ton brouillon local ? Les tickets déjà publiés sur GitHub ne seront pas touchés."))return;
- fields.forEach(function(k){id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"LINK",tType:"bug",tPriority:"normale",tScope:"all"}[k]):"";});
+ fields.forEach(function(k){id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"GENERAL",tType:"idee",tPriority:"normale",tScope:"newapp"}[k]):"";});
  try{localStorage.removeItem(DRAFT_KEY);}catch(e){}
  id("composeMessage").textContent="Brouillon effacé.";toggleGeneral();
 }
