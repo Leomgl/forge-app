@@ -1,8 +1,8 @@
 # FORGE — consignes de développement, génération V0.10.1
 
 1. Le **catalogue actif** contient LINK et FORGE seulement. Ne pas réactiver d'ancienne application ou reprendre ses contrats sans nouvelle décision. Les apps futures ne sont pas encore nommées.
-2. **Release courante : LAB/BLOCKS V0.2.3** — `blocks.lock.json` pointe vers BLOCKS `b7a6e7924a76b9be24ee71669af199298dfc83b1`. V0.2.0 validée sur iPhone ; V0.2.1 encore à valider. L'adaptateur LINK n'est pas déployé.
-2. **Sources OFFICIELLES désormais séparées :** `Leomgl/laboratoire-app` (V0.2.3) et `Leomgl/blocks-app` (V0.2.3). BLOCKS est la bibliothèque ESM/CSS, LAB utilise `blocks.lock.json` pour un SHA épinglé (`93a04c6429ade3885ef1c3cf3133240ecf3059e8`). Source `forge-app/bootstrap/laboratoire-v0-1` **obsolète** : ne pas y faire de changements. Uniquement mettre à jour ces deux vrais dépôts et synchroniser FORGE.
+2. **Release courante : LAB V0.3.1 / BLOCKS V0.2.3 / LINK Worker V0.12.0** — `blocks.lock.json` pointe vers BLOCKS `b7a6e7924a76b9be24ee71669af199298dfc83b1`. V0.2.0 validée sur iPhone ; V0.2.1 encore à valider. L'adaptateur LINK n'est pas déployé.
+2. **Sources OFFICIELLES désormais séparées :** `Leomgl/laboratoire-app` (V0.3.1), `Leomgl/blocks-app` (V0.2.3) et `Leomgl/link-app` (SDK seulement ; Worker V0.12.0). BLOCKS est la bibliothèque ESM/CSS, LAB utilise `blocks.lock.json` pour un SHA épinglé (`93a04c6429ade3885ef1c3cf3133240ecf3059e8`). Source `forge-app/bootstrap/laboratoire-v0-1` **obsolète** : ne pas y faire de changements. Uniquement mettre à jour ces deux vrais dépôts et synchroniser FORGE.
 3. **Architecture approuvée :** LINK (transport et notifications), FORGE (suivi), BLOCKS (bibliothèque de modules transversaux), LABORATOIRE (première PWA, feuilles de tests). Lire `docs/ARCHITECTURE-BLOCKS.md` et `docs/LABORATORY.md`; FORGE #41/#43/#44. Feuille 03 V0.2.0 validée sur iPhone ; modification V0.2.1 en attente de recette physique et liaison LINK non implémentée.
 4. La **source de vérité des tickets** est GitHub Issues de `Leomgl/forge-app`. Pour les nouveaux chantiers, créer des issues #40 ou suivantes. Les issues précédentes sont archives historiques, pas un backlog vivant.
 4. Dans une intervention, lire l'issue **et ses commentaires**, puis le dépôt/branche et la version réellement déployés. Documenter les changements dans FORGE avant de conclure.
@@ -17,3 +17,5 @@
 12. Aucun travail en arrière-plan sans automatisation explicitement créée : vérifier et synchroniser FORGE **pendant le chat**.
 
 - **Mise à jour PWA** V0.2.3 : `/version.json` dans les apps, helper `src/pwa-update.mjs` dans BLOCKS. Vérifier les versions, SW et rechargement automatique, pas de lien avec LINK. Validation iPhone restante.
+
+- **M4 en cours : FORGE #47.** Le SDK LINK a été étendu sans déployer ni changer le Worker LINK. LAB V0.3.1 consomme les SDK LINK dans son Worker *compilé*, pin `link.lock.json = 9d98d59dbbd52ec6a818b4dbe2c1ce7a52cb2b1e`, et BLOCKS depuis `blocks.lock.json`. Owner doit inscrire `laboratoire` et autoriser notifications dans LINK ; iPhone Push non encore validé. Lire `docs/LINK-BRIDGE.md` avant toute mutation.
