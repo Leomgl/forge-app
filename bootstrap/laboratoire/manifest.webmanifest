@@ -1,0 +1,13 @@
+{
+  "name":"LABORATOIRE — Carnet d'expériences",
+  "short_name":"LAB",
+  "id":"/",
+  "start_url":"/",
+  "scope":"/",
+  "display":"standalone",
+  "background_color":"#14151b",
+  "theme_color":"#14151b",
+  "lang":"fr",
+  "description":"Notre PWA d'essai des composants de la nouvelle génération.",
+  "icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
