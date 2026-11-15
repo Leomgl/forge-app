@@ -4,6 +4,14 @@
 
 **Commencer ici : [docs/AI-START-HERE.md](docs/AI-START-HERE.md)** — ce fichier est le point d'entrée durable à consulter au début de toute nouvelle conversation de développement.
 
+## V0.9.1 — Remise à zéro des anciennes PWA (15/11/2026)
+
+- Décision : ne conserver que LINK et FORGE ; arrêt des six PWA historiques et reconstruction unitaire à partir de nouveaux blocs communs.
+- Catalogue actif FORGE limité à LINK / FORGE ; anciens tickets et docs maintenus en archive, non comme code vivant.
+- Cloudflare : 9 anciens Workers et 1 projet Pages supprimés, 4 bases D1 anciennes supprimées ; `link-hub-db` purgée des enregistrements historiques sans supprimer la sécurité ni l'ordonnanceur.
+- Six dépôts GitHub d'anciennes apps à supprimer via administration ; suivi dans [FORGE #39](https://github.com/Leomgl/forge-app/issues/39).
+- SW et version visible V0.9.1, aucune purge locale FORGE.
+
 ## V0.9.0 — Réglages communs Nexus (15 novembre 2026)
 
 - Nouvel onglet **Réglages** dans la navigation basse, inspiré de l'architecture Nexus : « LINK et connexions », « Préférences et interface », « Données et sauvegardes », « Sécurité et confidentialité » et « À propos ». Recherche dans les catégories, version visible **V0.9.0** en haut, mise à jour **uniquement dans À propos**.
