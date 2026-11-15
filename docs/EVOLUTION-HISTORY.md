@@ -1,5 +1,13 @@
 # Historique des livraisons — nouveau cycle
 
+## 15 novembre 2026 — Migration des sources GitHub et LABORATOIRE V0.1.1
+
+- L'utilisateur a créé les repos privés `Leomgl/laboratoire-app` et `Leomgl/blocks-app`. Code source officiellement migré ; `forge-app/bootstrap/laboratoire-v0-1` n'est plus source de vérité.
+- BLOCKS V0.1.0 : 3 modules ESM, styles partagés CSS et tests verts ; commit `b41d3fcf99c1d9dcfc0935db007e6678316c77f2`.
+- LABORATOIRE V0.1.1 : app et Worker empaquetant des modules BLOCKS depuis le commit verrouillé dans `blocks.lock.json`, sans copie source. GitHub Actions LAB et BLOCKS vertes.
+- Worker Cloudflare `laboratoire-app` mis à jour à **100 % du trafic** ; même URL, 0 binding/D1 ; aucun changement LINK ou FORGE.
+- L'utilisateur avait validé V0.1.0 sur iPhone et ses deux DA ; recette V0.1.1 encore à effectuer.
+
 ## 15 novembre 2026 — Lancement de BLOCKS et LABORATOIRE
 
 - Documentation architecture validée par l'utilisateur, PR [#45](https://github.com/Leomgl/forge-app/pull/45) et tickets #41/#43/#44.
