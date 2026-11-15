@@ -1,5 +1,11 @@
 # Historique des livraisons — nouveau cycle
 
+## 15 novembre 2026 — FORGE V0.10.1
+
+- Dernières références stylistiques obsolètes nettoyées dans le code actif.
+- Numérotation de version harmonisée dans tous les fichiers de la PWA.
+- Aucun changement sur OAuth ou les données des tickets.
+
 ## 15 novembre 2026 — FORGE V0.10.0
 
 - Nouvelle base : deux projets actifs, LINK et FORGE, sans anciennes apps métiers.
