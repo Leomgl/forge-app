@@ -72,6 +72,10 @@ Pour chaque bloc : API et tokens documentés ; aperçu avec au moins deux thème
 
 LABORATOIRE V0.2.0 fonctionne sur le même Worker indépendant `laboratoire-app` (100 % du trafic, 0 binding/D1), avec 3 feuilles. Les modules v0.1.0 de BLOCKS et leurs styles sont réellement consommés. Tests GitHub Actions des deux dépôts réussis. L'utilisateur a déjà validé l'app et les DA Graphite/Papier sur iPhone en V0.1.0 ; **refaire la recette iPhone après V0.1.1**. La branche `bootstrap/laboratoire-v0-1` de FORGE ne doit pas recevoir de nouvelles modifications. Avec deux dépôts privés, le build nécessite deux clones authentifiés ; les CI vérifient séparément BLOCKS et le Worker LAB généré, aucun PAT partagé.
 
+## Statut expérimentation (15 novembre 2026)
+
+LABORATOIRE **V0.2.1** + BLOCKS **V0.2.1**, 15 novembre 2026 : nouvelle saisie des rappels en **Jours / Heures / Minutes** et champ numérique, ajout/suppression de plusieurs rappels (max. six) pour rendez-vous et fin de pass. Le seuil Stock est inchangé. BLOCKS commit `93a04c6429ade3885ef1c3cf3133240ecf3059e8` (CI verte [43767468999](https://github.com/Leomgl/blocks-app/actions/runs/43767468999)), LAB commit `0d3fcc4fff9ae552557f13c289e309c6aeb9df47` (CI verte [43767626205](https://github.com/Leomgl/laboratoire-app/actions/runs/43767626205)). Cloudflare Worker `laboratoire-app` version `91f2f399-b16e-483e-8349-1b715be5fee7` diffusée à **100 %**, même URL et aucune ressource ajoutée. Sortie `blocks.notify.v1` inchangée, LINK seul moteur de notifications, aucune intégration Web Push active dans LAB. **V0.2.0 a été validée fonctionnelle sur iPhone par l'utilisateur ; V0.2.1 nécessite encore recette iPhone.**
+
 ## Ordre de fabrication
 
 - **M0** : créer la PWA LABORATOIRE, manifest/service worker, feuilles, design tokens et environnement de test.

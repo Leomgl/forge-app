@@ -2,7 +2,11 @@
 
 **Validation produit :** l'utilisateur a décidé de construire en premier une PWA « Laboratoire », conçue comme une pile de feuilles vierges pour dessiner, tester et valider les blocs communs. Elle **n'est pas** une app métier définitive. Tickets : [#43](https://github.com/Leomgl/forge-app/issues/43) / [#44](https://github.com/Leomgl/forge-app/issues/44).
 
-## Livré — V0.2.0 (15/11/2026, feuille 03)
+## Livré — V0.2.1 (personnalisation de « Me notifier »)
+
+LABORATOIRE **V0.2.1** + BLOCKS **V0.2.1**, 15 novembre 2026 : nouvelle saisie des rappels en **Jours / Heures / Minutes** et champ numérique, ajout/suppression de plusieurs rappels (max. six) pour rendez-vous et fin de pass. Le seuil Stock est inchangé. BLOCKS commit `93a04c6429ade3885ef1c3cf3133240ecf3059e8` (CI verte [43767468999](https://github.com/Leomgl/blocks-app/actions/runs/43767468999)), LAB commit `0d3fcc4fff9ae552557f13c289e309c6aeb9df47` (CI verte [43767626205](https://github.com/Leomgl/laboratoire-app/actions/runs/43767626205)). Cloudflare Worker `laboratoire-app` version `91f2f399-b16e-483e-8349-1b715be5fee7` diffusée à **100 %**, même URL et aucune ressource ajoutée. Sortie `blocks.notify.v1` inchangée, LINK seul moteur de notifications, aucune intégration Web Push active dans LAB. **V0.2.0 a été validée fonctionnelle sur iPhone par l'utilisateur ; V0.2.1 nécessite encore recette iPhone.**
+
+## Historique — V0.2.0 (15/11/2026, feuille 03)
 
 - **Feuille 03 « Me notifier »** : rendez-vous, fin de pass, stock faible, activation, rappels multiples, libellé et aperçu JSON neutre. Deux DA Graphite/Papier maintenues.
 - **BLOCKS V0.2.0** : module partagé `src/notify-editor.mjs` et CSS structuraux ; commit épinglé `755c6f2387d6ccb21a6fca6ad00f3a54523d0b2f`.

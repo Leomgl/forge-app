@@ -12,10 +12,11 @@
 
 ## Sources officielles et assemblage de LAB
 
-- Bibliothèque : [Leomgl/blocks-app](https://github.com/Leomgl/blocks-app), modules `src/theme.mjs`, `src/shell.mjs`, `src/settings.mjs`, `src/notify-editor.mjs` et `src/blocks.css`, version V0.2.0, commit `755c6f2387d6ccb21a6fca6ad00f3a54523d0b2f`.
-- PWA : [Leomgl/laboratoire-app](https://github.com/Leomgl/laboratoire-app), version V0.2.0, Worker `laboratoire-app` indépendant, aucune D1/binding. `blocks.lock.json` référence précisément la version de BLOCKS.
+- **Release courante : V0.2.1.** BLOCKS `93a04c6429ade3885ef1c3cf3133240ecf3059e8` ; LAB `0d3fcc4fff9ae552557f13c289e309c6aeb9df47`. Durées personnalisées jours/heures/minutes en 03, stock inchangé ; aucun Push local. V0.2.0 testée sur iPhone ; V0.2.1 à vérifier.
+- Bibliothèque : [Leomgl/blocks-app](https://github.com/Leomgl/blocks-app), modules `src/theme.mjs`, `src/shell.mjs`, `src/settings.mjs`, `src/notify-editor.mjs` et `src/blocks.css`, version V0.2.1, commit `93a04c6429ade3885ef1c3cf3133240ecf3059e8`.
+- PWA : [Leomgl/laboratoire-app](https://github.com/Leomgl/laboratoire-app), version V0.2.1, Worker `laboratoire-app` indépendant, aucune D1/binding. `blocks.lock.json` référence précisément la version de BLOCKS.
 - Le bundle `dist/worker.mjs` est généré depuis les **deux sources privées** et sert le JS/CSS partagé depuis l'origine HTTPS de LAB. Pas de duplication maintenable, pas de requêtes cross-origin et pas de service Worker BLOCKS séparé.
-- Deux dépôts privés : les CI de chaque repo restent autonomes ; recompiler avec les deux dépôts clonés et authentifiés. Pas de PAT inter-repos configuré. La recette de la V0.1.1 post-migration et de la V0.2.0 sur iPhone reste à confirmer. Le bloc ne programme rien ; l'adaptateur LINK n'est pas encore branché.
+- Deux dépôts privés : les CI de chaque repo restent autonomes ; recompiler avec les deux dépôts clonés et authentifiés. Pas de PAT inter-repos configuré. L'utilisateur a confirmé la recette fonctionnelle de V0.2.0 sur iPhone ; V0.2.1 reste à vérifier. Le bloc ne programme rien ; l'adaptateur LINK n'est pas encore branché.
 
 ## Contrat d'intégration d'une nouvelle PWA
 
