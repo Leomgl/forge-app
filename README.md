@@ -4,6 +4,14 @@
 
 **Commencer ici : [docs/AI-START-HERE.md](docs/AI-START-HERE.md)** — ce fichier est le point d'entrée durable à consulter au début de toute nouvelle conversation de développement.
 
+## V0.9.0 — Réglages communs Nexus (15 novembre 2026)
+
+- Nouvel onglet **Réglages** dans la navigation basse, inspiré de l'architecture Nexus : « LINK et connexions », « Préférences et interface », « Données et sauvegardes », « Sécurité et confidentialité » et « À propos ». Recherche dans les catégories, version visible **V0.9.0** en haut, mise à jour **uniquement dans À propos**.
+- Préférence de vue au démarrage (Accueil / Terminés / Apps) enregistrée localement sous `forge-start-view-v1`. Aucun ticket ni commentaire modifié par cette préférence.
+- Connexion GitHub OAuth existante réutilisée, sans jeton PAT côté client. Le bouton mise à jour demande le rafraîchissement du Service Worker sans purger les données ni effacer le brouillon.
+- Cache PWA `forge-v0.9.0-nexus-settings` versionné. Le Worker OAuth reste **inchangé** et sert les fichiers publics depuis `main` ; aucun secret, D1, nouvelle API ou moteur Push ajouté.
+- Recette tactile et connexion OAuth sur iPhone programmées dans la phase de test finale, après les autres mises à jour.
+
 ## Principe et source d'autorité
 
 - **Tickets durables = GitHub Issues de ce dépôt** : un numéro unique `#N`, le projet, le contexte, les critères de recette et un historique de décisions/discussions. Une note locale dans la PWA n'est **pas** un ticket publié.
