@@ -56,7 +56,7 @@ Le modèle de configuration notification de démonstration peut contenir : `enab
 ## Design de la première bibliothèque
 
 - ESM natif, CSS scoped ou préfixé, aucune dépendance npm obligatoire, pas de framework lourd par défaut.
-- **Dépôts privés dédiés actifs :** `Leomgl/blocks-app` (ESM et `src/blocks.css`) et `Leomgl/laboratoire-app` (PWA). Versionner le bloc par SHA Git dans `laboratoire-app/blocks.lock.json` ; aucune copie de source dans LAB, uniquement un bundle généré `dist/worker.mjs`. Version actuelle BLOCKS V0.1.0, commit `b41d3fcf99c1d9dcfc0935db007e6678316c77f2`; LAB V0.1.1. Éviter le copier-coller entre apps.
+- **Dépôts privés dédiés actifs :** `Leomgl/blocks-app` (ESM et `src/blocks.css`) et `Leomgl/laboratoire-app` (PWA). Versionner le bloc par SHA Git dans `laboratoire-app/blocks.lock.json` ; aucune copie de source dans LAB, uniquement un bundle généré `dist/worker.mjs`. Version actuelle BLOCKS V0.2.0, commit `755c6f2387d6ccb21a6fca6ad00f3a54523d0b2f`; LAB V0.1.1. Éviter le copier-coller entre apps.
 - Contrat type : `mount(element, options)` avec `destroy()`, options facultatives, callbacks et documentation.
 - Ne créer des abstractions communes qu'après **deux scénarios réellement testés**.
 - Responsiveness iPhone, navigation clavier, textes dynamiques, contrastes, zones tactiles >= 44 px, préférences de mouvement.
@@ -70,15 +70,15 @@ Pour chaque bloc : API et tokens documentés ; aperçu avec au moins deux thème
 
 ## État réel du déploiement
 
-LABORATOIRE V0.1.1 fonctionne sur le même Worker indépendant `laboratoire-app` (100 % du trafic, 0 binding/D1). Les modules v0.1.0 de BLOCKS et leurs styles sont réellement consommés. Tests GitHub Actions des deux dépôts réussis. L'utilisateur a déjà validé l'app et les DA Graphite/Papier sur iPhone en V0.1.0 ; **refaire la recette iPhone après V0.1.1**. La branche `bootstrap/laboratoire-v0-1` de FORGE ne doit pas recevoir de nouvelles modifications. Avec deux dépôts privés, le build nécessite deux clones authentifiés ; les CI vérifient séparément BLOCKS et le Worker LAB généré, aucun PAT partagé.
+LABORATOIRE V0.2.0 fonctionne sur le même Worker indépendant `laboratoire-app` (100 % du trafic, 0 binding/D1), avec 3 feuilles. Les modules v0.1.0 de BLOCKS et leurs styles sont réellement consommés. Tests GitHub Actions des deux dépôts réussis. L'utilisateur a déjà validé l'app et les DA Graphite/Papier sur iPhone en V0.1.0 ; **refaire la recette iPhone après V0.1.1**. La branche `bootstrap/laboratoire-v0-1` de FORGE ne doit pas recevoir de nouvelles modifications. Avec deux dépôts privés, le build nécessite deux clones authentifiés ; les CI vérifient séparément BLOCKS et le Worker LAB généré, aucun PAT partagé.
 
 ## Ordre de fabrication
 
 - **M0** : créer la PWA LABORATOIRE, manifest/service worker, feuilles, design tokens et environnement de test.
 - **M1** : BLOCKS AppShell + structure de navigation (deux thèmes).
 - **M2** : BLOCKS Réglages universels (architecture commune et slots d'app).
-- **M3** : éditeur « Me notifier » (rendez-vous vs stock/échéance).
-- **M4** : adaptateur LINK conforme à ses routes existantes, tests isolation, sécurité et notifications.
+- **M3** : éditeur « Me notifier » (rendez-vous vs stock/échéance) — prototype V0.2.0 livré, recette iPhone attendue.
+- **M4** : non implémenté — adaptateur LINK conforme à ses routes existantes, tests isolation, sécurité et notifications.
 - **M5** : composants supplémentaires uniquement en fonction des vrais besoins des futures apps.
 
 ## Invariants budgétaires et opérationnels
