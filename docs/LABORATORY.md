@@ -2,7 +2,16 @@
 
 **Validation produit :** l'utilisateur a décidé de construire en premier une PWA « Laboratoire », conçue comme une pile de feuilles vierges pour dessiner, tester et valider les blocs communs. Elle **n'est pas** une app métier définitive. Tickets : [#43](https://github.com/Leomgl/forge-app/issues/43) / [#44](https://github.com/Leomgl/forge-app/issues/44).
 
-## Livré — V0.1.1 (15/11/2026, migration définitive)
+## Livré — V0.2.0 (15/11/2026, feuille 03)
+
+- **Feuille 03 « Me notifier »** : rendez-vous, fin de pass, stock faible, activation, rappels multiples, libellé et aperçu JSON neutre. Deux DA Graphite/Papier maintenues.
+- **BLOCKS V0.2.0** : module partagé `src/notify-editor.mjs` et CSS structuraux ; commit épinglé `755c6f2387d6ccb21a6fca6ad00f3a54523d0b2f`.
+- **LABORATOIRE V0.2.0** : commit `213ea7e900f5efe9f31852478e3d116ca6e24d28`, 11 ressources Worker, cache SW `laboratoire-v0.2.0`, CI [verte](https://github.com/Leomgl/laboratoire-app/actions/runs/43766395358).
+- **Cloudflare** : version `007915c9-31f0-4079-8bc7-18238735b581` déployée à 100 % sur le Worker existant. Aucun Worker/D1 ajouté, LINK et FORGE préservés.
+- **Recette iPhone** : non effectuée sur V0.1.1 après migration ni sur la V0.2.0 ; test physique requis (navigation, deux thèmes, feuilles 01–03, plusieurs rappels et seuil stock, hors ligne).
+- **LINK** : aucune intégration active. Un adaptateur sera étudié et validé séparément contre l'API et les permissions réelles du Hub.
+
+## Historique — V0.1.1 (15/11/2026, migration définitive)
 
 - **URL** : https://laboratoire-app.q9pfwtztsc.workers.dev/ ; Worker Cloudflare indépendant `laboratoire-app`, 100 % du trafic, `workers.dev` activé.
 - **Deux feuilles déjà implémentées** : Shell + Réglages et deux thèmes Graphite/Papier. Modules ESM `theme.mjs`, `shell.mjs`, `settings.mjs` partagés avec de vrais imports.
@@ -31,6 +40,6 @@ Accueil = carnet de feuilles. Une feuille = une expérience indépendante : nom 
 
 ## Source / déploiement
 
-**Réalisation effective :** dépôts privés séparés `Leomgl/laboratoire-app` et `Leomgl/blocks-app`. Aucun module source BLOCKS n'est copié dans le dépôt LAB. La dépendance est **verrouillée** dans `blocks.lock.json` au commit `b41d3fcf99c1d9dcfc0935db007e6678316c77f2`. Le compilateur LAB produit `dist/worker.mjs`, qui intègre les fichiers versionnés au déploiement pour fonctionner sans connexion inter-Workers, sans base de données et hors ligne. Deux CI indépendantes : tests unitaires de BLOCKS et smoke du bundle LAB. Les repos étant privés, **la CI LAB ne recompile pas automatiquement l'autre dépôt** sans autorisation GitHub supplémentaire ; les builds depuis deux clones authentifiés sont reproductibles et documentés dans le README LAB.
+**Réalisation effective :** dépôts privés séparés `Leomgl/laboratoire-app` et `Leomgl/blocks-app`. Aucun module source BLOCKS n'est copié dans le dépôt LAB. La dépendance actuelle est **verrouillée** dans `blocks.lock.json` au commit `755c6f2387d6ccb21a6fca6ad00f3a54523d0b2f`. Le compilateur LAB produit `dist/worker.mjs`, qui intègre les fichiers versionnés au déploiement pour fonctionner sans connexion inter-Workers, sans base de données et hors ligne. Deux CI indépendantes : tests unitaires de BLOCKS et smoke du bundle LAB. Les repos étant privés, **la CI LAB ne recompile pas automatiquement l'autre dépôt** sans autorisation GitHub supplémentaire ; les builds depuis deux clones authentifiés sont reproductibles et documentés dans le README LAB.
 
 Le prototype initial est livré ; la migration est réalisée. Recette iPhone post-migration : PWA accessible, deux feuilles fonctionnelles, deux thèmes et composants ESM versionnables, recette Safari iPhone demandée. Déploiement du Laboratoire distinct de LINK et FORGE, sans liaison ni base de données supplémentaire.
