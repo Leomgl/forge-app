@@ -29,7 +29,7 @@ assert.match(style,/:root\[data-theme="paper"\]/);
 assert.match(style,/env\(safe-area-inset-bottom\)/);
 assert.match(style,/prefers-reduced-motion/);
 assert.match(sw,/laboratoire-v0\.1\.0/);
-assert.doesNotMatch(sw,/addEventListener\\([\"\x27](?:push|notificationclick)[\"\x27]|setInterval\\(/i);
+assert.ok(!sw.includes('addEventListener("push"') && !sw.includes('addEventListener("notificationclick"') && !sw.includes("setInterval("),"SW must not implement push or polling");
 assert.equal(normalizeTheme("paper"),"paper");
 assert.equal(normalizeTheme("unsafe"),"graphite");
 const el={dataset:{}};
