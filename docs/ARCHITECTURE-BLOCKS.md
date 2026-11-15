@@ -56,7 +56,7 @@ Le modèle de configuration notification de démonstration peut contenir : `enab
 ## Design de la première bibliothèque
 
 - ESM natif, CSS scoped ou préfixé, aucune dépendance npm obligatoire, pas de framework lourd par défaut.
-- Évolution vers une distribution versionnée Git (tag ou paquet) lorsque le dépôt dédié est disponible. Éviter le copier-coller entre apps.
+- **Dépôts privés dédiés actifs :** `Leomgl/blocks-app` (ESM et `src/blocks.css`) et `Leomgl/laboratoire-app` (PWA). Versionner le bloc par SHA Git dans `laboratoire-app/blocks.lock.json` ; aucune copie de source dans LAB, uniquement un bundle généré `dist/worker.mjs`. Version actuelle BLOCKS V0.1.0, commit `b41d3fcf99c1d9dcfc0935db007e6678316c77f2`; LAB V0.1.1. Éviter le copier-coller entre apps.
 - Contrat type : `mount(element, options)` avec `destroy()`, options facultatives, callbacks et documentation.
 - Ne créer des abstractions communes qu'après **deux scénarios réellement testés**.
 - Responsiveness iPhone, navigation clavier, textes dynamiques, contrastes, zones tactiles >= 44 px, préférences de mouvement.
@@ -67,6 +67,10 @@ Le modèle de configuration notification de démonstration peut contenir : `enab
 `Brouillon → Test LABORATOIRE → Recette iPhone → Validé → Version réutilisable`.
 
 Pour chaque bloc : API et tokens documentés ; aperçu avec au moins deux thèmes et deux contextes ; tests syntaxe/états ; critères d'accessibilité ; changelog ; exemple d'intégration ; décision de validation utilisateur. Une simple capture ou une CI verte ne vaut pas recette réelle sur iPhone.
+
+## État réel du déploiement
+
+LABORATOIRE V0.1.1 fonctionne sur le même Worker indépendant `laboratoire-app` (100 % du trafic, 0 binding/D1). Les modules v0.1.0 de BLOCKS et leurs styles sont réellement consommés. Tests GitHub Actions des deux dépôts réussis. L'utilisateur a déjà validé l'app et les DA Graphite/Papier sur iPhone en V0.1.0 ; **refaire la recette iPhone après V0.1.1**. La branche `bootstrap/laboratoire-v0-1` de FORGE ne doit pas recevoir de nouvelles modifications. Avec deux dépôts privés, le build nécessite deux clones authentifiés ; les CI vérifient séparément BLOCKS et le Worker LAB généré, aucun PAT partagé.
 
 ## Ordre de fabrication
 
