@@ -1,4 +1,4 @@
-/* FORGE v0.8 — modular home, completed archive and bottom navigation. */
+/* FORGE v0.9.0 — Nexus-like settings, modular cockpit and safe GitHub OAuth. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
@@ -81,7 +81,7 @@ function render(){
  id("completedIssues").innerHTML=archived.length?archived.map(ticketCard).join("")
   :'<div class="column-empty archive-empty">Aucun ticket terminé ne correspond aux filtres.</div>';
 }
-const VIEWS=["tickets","completed","composer","context"];
+const VIEWS=["tickets","completed","composer","context","settings"];
 let activeView="tickets";
 function showView(name){
  if(!VIEWS.includes(name))return;
@@ -97,7 +97,52 @@ function showView(name){
 }
 function routeView(){
  var name=location.hash.slice(1);
- if(VIEWS.includes(name))showView(name);
+ if(VIEWS.includes(name)){showView(name);return;}
+ if(!name){
+  var preferred="tickets";
+  try{preferred=localStorage.getItem("forge-start-view-v1")||"tickets";}catch(e){}
+  showView(["tickets","completed","context"].includes(preferred)?preferred:"tickets");
+ }
+}
+function initSettings(){
+ var select=id("forge-start-view");
+ if(select){
+  try{
+   var saved=localStorage.getItem("forge-start-view-v1");
+   if(["tickets","completed","context"].includes(saved))select.value=saved;
+  }catch(e){}
+  select.addEventListener("change",function(){
+   var chosen=select.value;
+   if(!["tickets","completed","context"].includes(chosen))return;
+   try{localStorage.setItem("forge-start-view-v1",chosen);}catch(e){}
+  });
+ }
+ var search=id("forge-settings-search");
+ if(search)search.addEventListener("input",function(){
+  var query=search.value.trim().toLocaleLowerCase("fr"),matches=0;
+  document.querySelectorAll(".forge-settings-group").forEach(function(group){
+   var text=(group.dataset.settingsKeywords+" "+group.textContent).toLocaleLowerCase("fr");
+   var visible=!query||text.includes(query);
+   group.hidden=!visible;if(visible){matches++;if(query)group.open=true;}
+  });
+  id("forge-settings-search-status").textContent=query?matches+" catégorie(s) correspondante(s).":"";
+ });
+ id("forge-settings-auth")?.addEventListener("click",editClick);
+ id("forge-check-update")?.addEventListener("click",async function(){
+  var button=id("forge-check-update"),message=id("forge-update-status");
+  button.disabled=true;message.textContent="Vérification de la mise à jour…";
+  try{
+   if(!navigator.onLine)throw Error("Connexion nécessaire pour vérifier la dernière version.");
+   if("serviceWorker" in navigator){
+    var registration=await navigator.serviceWorker.getRegistration();
+    if(registration)await registration.update();
+   }
+   // No cache purge and no localStorage reset.
+   message.textContent="Vérification terminée. Actualisation…";
+   window.location.reload();
+  }catch(e){message.textContent=e?.message||"La mise à jour n’a pas abouti.";}
+  finally{if(button.isConnected)button.disabled=false;}
+ });
 }
 
 async function load(){
@@ -284,7 +329,7 @@ function reset(){
  id("composeMessage").textContent="Brouillon effacé.";toggleGeneral();
 }
 function start(){
- populateProjects();makeApps();restore();toggleGeneral();editMode();authCheck();
+ populateProjects();makeApps();restore();toggleGeneral();editMode();authCheck();initSettings();
  window.addEventListener("hashchange",routeView);routeView();
  id("issues").addEventListener("change",onStatusChange);
  id("completedIssues").addEventListener("change",onStatusChange);
