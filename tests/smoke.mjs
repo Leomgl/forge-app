@@ -229,7 +229,7 @@ for(const category of ["LINK et connexions","Préférences et interface","Donné
 assert.match(html,/id="forge-settings-search"/);
 assert.match(html,/id="forge-start-view"/);
 assert.match(html,/id="forge-check-update"/);
-assert.match(html,/FORGE <strong>v0\.9\.0<\/strong>/);
+assert.match(html,/FORGE <strong>v0\.9\.2<\/strong>/);
 assert.match(src,/function initSettings\(\)/);
 assert.match(src,/forge-start-view-v1/);
 assert.match(src,/forge-settings-group/);
