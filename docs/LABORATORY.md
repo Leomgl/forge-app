@@ -2,12 +2,12 @@
 
 **Validation produit :** l'utilisateur a décidé de construire en premier une PWA « Laboratoire », conçue comme une pile de feuilles vierges pour dessiner, tester et valider les blocs communs. Elle **n'est pas** une app métier définitive. Tickets : [#43](https://github.com/Leomgl/forge-app/issues/43) / [#44](https://github.com/Leomgl/forge-app/issues/44).
 
-## Livré — V0.1.0 (15/11/2026)
+## Livré — V0.1.1 (15/11/2026, migration définitive)
 
 - **URL** : https://laboratoire-app.q9pfwtztsc.workers.dev/ ; Worker Cloudflare indépendant `laboratoire-app`, 100 % du trafic, `workers.dev` activé.
 - **Deux feuilles déjà implémentées** : Shell + Réglages et deux thèmes Graphite/Papier. Modules ESM `theme.mjs`, `shell.mjs`, `settings.mjs` partagés avec de vrais imports.
-- **GitHub** : code source bootstrap sous `bootstrap/laboratoire/` dans la branche `bootstrap/laboratoire-v0-1` de `forge-app`. **NE PAS fusionner cette branche dans main.** Migrer ensuite vers `laboratoire-app` / `blocks` dédiés.
-- **Validation** : GitHub Actions `43762489809` SUCCESS ; tests Node : build Worker, CSP, shell, settings, thèmes et structure PWA. Test iPhone Safari/PWA non encore réalisé.
+- **GitHub officiels :** [laboratoire-app](https://github.com/Leomgl/laboratoire-app) (`main`, PWA/build/test) et [blocks-app](https://github.com/Leomgl/blocks-app) (`main`, composants + CSS). L'ancien bootstrap FORGE est figé en archive, ne plus y développer.
+- **Validation :** CI `blocks-app` et `laboratoire-app` vertes, tests Node sur modules et bundle Worker (10 assets), CSP, offline, versionnement et HTTP. La V0.1.0 a été testée et appréciée sur iPhone par l'utilisateur, **V0.1.1 doit être revalidée** après extraction du CSS commun.
 - **Isolation** : aucun binding, D1, moteur Push ou contrat LINK actif.
 
 ## Expérience
@@ -31,6 +31,6 @@ Accueil = carnet de feuilles. Une feuille = une expérience indépendante : nom 
 
 ## Source / déploiement
 
-Cible : deux dépôts séparés `laboratoire-app` et `blocks`. Si la création de nouveaux dépôts est indisponible depuis les connecteurs, utiliser **temporairement une branche de bootstrap isolée de `forge-app` sans fusion dans `main`**, et un Worker Cloudflare dédié au laboratoire. Migrer dans les dépôts propres dès leur création. Ne pas importer ce code de prototype dans FORGE en production.
+**Réalisation effective :** dépôts privés séparés `Leomgl/laboratoire-app` et `Leomgl/blocks-app`. Aucun module source BLOCKS n'est copié dans le dépôt LAB. La dépendance est **verrouillée** dans `blocks.lock.json` au commit `b41d3fcf99c1d9dcfc0935db007e6678316c77f2`. Le compilateur LAB produit `dist/worker.mjs`, qui intègre les fichiers versionnés au déploiement pour fonctionner sans connexion inter-Workers, sans base de données et hors ligne. Deux CI indépendantes : tests unitaires de BLOCKS et smoke du bundle LAB. Les repos étant privés, **la CI LAB ne recompile pas automatiquement l'autre dépôt** sans autorisation GitHub supplémentaire ; les builds depuis deux clones authentifiés sont reproductibles et documentés dans le README LAB.
 
-Cible de première livraison : PWA accessible, deux feuilles fonctionnelles, deux thèmes et composants ESM versionnables, recette Safari iPhone demandée. Déploiement du Laboratoire distinct de LINK et FORGE, sans liaison ni base de données supplémentaire.
+Le prototype initial est livré ; la migration est réalisée. Recette iPhone post-migration : PWA accessible, deux feuilles fonctionnelles, deux thèmes et composants ESM versionnables, recette Safari iPhone demandée. Déploiement du Laboratoire distinct de LINK et FORGE, sans liaison ni base de données supplémentaire.
