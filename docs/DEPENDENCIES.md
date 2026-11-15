@@ -8,14 +8,14 @@
 
 ## Bibliothèque et laboratoire
 
-**BLOCKS** contient uniquement le rendu/comportement partagé, les thèmes, les champs, l'onglet Réglages et plus tard le configurateur de notifications ; ne transporte aucune donnée entre apps. **LABORATOIRE** importe et teste ces modules à travers des feuilles indépendantes, avec données fictives et sans stockage Cloudflare. Les apps métiers utiliseront la même version des blocs, par import, pas par copier-coller. LINK conserve l'exclusivité de la distribution des événements et Web Push. Voir [ARCHITECTURE-BLOCKS.md](ARCHITECTURE-BLOCKS.md) et [LABORATORY.md](LABORATORY.md).
+**BLOCKS** contient uniquement le rendu/comportement partagé, les thèmes, les champs, l'onglet Réglages et le configurateur de notifications ; ne transporte aucune donnée entre apps. **LABORATOIRE** importe et teste ces modules à travers des feuilles indépendantes, avec données fictives et sans stockage Cloudflare. Les apps métiers utiliseront la même version des blocs, par import, pas par copier-coller. LINK conserve l'exclusivité de la distribution des événements et Web Push. Voir [ARCHITECTURE-BLOCKS.md](ARCHITECTURE-BLOCKS.md) et [LABORATORY.md](LABORATORY.md).
 
 ## Sources officielles et assemblage de LAB
 
-- Bibliothèque : [Leomgl/blocks-app](https://github.com/Leomgl/blocks-app), modules `src/theme.mjs`, `src/shell.mjs`, `src/settings.mjs` et `src/blocks.css`, version V0.1.0, commit `b41d3fcf99c1d9dcfc0935db007e6678316c77f2`.
-- PWA : [Leomgl/laboratoire-app](https://github.com/Leomgl/laboratoire-app), version V0.1.1, Worker `laboratoire-app` indépendant, aucune D1/binding. `blocks.lock.json` référence précisément la version de BLOCKS.
+- Bibliothèque : [Leomgl/blocks-app](https://github.com/Leomgl/blocks-app), modules `src/theme.mjs`, `src/shell.mjs`, `src/settings.mjs`, `src/notify-editor.mjs` et `src/blocks.css`, version V0.2.0, commit `755c6f2387d6ccb21a6fca6ad00f3a54523d0b2f`.
+- PWA : [Leomgl/laboratoire-app](https://github.com/Leomgl/laboratoire-app), version V0.2.0, Worker `laboratoire-app` indépendant, aucune D1/binding. `blocks.lock.json` référence précisément la version de BLOCKS.
 - Le bundle `dist/worker.mjs` est généré depuis les **deux sources privées** et sert le JS/CSS partagé depuis l'origine HTTPS de LAB. Pas de duplication maintenable, pas de requêtes cross-origin et pas de service Worker BLOCKS séparé.
-- Deux dépôts privés : les CI de chaque repo restent autonomes ; recompiler avec les deux dépôts clonés et authentifiés. Pas de PAT inter-repos configuré. La recette de la nouvelle version sur iPhone reste à confirmer.
+- Deux dépôts privés : les CI de chaque repo restent autonomes ; recompiler avec les deux dépôts clonés et authentifiés. Pas de PAT inter-repos configuré. La recette de la V0.1.1 post-migration et de la V0.2.0 sur iPhone reste à confirmer. Le bloc ne programme rien ; l'adaptateur LINK n'est pas encore branché.
 
 ## Contrat d'intégration d'une nouvelle PWA
 
