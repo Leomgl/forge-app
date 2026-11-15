@@ -1,4 +1,4 @@
-# FORGE — consignes de développement, génération V0.10.0
+# FORGE — consignes de développement, génération V0.10.1
 
 1. Le **catalogue actif** contient LINK et FORGE seulement. Ne pas réactiver d'ancienne application ou reprendre ses contrats sans nouvelle décision. Les apps futures ne sont pas encore nommées.
 2. La **source de vérité des tickets** est GitHub Issues de `Leomgl/forge-app`. Pour les nouveaux chantiers, créer des issues #40 ou suivantes. Les issues précédentes sont archives historiques, pas un backlog vivant.
