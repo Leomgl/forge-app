@@ -4,6 +4,8 @@ FORGE est le cockpit de suivi des **nouvelles applications iPhone**. L'architect
 
 **Application :** https://forge-hub.q9pfwtztsc.workers.dev/
 
+## V0.10.0 — nouvelle génération
+
 ## Nouvelle génération
 
 - **LINK V0.12.0** : seul centre technique des connexions chiffrées, permissions inter-apps et notifications iOS. Les applications à venir devront s'y inscrire ; aucune app historique n'est encore retenue.
