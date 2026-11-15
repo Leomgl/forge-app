@@ -1,5 +1,18 @@
 # ARCHITECTURE BLOCKS — référence inter-threads
 
+## Règle de classification — BLOCKS n'est PAS une application (confirmée le 16/11/2026)
+
+**BLOCKS = coffre/bibliothèque technique de modules réutilisables**, pas une PWA iPhone, pas une app métier, pas une destination de liaison LINK, pas une entrée du catalogue des apps installables. Son dépôt `Leomgl/blocks-app` conserve les sources ESM/CSS, versions, contrats d'interface et modules génériques, indépendants des identités graphiques et de toute donnée utilisateur.
+
+**LABORATOIRE (LABO) = application PWA de prototypage et de recette** : on y assemble, visualise, teste les variantes et valide l'ergonomie / fonctionnement iPhone des modules. **Après validation, le module est consolidé et rangé dans BLOCKS**, avec documentation, versionnage et compatibilité, pour intégration par les futures applications métiers. Il ne faut pas confondre le stockage/versionnage des modules dans BLOCKS avec une PWA déployée. LABO consomme les modules de BLOCKS et ne devient pas leur source de vérité.
+
+**LINK = PWA de services transversaux** : associations, permissions, ordonnanceur, notifications Push et liaisons entre véritables apps. LINK est associé à LABO, puis aux futures PWA, mais **jamais à BLOCKS**. **FORGE = PWA de pilotage** : tickets, étapes, décisions et états du développement.
+
+Cycle officiel : **concevoir un bloc → le développer/l'essayer dans LABO → valider sur iPhone → le verser et versionner dans BLOCKS → le réutiliser depuis BLOCKS dans les nouvelles apps**. Si un prototype est testé dans LABO avec une copie transitoire, ce n'est pas sa source définitive : synchroniser le code canonique de BLOCKS pour toute réutilisation.
+
+**Validation utilisateur** : LABO est bien associé à LINK sur iPhone (16/11/2026) ; cette validation concerne l'association, et **ne vaut pas encore preuve de réception d'un Push réel depuis LABO** (FORGE #47).
+
+
 ## Règle à appliquer dans toutes les futures apps — 16/11/2026
 
 **Décision UX transverse — LINK dans Réglages, jamais dans « Me notifier ».** LABORATOIRE **V0.3.3**, CI [verte](https://github.com/Leomgl/laboratoire-app/actions/runs/43776500074), Worker Cloudflare `f1335351-7e8b-4157-a00e-3756f215870a` à **100 %**. Le bloc partagé `mountSettings` accueille maintenant la catégorie **« Connexion LINK »** (extension `decorate`) : générer/recopier le code, associer l'app dans LINK → Applications, état de la connexion, contrôle des permissions et déconnexion locale. La feuille **Notifier** conserve seulement `Me notifier` et un test d'envoi **volontaire**, avec un renvoi aux Réglages si l'app n'est pas encore liée. Code LAB `Leomgl/laboratoire-app` release `f771a16e77bc8f76d00dffa62a4735d384090165`. Identifiants IndexedDB conservés lors de la migration d'UI ; les vues nettoient leurs listeners à la navigation. **LINK V0.13.0 inchangé** (Worker `dd12eb78-eef1-4ed2-a8ff-1429ad0a3425`, 25 bindings, D1 et moteur Push intacts). Le pairing/permission reste manuel une seule fois ; après l'association, l'envoi automatique à la création/modification de RDV demeure un travail à faire dans FORGE #49. **Recette physique iPhone du nouvel emplacement en attente.**
