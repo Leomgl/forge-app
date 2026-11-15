@@ -1,5 +1,10 @@
 # FORGE — consignes de développement, génération V0.10.1
 
+## Non-négociable : BLOCKS = dépôt de modules, jamais application
+
+Lors de tout inventaire, déploiement, ticket, architecture, module ou reprise d'un nouveau thread, distinguer **LINK et FORGE (apps système PWA)**, **LABORATOIRE/LABO (PWA de prototypage)** et **BLOCKS (librairie non-PWA, coffre de modules)**. Ne jamais proposer d'inscrire BLOCKS dans LINK, de lui envoyer des Push, ou de le compter parmi les apps à installer sur iPhone. Le flux de développement est **conception/essais dans LABO → validation → consolidation et versionnement dans BLOCKS → import réutilisable dans les futures apps**. LABO a été associé à LINK sur l'iPhone de l'utilisateur le 16/11/2026, mais aucune réception de Push LABO n'a été confirmée à ce stade ; garder FORGE #47 en recette jusqu'à ce test.
+
+
 ## Règle à appliquer dans toutes les futures apps — 16/11/2026
 
 **Décision UX transverse — LINK dans Réglages, jamais dans « Me notifier ».** LABORATOIRE **V0.3.3**, CI [verte](https://github.com/Leomgl/laboratoire-app/actions/runs/43776500074), Worker Cloudflare `f1335351-7e8b-4157-a00e-3756f215870a` à **100 %**. Le bloc partagé `mountSettings` accueille maintenant la catégorie **« Connexion LINK »** (extension `decorate`) : générer/recopier le code, associer l'app dans LINK → Applications, état de la connexion, contrôle des permissions et déconnexion locale. La feuille **Notifier** conserve seulement `Me notifier` et un test d'envoi **volontaire**, avec un renvoi aux Réglages si l'app n'est pas encore liée. Code LAB `Leomgl/laboratoire-app` release `f771a16e77bc8f76d00dffa62a4735d384090165`. Identifiants IndexedDB conservés lors de la migration d'UI ; les vues nettoient leurs listeners à la navigation. **LINK V0.13.0 inchangé** (Worker `dd12eb78-eef1-4ed2-a8ff-1429ad0a3425`, 25 bindings, D1 et moteur Push intacts). Le pairing/permission reste manuel une seule fois ; après l'association, l'envoi automatique à la création/modification de RDV demeure un travail à faire dans FORGE #49. **Recette physique iPhone du nouvel emplacement en attente.**
