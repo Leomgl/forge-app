@@ -19,6 +19,16 @@
 - **Promotion :** bloc partagé seulement après deux scénarios distincts et une recette iPhone réelle.
 - [Cahier d'architecture](ARCHITECTURE-BLOCKS.md) · [Spécification LABORATOIRE](LABORATORY.md).
 
+## Migration officielle des sources (15/11/2026)
+
+- **Repos définitifs :** `Leomgl/laboratoire-app` et `Leomgl/blocks-app`, tous deux privés.
+- **Versions :** LABORATOIRE V0.1.1 (compilation des CSS partagés et des modules) ; BLOCKS V0.1.0 (`b41d3fcf99c1d9dcfc0935db007e6678316c77f2`).
+- **Dépendance :** bloc versionné par `blocks.lock.json`, injecté à la compilation du Worker et non dupliqué comme source dans LAB.
+- **Cloudflare :** Worker `laboratoire-app` redéployé à 100 %, 0 binding et 0 D1 ; LINK et FORGE inchangés.
+- **CI :** `blocks-app` teste les composants, `laboratoire-app` teste le bundle et la PWA ; pas d'accès automatique inter-dépôts privés pour recompiler en CI.
+- **Ancien prototype :** branche `bootstrap/laboratoire-v0-1` de FORGE désormais historique uniquement, ne plus s'en servir comme dépôt de développement.
+- **État de validation :** l'utilisateur a validé V0.1.0 sur iPhone et aime les DA Graphite et Papier ; la V0.1.1 post-migration doit être revalidée physiquement.
+
 ## Non décidées
 
 Noms des nouvelles apps, ordre de reconstruction, périmètre fonctionnel et partage des données, identité graphique de la nouvelle génération, architecture des dépôts métiers, découpage précis des composants communs.
