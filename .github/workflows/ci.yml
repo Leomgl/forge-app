@@ -1,0 +1,24 @@
+name: FORGE PWA and settings
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Release version and no destructive cache reset
+        run: node scripts/check-release-version.cjs
+      - name: Syntax checks
+        run: |
+          for file in app.js ticket-detail.js sw.js edge-worker/index.mjs; do node --check "$file"; done
+      - name: Existing issue, OAuth, Markdown and navigation smoke tests
+        run: node tests/smoke.mjs
