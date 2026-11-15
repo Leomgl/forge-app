@@ -1,4 +1,4 @@
-/* FORGE v0.9.0 — ticket detail retaining source tab for navigation. */
+/* FORGE v0.9.1 — ticket detail retaining source tab for navigation. */
 (function () {
 "use strict";
 const ROOT="https://api.github.com/repos/Leomgl/forge-app/issues/";
