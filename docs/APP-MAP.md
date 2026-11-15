@@ -11,10 +11,10 @@ Version du registre : **2026-11-15 / FORGE V0.10.1**.
 
 | Projet | Statut | Rôle |
 |---|---|---|
-| BLOCKS | Prototype v0.1.0 (theme/shell/settings), [FORGE #44](https://github.com/Leomgl/forge-app/issues/44) | Bibliothèque versionnée de composants et comportements personnalisables |
-| LABORATOIRE | Déployé V0.1.0 — recette iPhone en attente, [FORGE #43](https://github.com/Leomgl/forge-app/issues/43) | PWA légère, feuilles d’expérimentation pour tester et valider BLOCKS sur iPhone |
+| BLOCKS | Dépôt officiel `Leomgl/blocks-app`, V0.1.0 — thème/shell/réglages/styles, [FORGE #44](https://github.com/Leomgl/forge-app/issues/44) | Bibliothèque versionnée de composants et comportements personnalisables |
+| LABORATOIRE | Dépôt officiel `Leomgl/laboratoire-app`, déployé V0.1.1 — recette post-migration à confirmer, [FORGE #43](https://github.com/Leomgl/forge-app/issues/43) | PWA légère, feuilles d’expérimentation pour tester et valider BLOCKS sur iPhone |
 
-**Laboratoire :** https://laboratoire-app.q9pfwtztsc.workers.dev/ ; Worker `laboratoire-app` (0 binding/D1). **Source temporaire :** branche `bootstrap/laboratoire-v0-1` de `Leomgl/forge-app`, répertoire `bootstrap/laboratoire/`, jamais fusionnée dans `main`. De vrais dépôts dédiés à créer/migrer.
+**Laboratoire :** https://laboratoire-app.q9pfwtztsc.workers.dev/ ; Worker `laboratoire-app` (0 binding/D1). **Sources officielles :** `Leomgl/laboratoire-app` (PWA + build + tests + artefact) et `Leomgl/blocks-app` (modules ESM + styles CSS + tests). **BLOCKS est épinglé au commit** `b41d3fcf99c1d9dcfc0935db007e6678316c77f2` par `blocks.lock.json`, et assemblé dans `dist/worker.mjs`. L'ancien bootstrap FORGE n'est plus qu'une archive.
 
 **Aucune application métier n'est validée à ce stade.** Ne pas inscrire d'autres noms avant notre travail commun de cadrage.
 
