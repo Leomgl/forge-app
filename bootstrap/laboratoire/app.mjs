@@ -54,6 +54,7 @@ function renderCarnet(outlet){
  outlet.append(note);
 }
 function renderShell(outlet){
+ outlet.replaceChildren();
  outlet.append(headline("section","FEUILLE 01 · BLOCKS/SHELL","Structure d'application","L'en-tête et la barre de navigation que tu utilises ici sont déjà rendus par notre composant partagé."));
  const panel=$("section","lab-panel");panel.append($("h2",null,"Changer l'identité graphique"),$("p","lab-muted","La structure ne change pas : seuls les design tokens sont modifiés."));
  const controls=$("div","lab-choices");controls.setAttribute("role","group");controls.setAttribute("aria-label","Identité graphique");
@@ -98,6 +99,7 @@ function sectionPreset(){
  ];
 }
 function renderSettings(outlet){
+ outlet.replaceChildren();
  outlet.append(headline("section","FEUILLE 02 · BLOCKS/SETTINGS","Réglages universels","Même architecture dans toutes les apps, mais sections et présentation adaptées à leur contexte."));
  const options=$("div","lab-switcher");
  options.setAttribute("role","group");options.setAttribute("aria-label","Contexte de démonstration");
