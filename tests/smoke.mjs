@@ -78,7 +78,7 @@ assert.match(html,/id="advancedOptions"/);
 assert.match(html,/id="projectFilter"/);
 assert.match(src,/function populateProjects\(/);
 assert.match(src,/class="issue-column col-/);
-assert.match(edge,/NEXUS\|GAMING\|RITUEL\|VESTIAIRE\|SANTE\|GARAGE\|FORGE/);
+assert.match(edge,/NEXUS\|GAMING\|RITUEL\|VESTIAIRE\|SANTE\|GARAGE\|LINK\|FORGE/);
 console.log("FORGE V0.5: catalog, priorities, board and compact form OK");
 
 
