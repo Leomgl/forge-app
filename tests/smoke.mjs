@@ -154,7 +154,7 @@ assert.match(html,/id="generalScopeFields"/);
 assert.match(html,/id="tScope"/);
 assert.match(html,/id="tScopeDetails"/);
 assert.match(edge,/FORGE\|GENERAL/);
-assert.match(sw,/forge-v0\.8\.0/);
+assert.match(sw,/forge-v0\.9\.0/);
 console.log("FORGE V0.7: general ticket creation, scope, filters, and existing apps OK");
 
 
@@ -176,13 +176,13 @@ assert.doesNotMatch(html.match(/id="statusFilter"[\s\S]*?<\/select>/)?.[0]||"",/
 assert.match(src,/window\.addEventListener\("hashchange",routeView\)/);
 assert.match(src,/id\("completedIssues"\)\.addEventListener\("change",onStatusChange\)/);
 assert.match(detail,/returnHash=selected\?\.getAttribute\("href"\)/);
-assert.match(sw,/forge-v0\.8\.0/);
+assert.match(sw,/forge-v0\.9\.0/);
 const domKeys=["search","projectFilter","statusFilter","priorityFilter","workflowSummary","issueCount",
  "issues","completedSearch","completedProjectFilter","completedPriorityFilter","completedCount",
- "completedIssues","navActiveCount","tickets","completed","composer","context","homeIntro"];
+ "completedIssues","navActiveCount","tickets","completed","composer","context","settings","homeIntro"];
 const fakeElements=Object.fromEntries(domKeys.map(k=>[k,{value:k.includes("Search")||k==="search"?"":"all",
- innerHTML:"",textContent:"",hidden:k==="completed"||k==="composer"||k==="context"}]));
-const navs=["tickets","completed","composer","context"].map(view=>{
+ innerHTML:"",textContent:"",hidden:k==="completed"||k==="composer"||k==="context"||k==="settings"}]));
+const navs=["tickets","completed","composer","context","settings"].map(view=>{
  const attrs={},classes=new Set(view==="tickets"?["active"]:[]);
  return {dataset:{view},classList:{toggle(name,on){if(on)classes.add(name);else classes.delete(name);},contains(name){return classes.has(name);}},
  setAttribute(name,value){attrs[name]=value;},removeAttribute(name){delete attrs[name];},getAttribute(name){return attrs[name];}};
@@ -223,4 +223,24 @@ assert.equal(api.getView(),"composer","detail deep link must preserve underlying
 context.location.hash="#tickets";api.routeView();
 assert.equal(fakeElements.tickets.hidden,false);
 assert.equal(fakeElements.homeIntro.hidden,false);
-console.log("FORGE V0.8: active-only home, completed archive, filtering and tab navigation OK");
+assert.match(html,/id="settings" hidden/);
+for(const category of ["LINK et connexions","Préférences et interface","Données et sauvegardes","Sécurité et confidentialité","À propos"])
+ assert.ok(html.includes(category),"Missing settings category "+category);
+assert.match(html,/id="forge-settings-search"/);
+assert.match(html,/id="forge-start-view"/);
+assert.match(html,/id="forge-check-update"/);
+assert.match(html,/FORGE <strong>v0\.9\.0<\/strong>/);
+assert.match(src,/function initSettings\(\)/);
+assert.match(src,/forge-start-view-v1/);
+assert.match(src,/forge-settings-group/);
+assert.match(src,/navigator\.serviceWorker\.getRegistration\(\)/);
+assert.match(src,/document\.querySelectorAll\("\.forge-settings-group"\)/);
+assert.doesNotMatch(src,/localStorage\.clear\(|indexedDB\.deleteDatabase/);
+api.showView("settings");
+assert.equal(fakeElements.settings.hidden,false);
+assert.equal(fakeElements.tickets.hidden,true);
+assert.equal(navs[4].getAttribute("aria-current"),"page");
+context.location.hash="#completed";api.routeView();
+assert.equal(fakeElements.settings.hidden,true);
+assert.equal(fakeElements.completed.hidden,false);
+console.log("FORGE V0.9: Nexus-like settings, version, safe updater, search and five-tab navigation OK");
