@@ -1,5 +1,6 @@
 # Contrats et dépendances inter-applications
 
+> **RESET DU 15/11/2026 — ARCHIVE HISTORIQUE.** Les six anciennes applications (Nexus, Gaming, Rituel, Vestiaire, Santé, Garage) ont été décommissionnées sur Cloudflare. Leurs connexions LINK ont été supprimées. Seuls **LINK et FORGE** sont actifs. Les notes ci-dessous décrivent l'ancienne génération et ne doivent **plus** servir de cartographie active. Voir [FORGE #39](https://github.com/Leomgl/forge-app/issues/39). Les six dépôts historiques doivent encore être supprimés dans les paramètres GitHub.\n\n
 FORGE ne synchronise aucune donnée applicative ; il suit les changements et leurs conséquences. Tout nouveau lien entre apps exige une discussion et une analyse explicite des permissions.
 
 ## Connexions documentées
