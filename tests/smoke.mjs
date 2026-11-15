@@ -154,7 +154,7 @@ assert.match(html,/id="generalScopeFields"/);
 assert.match(html,/id="tScope"/);
 assert.match(html,/id="tScopeDetails"/);
 assert.match(edge,/FORGE\|GENERAL/);
-assert.match(sw,/forge-v0\.9\.1/);
+assert.match(sw,/forge-v0\.9\.2/);
 console.log("FORGE V0.7: general ticket creation, scope, filters, and existing apps OK");
 
 
@@ -176,7 +176,7 @@ assert.doesNotMatch(html.match(/id="statusFilter"[\s\S]*?<\/select>/)?.[0]||"",/
 assert.match(src,/window\.addEventListener\("hashchange",routeView\)/);
 assert.match(src,/id\("completedIssues"\)\.addEventListener\("change",onStatusChange\)/);
 assert.match(detail,/returnHash=selected\?\.getAttribute\("href"\)/);
-assert.match(sw,/forge-v0\.9\.1/);
+assert.match(sw,/forge-v0\.9\.2/);
 const domKeys=["search","projectFilter","statusFilter","priorityFilter","workflowSummary","issueCount",
  "issues","completedSearch","completedProjectFilter","completedPriorityFilter","completedCount",
  "completedIssues","navActiveCount","tickets","completed","composer","context","settings","homeIntro"];
