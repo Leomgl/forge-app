@@ -1,0 +1,24 @@
+name: LABORATOIRE bootstrap smoke
+on:
+  push:
+    branches: [bootstrap/laboratoire-v0-1]
+    paths:
+      - 'bootstrap/laboratoire/**'
+      - '.github/workflows/laboratoire-smoke.yml'
+  pull_request:
+    paths:
+      - 'bootstrap/laboratoire/**'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build isolated Cloudflare Worker
+        run: node bootstrap/laboratoire/scripts/build.mjs
+      - name: Validate PWA and shared BLOCKS
+        run: node bootstrap/laboratoire/tests/smoke.mjs
