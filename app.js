@@ -1,4 +1,4 @@
-/* FORGE v0.9.0 — Nexus-like settings, modular cockpit and safe GitHub OAuth. */
+/* FORGE v0.9.1 — Nexus-like settings, modular cockpit and safe GitHub OAuth. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-public-issues-v2", DRAFT_KEY="forge-draft-v2";
@@ -6,14 +6,8 @@ var issues=[],loading=false,saving=false,auth={configured:false,authenticated:fa
 var GATEWAY="https://forge-hub.q9pfwtztsc.workers.dev/";
 var SCOPE_TYPES={all:"Toutes les apps",multiple:"Plusieurs apps",newapp:"Nouvelle app",other:"Projet / réflexion générale"};
 var apps=[
- {id:"NEXUS",mark:"N",repo:"Leomgl/nexus-app",desc:"Second cerveau, contacts, rappels, budget et intégrations chiffrées."},
- {id:"GAMING",mark:"G",repo:"Leomgl/gaming-app",desc:"Jeux, stockage PS5, saisons, notifications et liens NEXUS."},
- {id:"RITUEL",mark:"R",repo:"Leomgl/rituel-app",desc:"Routines, stocks, statistiques et push iPhone."},
- {id:"VESTIAIRE",mark:"V",repo:"Leomgl/Vestiaire-app",desc:"Dressing, import Fits, mannequin et superposition des tenues."},
- {id:"SANTE",mark:"S",repo:"Leomgl/sante-app",desc:"Carnet de santé chiffré, traitements, habitudes et liaison NEXUS."},
- {id:"GARAGE",mark:"G",repo:"Leomgl/garage-app",desc:"Inventaire privé, localisation des objets, prêts et kits de départ."},
- {id:"LINK",mark:"L",repo:"Leomgl/link-app",desc:"Centre des relations et protocoles de synchronisation entre les apps."},
- {id:"FORGE",mark:"F",repo:"Leomgl/forge-app",desc:"Mémoire des tickets, connexion GitHub et pilotage du développement."}
+ {id:"LINK",mark:"L",repo:"Leomgl/link-app",desc:"Noyau technique : communication, permissions, synchronisation et notifications communes."},
+ {id:"FORGE",mark:"F",repo:"Leomgl/forge-app",desc:"Pilotage du rebuild, historique technique, tickets et évolutions."}
 ];
 function id(n){return document.getElementById(n);}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -253,7 +247,7 @@ function populateProjects(){
   el.innerHTML=(all?'<option value="all">Tous les tickets</option>':"")
     +'<option value="GENERAL">GÉNÉRAL · projets transversaux</option>'
     +apps.map(function(p){return '<option value="'+esc(p.id)+'">'+esc(projectLabel(p.id))+'</option>';}).join("");
-  el.value=previous&&Array.from(el.options).some(function(o){return o.value===previous;})?previous:(all?"all":"NEXUS");
+  el.value=previous&&Array.from(el.options).some(function(o){return o.value===previous;})?previous:(all?"all":"LINK");
  });
 }
 function makeApps(){
@@ -294,7 +288,7 @@ function issueBody(d){
  +'- Priorité exprimée : '+d.tPriority+'\n'
  +'- Point de départ : https://github.com/Leomgl/forge-app/blob/main/docs/AI-START-HERE.md\n'
  +'- Dépendances : https://github.com/Leomgl/forge-app/blob/main/docs/DEPENDENCIES.md\n'
- +(general?'- Identifier les apps réellement concernées et vérifier leurs dépôts, contrats NEXUS LINK et déploiements Cloudflare avant intervention.\n'
+ +(general?'- Identifier les apps réellement concernées et vérifier leurs dépôts, contrats LINK et déploiements Cloudflare avant intervention.\n'
    :'- Lire le README actuel, code concerné, tests et commits récents avant toute modification.\n')
  +'- Documenter l’impact sur les données/migrations, les régressions possibles, les tests réalisés et les tests iPhone restant à faire.\n\n'
  +'## Suivi de livraison (à remplir lors du traitement)\n'
@@ -321,10 +315,10 @@ async function publish(){
  msg.textContent="Ouverture de GitHub : connecte-toi et confirme « Submit new issue ». Ce brouillon seul n'est pas encore publié.";
  window.open(url.href,"_blank","noopener,noreferrer");
 }
-function resetAfterPublication(){fields.forEach(k=>{id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"NEXUS",tType:"bug",tPriority:"normale",tScope:"all"}[k]):"";});try{localStorage.removeItem(DRAFT_KEY);}catch{}toggleGeneral();}
+function resetAfterPublication(){fields.forEach(k=>{id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"LINK",tType:"bug",tPriority:"normale",tScope:"all"}[k]):"";});try{localStorage.removeItem(DRAFT_KEY);}catch{}toggleGeneral();}
 function reset(){
  if(!confirm("Effacer ton brouillon local ? Les tickets déjà publiés sur GitHub ne seront pas touchés."))return;
- fields.forEach(function(k){id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"NEXUS",tType:"bug",tPriority:"normale",tScope:"all"}[k]):"";});
+ fields.forEach(function(k){id(k).value=["tProject","tType","tPriority","tScope"].includes(k)?({tProject:"LINK",tType:"bug",tPriority:"normale",tScope:"all"}[k]):"";});
  try{localStorage.removeItem(DRAFT_KEY);}catch(e){}
  id("composeMessage").textContent="Brouillon effacé.";toggleGeneral();
 }
