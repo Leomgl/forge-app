@@ -1,7 +1,7 @@
 # FORGE — consignes de développement, génération V0.10.1
 
 1. Le **catalogue actif** contient LINK et FORGE seulement. Ne pas réactiver d'ancienne application ou reprendre ses contrats sans nouvelle décision. Les apps futures ne sont pas encore nommées.
-2. **Sources OFFICIELLES désormais séparées :** `Leomgl/laboratoire-app` (V0.1.1) et `Leomgl/blocks-app` (V0.1.0). BL0CKS est la bibliothèque ESM/CSS, LAB utilise `blocks.lock.json` pour un SHA épinglé (`b41d3fcf99c1d9dcfc0935db007e6678316c77f2`). Source `forge-app/bootstrap/laboratoire-v0-1` **obsolète** : ne pas y faire de changements. Uniquement mettre à jour ces deux vrais dépôts et synchroniser FORGE.
+2. **Sources OFFICIELLES désormais séparées :** `Leomgl/laboratoire-app` (V0.1.1) et `Leomgl/blocks-app` (V0.1.0). BLOCKS est la bibliothèque ESM/CSS, LAB utilise `blocks.lock.json` pour un SHA épinglé (`b41d3fcf99c1d9dcfc0935db007e6678316c77f2`). Source `forge-app/bootstrap/laboratoire-v0-1` **obsolète** : ne pas y faire de changements. Uniquement mettre à jour ces deux vrais dépôts et synchroniser FORGE.
 3. **Architecture approuvée :** LINK (transport et notifications), FORGE (suivi), BLOCKS (bibliothèque de modules transversaux), LABORATOIRE (première PWA, feuilles de tests). Lire `docs/ARCHITECTURE-BLOCKS.md` et `docs/LABORATORY.md`; FORGE #41/#43/#44.
 4. La **source de vérité des tickets** est GitHub Issues de `Leomgl/forge-app`. Pour les nouveaux chantiers, créer des issues #40 ou suivantes. Les issues précédentes sont archives historiques, pas un backlog vivant.
 4. Dans une intervention, lire l'issue **et ses commentaires**, puis le dépôt/branche et la version réellement déployés. Documenter les changements dans FORGE avant de conclure.
