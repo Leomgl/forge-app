@@ -10,6 +10,15 @@
 - **Modules communs à élaborer** : Réglages partagés et `Me notifier`, avec personnalisation à la DA et aux contraintes de l'app.
 - **Cible budgétaire** : zéro abonnement supplémentaire ; limiter les coûts et lectures D1 Cloudflare.
 
+## Décisions de lancement (15/11/2026)
+
+- **LABORATOIRE**, PWA autonome et légère, est la première application à réaliser. Interface en pile de feuilles d'essai. Données fictives, aucune D1 propre ni moteur Push. Tickets FORGE #43.
+- **BLOCKS**, bibliothèque transversale séparée des apps, fournit composants, comportements et tokens personnalisables. Ni duplication ni héritage forcé de DA. Tickets FORGE #44.
+- **Ordre validé :** structure d'app et navigation → page Réglages universels → Me notifier → liaison/permissions LINK → nouveaux blocs au besoin.
+- **Isolation :** les blocs construisent l'UI, les apps détiennent leur logique métier, LINK transporte les événements et distribue les notifications. Ne pas exiger que LINK déchiffre toutes les données privées.
+- **Promotion :** bloc partagé seulement après deux scénarios distincts et une recette iPhone réelle.
+- [Cahier d'architecture](ARCHITECTURE-BLOCKS.md) · [Spécification LABORATOIRE](LABORATORY.md).
+
 ## Non décidées
 
 Noms des nouvelles apps, ordre de reconstruction, périmètre fonctionnel et partage des données, identité graphique de la nouvelle génération, architecture des dépôts métiers, découpage précis des composants communs.

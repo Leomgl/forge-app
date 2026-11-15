@@ -36,6 +36,8 @@ La page de détail de ticket charge les commentaires et rend le Markdown en DOM 
 
 ## Liens techniques
 
+- [Architecture BLOCKS · LABORATOIRE](docs/ARCHITECTURE-BLOCKS.md)
+- [Spécification LABORATOIRE](docs/LABORATORY.md)
 - [Guide de reprise IA](docs/AI-START-HERE.md)
 - [Catalogue des applications](docs/APP-MAP.md)
 - [Dépendances](docs/DEPENDENCIES.md)
