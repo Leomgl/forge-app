@@ -1,24 +1,14 @@
-# FORGE — consignes pour assistant / agent développeur
+# FORGE — consignes de développement, génération V0.10.0
 
-La mission de ce dépôt est **de conserver la mémoire de travail technique** : besoins, bugs, décisions, dépendances et suivi de validation. L'application PWA FORGE elle-même est volontairement indépendante des applications suivies.
-
-1. Lire `docs/AI-START-HERE.md` avant toute analyse d'issue.
-2. Les tickets sont les **GitHub Issues de `Leomgl/forge-app`**, pas les brouillons locaux et pas des issues dispersées dans chaque dépôt.
-3. Pour « ticket #N », ouvrir l'issue et **ses commentaires**, puis le dépôt de code actuel de l'app cible. Ne pas coder uniquement sur la base des notes FORGE.
-4. Lire `docs/APP-MAP.md`, `docs/DEPENDENCIES.md` et `docs/EVOLUTION-HISTORY.md` ; vérifier les contrats et migrations avant de toucher aux données.
-5. Après modification, référencer le commit, les fichiers touchés, les tests et la recette iPhone dans l'issue. Mettre à jour les documents transversaux si besoin.
-6. Aucun secret ou donnée personnelle dans un dépôt public. Aucun service payant ou synchronisation entre apps sans accord.
-7. Les tests simulés ne prouvent pas le résultat sur iPhone réel.
-
-Le code principal de chaque app vit dans ses propres dépôts GitHub (liens dans `docs/APP-MAP.md`).
-
-8. Statuts FORGE V0.3 : `closed` = Terminé ; `open` avec `FORGE_META.workflow=doing` = En cours ; autre `open` = À faire. Pour mettre à jour, préserver le corps existant et vérifier l'écriture distante. Ne jamais se fier à un statut local non publié.
-
-9. Depuis FORGE V0.4, aucune saisie de jeton GitHub dans la PWA : utiliser la GitHub App avec OAuth et un Worker Cloudflare à origine dédiée. La mise en route initiale de la GitHub App et des secrets est requise et ne doit jamais être déclarée validée sans recette. Détails : `docs/GITHUB-AUTH.md`.
-
-
-## Contrat permanent de tenue de contexte (12/11/2026)
-
-À chaque conversation qui intervient sur une app iPhone, penser à FORGE **sans attendre que le propriétaire le redemande**. À la fin d'une intervention substantielle, vérifier le dépôt courant et l'infrastructure Cloudflare utile, puis mettre à jour si nécessaire : `docs/APP-MAP.md` (app/version/modules/URL), `docs/DEPENDENCIES.md` (contrats, risques, consentement), `docs/EVOLUTION-HISTORY.md` (décisions), la liste `apps` dans `app.js` (interface et formulaire), et le ticket de suivi GitHub, avec liens commits/PR et statut fidèle. Pour une nouvelle app, penser également à son nom dans la liste blanche `edge-worker/index.mjs` et au déploiement de ce Worker. Garder `SANTE` et `GARAGE` (repos privés) présents dans l'interface, tout en excluant les données de production ou personnelles des issues publiques.
-
-La synchronisation est une **opération explicite de l'assistant au cours de la conversation**, jamais une tâche autonome en arrière-plan. Relire le code GitHub plutôt que recopier une version documentaire périmée ; ne jamais marquer une recette iPhone comme réussie sans validation physique. Ne pas déclarer un déploiement effectif à partir d'un simple commit GitHub.
+1. Le **catalogue actif** contient LINK et FORGE seulement. Ne pas réactiver d'ancienne application ou reprendre ses contrats sans nouvelle décision. Les apps futures ne sont pas encore nommées.
+2. La **source de vérité des tickets** est GitHub Issues de `Leomgl/forge-app`. Pour les nouveaux chantiers, créer des issues #40 ou suivantes. Les issues précédentes sont archives historiques, pas un backlog vivant.
+3. Dans une intervention, lire l'issue **et ses commentaires**, puis le dépôt/branche et la version réellement déployés. Documenter les changements dans FORGE avant de conclure.
+4. LINK demeure l'unique passerelle technique pour notifications, identités et synchronisations des nouvelles PWA. Préserver le Hub, le Web Push, ses permissions, sa D1 et son ordonnanceur.
+5. Les interfaces des futures apps partageront une architecture de **Réglages** et un bloc **Me notifier**, adaptés à chaque domaine. Préserver leurs DA respectives.
+6. Chaque app garde ses données métier. Les nouveaux contrats LINK sont explicitement approuvés, chiffrés, et les permissions sont fermées par défaut.
+7. Les tickets GÉNÉRAL sont transversaux. Pour une app créée, ajouter une entrée au catalogue FORGE après validation du nom, rôle, dépôt et intégration LINK ; adapter la liste autorisée côté passerelle GitHub.
+8. GitHub OAuth sécurisé par `forge-hub` ; jamais de jeton PAT en front ni de valeur secrète dans un ticket/commit. La session doit être vérifiée avant mutation.
+9. Statuts : fermé = Terminé, ouvert + `workflow=doing` = En cours, autre ouvert = À faire. Toujours confirmer les écritures distantes.
+10. Ne pas annoncer de recette iPhone sans avoir réellement testé sur l'appareil. Rédiger le compte rendu : fait, tests, risques, version, commit/PR, recette à faire.
+11. Conserver l'historique de l'ancienne génération uniquement dans GitHub et dans la branche `snapshot/forge-preclean-2026-11-15`. Ne pas réintroduire ces références dans les pages actives.
+12. Aucun travail en arrière-plan sans automatisation explicitement créée : vérifier et synchroniser FORGE **pendant le chat**.
