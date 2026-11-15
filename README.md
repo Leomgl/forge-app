@@ -20,7 +20,7 @@ FORGE est le cockpit de suivi des **nouvelles applications iPhone**. L'architect
 | LINK | Transport inter-apps, identité, permissions, Web Push | [link-app](https://github.com/Leomgl/link-app) |
 | FORGE | Pilotage du développement et décisions | [forge-app](https://github.com/Leomgl/forge-app) |
 
-**Premières réalisations de l'architecture :** [LABORATOIRE V0.1.1](https://github.com/Leomgl/laboratoire-app) (PWA d'essais, https://laboratoire-app.q9pfwtztsc.workers.dev/) et [BLOCKS V0.1.0](https://github.com/Leomgl/blocks-app) (composants partagés ESM + CSS). Le `blocks.lock.json` de LAB verrouille le commit de BLOCKS ; le Worker est compilé à partir des deux sources privées. Les deux CI sont opérationnelles. Les anciens fichiers bootstrap FORGE ne sont plus actifs.
+**Premières réalisations de l'architecture :** [LABORATOIRE V0.2.0](https://github.com/Leomgl/laboratoire-app) (PWA d'essais, https://laboratoire-app.q9pfwtztsc.workers.dev/) et [BLOCKS V0.2.0](https://github.com/Leomgl/blocks-app) (composants partagés ESM + CSS). Le `blocks.lock.json` de LAB verrouille le commit de BLOCKS ; le Worker est compilé à partir des deux sources privées. Les deux CI sont opérationnelles. Feuille 03 « Me notifier » en démonstration sur LAB, recette iPhone à faire ; aucun moteur Push local. Les anciens fichiers bootstrap FORGE ne sont plus actifs.
 
 Les **futures apps** restent à décider ensemble. Aucune ancienne app n'est recréée ou préinscrite par défaut.
 
