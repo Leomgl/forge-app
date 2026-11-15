@@ -1,5 +1,7 @@
 # FORGE — POINT D'ENTRÉE POUR L'ASSISTANT
 
+> **ÉTAT ACTUEL — 15/11/2026 :** seule l'architecture LINK + FORGE est conservée. Six PWA héritées décommissionnées, reconstruire les futures apps de zéro avec les modules communs. Voir FORGE #39. Les références ci-dessous aux anciennes apps sont historiques, ne pas les considérer actives.
+
 **À ouvrir en premier à chaque nouvelle conversation lorsqu'on parle d'un ticket FORGE.** Mise en place : 2026-11-11. Ce document est une *aide à la reprise* ; une documentation ancienne ne prouve pas le comportement actuel d'une application.
 
 ## Mission
