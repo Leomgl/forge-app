@@ -2,7 +2,7 @@
 
 ## Règle préalable à toute nouvelle app — lire le guide officiel
 
-**OBLIGATOIRE :** avant de créer un dépôt, un module ou une PWA métier, lire **[docs/APP-CREATION-GUIDE.md](docs/APP-CREATION-GUIDE.md)** (pour un fichier situé dans \`docs/\`, utiliser le chemin relatif \`APP-CREATION-GUIDE.md\`). Règle absolue : **brancher/importer BLOCKS comme dépendance versionnée, jamais copier-coller ni forker ses sources dans les apps**. Versions par module et propagation automatique des correctifs : **FORGE #51 à développer**, pas encore en production. Cadrage, sécurité LINK, mises à jour et recette iPhone exigés avant validation d'une nouvelle app.
+**OBLIGATOIRE :** avant de créer un dépôt, un module ou une PWA métier, lire **[docs/APP-CREATION-GUIDE.md](docs/APP-CREATION-GUIDE.md)**. Règle absolue : **brancher/importer BLOCKS comme dépendance versionnée, jamais copier-coller ni forker ses sources dans les apps**. Versions par module et propagation automatique des correctifs : **FORGE #51 à développer**, pas encore en production. Cadrage, sécurité LINK, mises à jour et recette iPhone exigés avant validation d'une nouvelle app.
 
 
 

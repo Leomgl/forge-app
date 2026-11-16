@@ -7,6 +7,10 @@ Version du registre : **2026-11-15 / FORGE V0.10.1**.
 | LINK | LINK | Connexions chiffrées, permissions, notifications centralisées | `Leomgl/link-app` | Worker `link-app`, D1 `link-hub-db`, ordonnanceur DO |
 | FORGE | FORGE | Catalogue, tickets, décisions, interventions et documentation | `Leomgl/forge-app` | Worker `forge-hub` (OAuth) |
 
+## Règle d'enregistrement d'une nouvelle app
+
+**Avant toute création de PWA métier**, appliquer le [Guide obligatoire de création d'app](APP-CREATION-GUIDE.md). Déclarer ici nom, rôle, dépôt, URL, Worker, données, modules BLOCKS **importés** (versions/commit, jamais copiés), connexion LINK, permissions, coûts, tests et recette iPhone. La distribution automatique des mises à jour BLOCKS est suivie dans [FORGE #51](https://github.com/Leomgl/forge-app/issues/51) : **non implémentée à ce jour**.
+
 ## Projets de construction validés, hors catalogue métier
 
 | Projet | Statut | Rôle |

@@ -16,7 +16,7 @@
 
 **Correct :** déclarer la dépendance à BLOCKS avec une version/commit vérifiable, **importer les modules** et leurs styles dans le build de l'app, puis personnaliser via **paramètres, callbacks, slots, adaptateurs métier et design tokens**. Un correctif du module se fait **dans BLOCKS**, et les apps sont reconstruites contre sa nouvelle version.
 
-**Interdit :** copier \`src/settings.mjs\`, \`src/notify-editor.mjs\`, \`src/blocks.css\` ou un autre module dans chaque repo ; créer des versions privées légèrement différentes du même module ; modifier le bundle compilé comme s'il était le code source.
+**Interdit :** copier `src/settings.mjs`, `src/notify-editor.mjs`, `src/blocks.css` ou un autre module dans chaque repo ; créer des versions privées légèrement différentes du même module ; modifier le bundle compilé comme s'il était le code source.
 
 **Exception :** une fonction réellement spécifique au métier de l'app reste dans son repo. Si elle devient générique, passer par LABO, tester, puis l'extraire dans BLOCKS. Le **bundle compilé** de la PWA peut contenir le code BLOCKS pour rester utilisable hors ligne : cela n'est **pas une duplication de source maintenable**.
 
@@ -24,12 +24,12 @@
 
 | Module | Où se trouve le code | Utilisation par une nouvelle app |
 | --- | --- | --- |
-| Réglages | BLOCKS, \`src/settings.mjs\` | Une architecture commune avec catégories adaptées, recherche, version en haut et mise à jour **dans À propos** |
-| Apparence / thèmes | BLOCKS, \`src/theme.mjs\`, \`src/palettes.css\` | Choisir une DA parmi **Graphite, Papier, Tabac, Minuit, Sauge** via **Réglages → Apparence** ; la DA de l'app reste personnalisable |
-| Densité | BLOCKS, \`src/density.mjs\`, \`src/blocks.css\` | Trois modes **Compact, Normal, Spacieux** via **Réglages → Préférences**, valeur persistée côté app |
-| Me notifier | BLOCKS, \`src/notify-editor.mjs\` | Configuration visuelle des rappels RDV / pass / stock, J/H/M, **jusqu'à 6 rappels** ; ne programme pas lui-même les Push |
-| Structure/Shell | BLOCKS, \`src/shell.mjs\` | En-tête et navigation communs ; ce n'est **pas** un écran/une feuille « Structure » supplémentaire à reproduire |
-| Mise à jour PWA | BLOCKS, \`src/pwa-update.mjs\` | Vérification de \`/version.json\` et mise à jour du Service Worker de **cette app** |
+| Réglages | BLOCKS, `src/settings.mjs` | Une architecture commune avec catégories adaptées, recherche, version en haut et mise à jour **dans À propos** |
+| Apparence / thèmes | BLOCKS, `src/theme.mjs`, `src/palettes.css` | Choisir une DA parmi **Graphite, Papier, Tabac, Minuit, Sauge** via **Réglages → Apparence** ; la DA de l'app reste personnalisable |
+| Densité | BLOCKS, `src/density.mjs`, `src/blocks.css` | Trois modes **Compact, Normal, Spacieux** via **Réglages → Préférences**, valeur persistée côté app |
+| Me notifier | BLOCKS, `src/notify-editor.mjs` | Configuration visuelle des rappels RDV / pass / stock, J/H/M, **jusqu'à 6 rappels** ; ne programme pas lui-même les Push |
+| Structure/Shell | BLOCKS, `src/shell.mjs` | En-tête et navigation communs ; ce n'est **pas** un écran/une feuille « Structure » supplémentaire à reproduire |
+| Mise à jour PWA | BLOCKS, `src/pwa-update.mjs` | Vérification de `/version.json` et mise à jour du Service Worker de **cette app** |
 
 **Qualification :** feuilles LABO **01 Réglages** et **02 Me notifier** validées sur iPhone le **16/11/2026** ; [FORGE #50](https://github.com/Leomgl/forge-app/issues/50) terminé. Base de référence : **BLOCKS V0.3.3**, **LABO V0.4.3**. Les modules ne changent pas à chaque création d'app : **on les branche**.
 
@@ -41,13 +41,13 @@
 
 ### B — Démarrer le dépôt de la nouvelle PWA
 
-Créer un repo indépendant, un manifeste PWA installable sur l'écran d'accueil, une icône, un Service Worker **propre à l'app**, \`/version.json\` et une version affichée dans l'interface. Conserver les caches et données utilisateur lors des mises à jour. GitHub + Cloudflare en visant **0 €**, et éviter la création d'une D1, d'un Worker supplémentaire ou d'un cron sans justification chiffrée. Ne pas cloner tout LABO comme application métier : réutiliser sa **méthode d'intégration**.
+Créer un repo indépendant, un manifeste PWA installable sur l'écran d'accueil, une icône, un Service Worker **propre à l'app**, `/version.json` et une version affichée dans l'interface. Conserver les caches et données utilisateur lors des mises à jour. GitHub + Cloudflare en visant **0 €**, et éviter la création d'une D1, d'un Worker supplémentaire ou d'un cron sans justification chiffrée. Ne pas cloner tout LABO comme application métier : réutiliser sa **méthode d'intégration**.
 
 ### C — Brancher BLOCKS, ne pas le dupliquer
 
-1. Ajouter une dépendance **verrouillée** sur un commit/version BLOCKS ; suivre le modèle actuel de \`Leomgl/laboratoire-app/blocks.lock.json\` (routes de modules et SHA exact).
-2. Dans le **build** de la PWA, prendre les fichiers depuis ce commit canonique de \`Leomgl/blocks-app\`, **sans créer de copies sources éditables** dans le repo métier.
-3. Importer depuis les **routes générées par le build** (exemples de la PWA actuelle : \`/blocks/settings.mjs\`, \`/blocks/theme.mjs\`, \`/blocks/density.mjs\`, \`/blocks/notify-editor.mjs\`, \`/blocks/blocks.css\`, \`/blocks/palettes.css\`). Le nom d'import concret dépend du bundler de l'app.
+1. Ajouter une dépendance **verrouillée** sur un commit/version BLOCKS ; suivre le modèle actuel de `Leomgl/laboratoire-app/blocks.lock.json` (routes de modules et SHA exact).
+2. Dans le **build** de la PWA, prendre les fichiers depuis ce commit canonique de `Leomgl/blocks-app`, **sans créer de copies sources éditables** dans le repo métier.
+3. Importer depuis les **routes générées par le build** (exemples de la PWA actuelle : `/blocks/settings.mjs`, `/blocks/theme.mjs`, `/blocks/density.mjs`, `/blocks/notify-editor.mjs`, `/blocks/blocks.css`, `/blocks/palettes.css`). Le nom d'import concret dépend du bundler de l'app.
 4. Injecter les **préférences, styles et callbacks** spécifiques à l'app dans les APIs des modules. Persister la sélection de thème/densité et les données **dans l'app hôte**.
 5. Vérifier que la compilation et les tests contrôlent la **correspondance du commit BLOCKS verrouillé**, les fichiers réellement embarqués et l'absence de source dupliquée.
 
@@ -72,8 +72,8 @@ Une vraie app possède une **identité distincte** et s'associe à LINK depuis *
 
 ### F — Consigner et enregistrer dans FORGE
 
-Créer/mettre à jour la fiche de l'app dans **\`docs/APP-MAP.md\`** et ses dépendances dans **\`docs/DEPENDENCIES.md\`**, avec :
-\`appId\`, nom, rôle, repo GitHub, URL PWA, Worker et bindings, version de l'app, commit/version BLOCKS, modules importés, version SDK LINK, permissions, stockage, coût/quotas, dernière recette, statut. Mettre à jour le ticket et le registre au **même moment** que le déploiement.
+Créer/mettre à jour la fiche de l'app dans **`docs/APP-MAP.md`** et ses dépendances dans **`docs/DEPENDENCIES.md`**, avec :
+`appId`, nom, rôle, repo GitHub, URL PWA, Worker et bindings, version de l'app, commit/version BLOCKS, modules importés, version SDK LINK, permissions, stockage, coût/quotas, dernière recette, statut. Mettre à jour le ticket et le registre au **même moment** que le déploiement.
 
 ## 4. Checklist de conformité — une app ne passe pas en « prête » sans ces points
 
