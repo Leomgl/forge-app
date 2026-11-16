@@ -1,3 +1,7 @@
+## 16/11/2026 — CORTEX : l'UI d'abord, LINK ensuite
+
+Priorité utilisateur : barre basse en icônes thématisées, modules groupés, calendrier et recherche, rappels Tous/Priorité/Date, contacts photos/4 favoris/index alphabétique. **Budget inchangé ; LINK reporté.** Aucun moteur LINK ou source BLOCKS modifié durant cette phase. CORTEX V0.1.2 publiée, recette iPhone en attente.
+
 ## 16/11/2026 — naissance de CORTEX
 
 ## 16/11/2026 — LINK V0.13.1 : interface BLOCKS, aucun changement métier
