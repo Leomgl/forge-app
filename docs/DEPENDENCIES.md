@@ -1,3 +1,11 @@
+## RITUELS V0.1.2 — accueil épuré et jauge circulaire (16/11/2026)
+
+- **Publication** : Worker Cloudflare `rituels-app`, [PWA](https://rituels-app.q9pfwtztsc.workers.dev/), version `0e8fc780-6f1d-4376-9d06-42784a5d0406` à **100 %**, déploiement `51b3dac7-975b-46c5-852f-60474d6442c1`. Aucun nouveau binding, D1, cron, Worker ni ordonnanceur Push.
+- **Application** : V0.1.2 / SW `rituels-v0.1.2`; les trois cartes Accueil (« Étapes terminées », « Produits suivis », « Stocks à surveiller ») disparaissent. Les alertes réelles de stock faible restent disponibles.
+- **Remplacement de l'étoile** : roue de 32 graduations avec pourcentage 0–100 % au centre du message d'accueil. Progression calculée à partir des étapes matin et soir **de la date sélectionnée** ; mise à jour à la coche, à la décoche et au changement de jour. Lecteurs d'écran : rôle progressbar, valeur et nombres d'étapes.
+- **Dépendances et données inchangées** : BLOCKS V0.3.3 épinglé `700ae421a2c2d56536c3793afa9f6f807973e72a`; ni duplication de module, ni migration IndexedDB, ni échange LINK/Cortex actif. Ancienne version Cloudflare `33567125-0e52-4023-b4dc-ccc112e4c653` conservée comme référence de rollback.
+- **Recette** : 12 tests métier et syntaxe CI ; vérification HTTP externe du bundle et du retrait des cartes via [Actions GitHub](https://github.com/Leomgl/rituels-app/actions). À confirmer sur iPhone : rendu, actualisation après coche/décoche, changement de date et persistance après mise à jour. [FORGE #54](https://github.com/Leomgl/forge-app/issues/54).
+
 ## RITUELS V0.1.1 — pictogrammes, typographie et suivi sur 7 jours (16/11/2026)
 
 - **PWA** : https://rituels-app.q9pfwtztsc.workers.dev/ ; Worker `rituels-app` Cloudflare version `33567125-0e52-4023-b4dc-ccc112e4c653` à **100 %**, déploiement `de2eba0c-4641-4edd-9e80-4f657e5df96e` ; 0 binding, D1, cron ou moteur Push ajouté.
