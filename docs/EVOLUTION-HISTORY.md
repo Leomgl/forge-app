@@ -1,5 +1,10 @@
 # Historique des livraisons — nouveau cycle
 
+## LINK V0.13.3 — Résolution du cache de mise à jour PWA (16/11/2026)
+
+**Déploiement à 100 %** sur le Worker LINK existant, version Cloudflare `f637f007-d717-4ade-a285-ada0be63647f`, déploiement `d02a7582-4dad-4fd6-a5e8-d1bcd9230060` ([PR #11 fusionnée](https://github.com/Leomgl/link-app/pull/11), [CI verte](https://github.com/Leomgl/link-app/actions/runs/43789586425), [FORGE #57](https://github.com/Leomgl/forge-app/issues/57)). Incident : le SW mettait `/version.json` en cache-first et pouvait masquer les versions nouvelles malgré `fetch(cache:no-store)`. LINK vérifie désormais une URL versionnée, ne pré-cache plus `/version.json`, et laisse cette route atteindre le réseau avec réponse `Cache-Control: no-store`. Test de non-interception SW ajouté. **BLOCKS canonique inchangé**, Hub, Face ID, D1, DO, permissions et logique Web Push préservés ; 25 bindings identiques. Recette réelle du bouton sur l'app iPhone installée en attente.
+
+
 ## LINK V0.13.2 — Face ID direct sur l'accueil (16/11/2026)
 
 Après retour utilisateur positif sur LINK V0.13.1, ajout d'un bouton Face ID en haut à droite de « Ton réseau », utilisant la même fonction `doLogin()` WebAuthn que Réglages et Apps. L'Accueil affiche « Déverrouillé » à réception de l'overview propriétaire ; aucune deuxième authentification ni permission implicite. Si la passkey n'est pas initialisée, ouverture des Réglages. **V0.13.2 déployée à 100 %** : Cloudflare Worker `link-app` version `f07d14df-d75a-4813-a1c0-c990423beab6` (déploiement `247f40dc-3141-46b8-91f4-ba431d2034e2`). [PR #10 fusionnée](https://github.com/Leomgl/link-app/pull/10) et [CI verte](https://github.com/Leomgl/link-app/actions/runs/43788388562). 25 bindings/D1/DO inchangés ; seuls les assets UI du Worker et le pré-cache PWA changent, pas le moteur Push. [FORGE #56](https://github.com/Leomgl/forge-app/issues/56) reste ouvert jusqu'au test du nouveau bouton sur iPhone.
