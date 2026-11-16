@@ -1,3 +1,13 @@
+## Cortex V0.5.1 — Contacts consultables et Corbeille (16/11/2026)
+
+- **Livraison** : [Cortex](https://cortex-app.q9pfwtztsc.workers.dev/) · `Leomgl/Cortex-app` commit `2e8f3ec92ee5736dec04514ec845a21f4dd52544` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43835364380).
+- **Cloudflare** : Worker `cortex-app`, deployment `3ac73033-aa61-4641-ba22-4f6d6b059bc9`, version `25b6a041-ea5d-4002-b802-77c407bee228` à 100 %, `bindings=[]`.
+- **Contacts** : consultation prioritaire via une carte (Appeler, Message, Infos), accès Modifier secondaire. Fav/listes/activité récente ouvrent cette carte. Photos, tri alphabétique, VCF et favoris préservés.
+- **Corbeille** : septième module dans Gestion, compatible raccourcis personnalisables. Récupération des éléments à `deletedAt`, restauration par type, purge individuelle ou globale après saisie de `VIDER`. Notifications LINK reprogrammées si fiche restaurée ; commandes d'annulation LINK en attente conservées si purge. Les voyages associés à un événement supprimé restent restaurables et leurs documents sont également purgés si suppression **définitive** du rendez-vous.
+- **Budget** : opérations, raccourcis et échéances déplacés en Corbeille depuis leur éditeur ; mouvements historiques réalisés non supprimés par retrait d'un modèle.
+- **Limites** : les sous-éléments retirés à l'intérieur d'une fiche ne sont pas récupérables depuis cette Corbeille. Les copies d'apps externes peuvent être republiées. Les sauvegardes JSON exportées séparément restent indépendantes. Pas de nouvelle base D1, BLOCKS 0.7.1 / LINK 0.13.0 inchangés.
+- **Validation** : tests GitHub automatiques verts ; **recette iPhone en attente** dans [FORGE #64](https://github.com/Leomgl/forge-app/issues/64). Ticket Cortex maître [#53](https://github.com/Leomgl/forge-app/issues/53) maintenu ouvert.
+
 ## Cortex V0.5.0 — Voyages : Agenda → séjour, documents et futur LINK (16/11/2026)
 
 - **Livraison Cortex** : [ouvrir l'application](https://cortex-app.q9pfwtztsc.workers.dev/) · commit `15a2f3b7419f6fec77be458b417b5766d12970ea` ; [CI réussie](https://github.com/Leomgl/Cortex-app/actions/runs/43832788666).
