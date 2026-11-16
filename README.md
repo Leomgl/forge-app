@@ -1,3 +1,14 @@
+## Cortex V0.4.0 — Budget et moteur financier versionné (16/11/2026)
+
+- **Recette dédiée** : [FORGE #59](https://github.com/Leomgl/forge-app/issues/59) (reste ouverte jusqu'à validation iPhone). **Cortex #53** reste ouverte.
+- **GitHub** : `Leomgl/Cortex-app`, commit `fe389659375f7d1ff2265b895abb9dd8b3413d6b`; [CI `43800368263` verte](https://github.com/Leomgl/Cortex-app/actions/runs/43800368263).
+- **Cloudflare** : `cortex-app`, déploiement `a7e51d00-8dc0-434b-93c7-798a511105b4`, version `27f98409-e6bd-413e-93b1-38b0f8386c2f` à **100 %**, `bindings=[]`.
+- **Budget** : six vues (Vue d'ensemble, Journal, Rapide, Revenus, Abonnements, Prêts) ; statistiques mensuelles et tendances sur six mois, dépenses rapides fixes/variables, échéances programmées mensuelles et annuelles, prêt et remboursement anticipé.
+- **Règle centrale** : nouvelles écritures réelles `budgetMovement` séparées des modèles `budgetPlan` et boutons `budgetQuick`. Versions à dates effectives : modifier un salaire/mensualité le 4 change uniquement le mois suivant ; ni le mois courant ni les anciennes écritures ne sont recalculés.
+- **Relations** : mouvement, raccourci, modèle associés à un contact et/ou à un événement/rappel via IDs Cortex, sans invitation automatique.
+- **Prêts** : estimation du capital restant sur paiements réels, intérêts estimés et remboursement partiel/total, hors frais et décompte officiel. Les paiements sont manuels ; le prévisionnel est distinct du réalisé. Le flux net n'est **pas** un solde bancaire. Anciennes dépenses et moteurs BLOCKS 0.7.0 / SYNAPSE / LINK 0.13.0 préservés ; aucune nouvelle DB/D1.
+- **Recette utilisateur** : à effectuer sur iPhone ; voir checklist complète dans FORGE #59.
+
 ## Cortex V0.3.1 — Espacements ciblés Modules et raccourcis (16/11/2026)
 
 - **Github** : `Leomgl/Cortex-app`, commit final `1352450fc3a4030d14355ca2846dbeca77710bb1` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43798220687).
