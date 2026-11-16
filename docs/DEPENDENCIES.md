@@ -1,3 +1,9 @@
+## VALIDATION OFFICIELLE — PHARMA BLOCKS 1.0.0 (16/11/2026)
+
+**PHARMA** est désormais **VALIDÉ** comme module réutilisable suite à l'approbation explicite de l'utilisateur. UI compacte (semaine 7 jours, cases de prise, Traitements avec stock/recharge intégrés, Historique), schéma compatible `blocks.ordo.v1`, import `@leo/blocks-app/pharma` / `pharma-styles`, `mountPharma`. **BLOCKS 0.11.0**, module `ordo@1.0.0`, commit `fee33da9d474eb99995e15aa58f5355d5f3d8cdb`, CI verte. **LABORATOIRE V0.9.3**, feuille **05 ✓ VALIDÉ**, avec 01/02/04 validées, 03 SYNAPSE en essai. Worker `laboratoire-app` version `f9162cd9-26a4-4d12-8460-c6012dcc7014` déployée à **100 %** ; 0 binding, aucune modification LINK/Cortex. [FORGE #76 terminée](https://github.com/Leomgl/forge-app/issues/76). Suite [FORGE #77](https://github.com/Leomgl/forge-app/issues/77) : intégration métier Cortex et notifications LINK **non réalisées** ; sécurité et rappels à qualifier avant usage réel.
+
+---
+
 ## MISE À JOUR 16/11/2026 — PHARMA 0.2.1 stocks intégrés
 
 PHARMA (feuille 05 LABORATOIRE) réunit maintenant **traitements et stocks dans une seule fiche** : solde, seuil bas et réapprovisionnement. Plus de volet Stocks indépendant. BLOCKS `0.10.2` / `ordo@0.2.1` commit `4263e7905d1ee857a844524f1b39e4d9cab7f4c7` ; LABO `V0.9.2` commit `08e460530ee0193ef99d942f4cc8b3bac80c47ca` déployé à 100 % sur le Worker existant `laboratoire-app` (version `80efcc87-62e3-448d-9ce3-c4d858bfec06`). Aucune nouvelle base, Worker, autorisation LINK ou notification. Recette iPhone en attente, [FORGE #76](https://github.com/Leomgl/forge-app/issues/76).
