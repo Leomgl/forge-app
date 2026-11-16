@@ -1,3 +1,12 @@
+## RITUELS V0.1.1 — pictogrammes, typographie et suivi sur 7 jours (16/11/2026)
+
+- **PWA** : https://rituels-app.q9pfwtztsc.workers.dev/ ; Worker `rituels-app` Cloudflare version `33567125-0e52-4023-b4dc-ccc112e4c653` à **100 %**, déploiement `de2eba0c-4641-4edd-9e80-4f657e5df96e` ; 0 binding, D1, cron ou moteur Push ajouté.
+- **GitHub** : `Leomgl/rituels-app`, V0.1.1, branche `main`; CI métier et syntaxe [verte](https://github.com/Leomgl/rituels-app/actions/runs/43792020576), contrôle HTTP externe sur la nouvelle version [réussi](https://github.com/Leomgl/rituels-app/actions/runs/43792162907).
+- **UI** : pictogrammes SVG ajoutés comme décoration par l'app au shell de navigation BLOCKS officiel (sans le modifier) ; typographie éditoriale Bodoni 72 / Didot / Baskerville / Georgia (polices système, pas de fichier propriétaire The Seasons).
+- **Home** : message selon heure locale ; 7 dates locales glissantes avec état matin/soir, sélection manuelle du jour et retour à aujourd'hui ; rattrapage explicite de la veille après 00h sans déplacer les anciennes coches. Gestion des changements de mois/année et des stocks inchangée.
+- **Dépendances** : BLOCKS V0.3.3 SHA `700ae421a2c2d56536c3793afa9f6f807973e72a` identique ; données IndexedDB inchangées ; LINK/Cortex toujours inactifs. Service Worker et version PWA `V0.1.1`, cache `rituels-v0.1.1`.
+- **Statut** : publication et tests distants validés, **recette tactile iPhone en attente** (confort de la typo, navigation 4 boutons, historique 7J, rattrapage après minuit, mise à jour sans perte de données). Suivi [FORGE #54](https://github.com/Leomgl/forge-app/issues/54).
+
 ## RITUELS V0.1.0 — première PWA publiée (16/11/2026)
 
 - **Nom / ID** : Rituels / `rituels` ; routine skincare personnelle, produits, stocks et trousses pour week-ends.
