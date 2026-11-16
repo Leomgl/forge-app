@@ -1,3 +1,12 @@
+## Cortex V0.1.6 — Living Home & météo (16/11/2026)
+
+- **GitHub** : `Leomgl/Cortex-app`, commit `52e24db1444dd3f0f01e14827110090af5c64af9` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43792778723).
+- **Cloudflare** : Worker `cortex-app`, déploiement `02c56157-afd7-497c-8834-478be008540b`, version `ea547219-832d-4d46-82dc-cff09ed5b9b9` à **100 %** avec `bindings=[]`. Aucun D1.
+- **Home** : titre contextuel selon l'heure, typographie premium, météo compacte interactive (actuel/ressenti/min/max/pluie/6 h), indicateurs ouvrant leur module, capture rapide valorisée et animations discrètes respectant `prefers-reduced-motion`.
+- **Météo** : module métier local `weather.mjs`, API Open-Meteo libre pour usage non commercial, géocodage GeoNames via Open-Meteo, choix manuel ville par défaut Lille, GPS **uniquement sur bouton explicite**, URL de prévisions avec coordonnées, cache localStorage 20 min et affichage cache hors ligne. Autorisations CSP adaptées aux deux hôtes API et `Permissions-Policy: geolocation=(self)` sans suivi automatique. Affichage attribution source.
+- **Préférences** : nouvelle sous-vue `Météo` dans Réglages BLOCKS → Personnalisation Cortex (extension locale `decorate`, BLOCKS V0.3.3 immuable). État d'accueil migré vers `schema:2` : météo insérée en premier tout en conservant ordre/visibilités historiques. LINK V0.13.0 et Budget inchangés.
+- **Limites/recette iPhone** : CI verte, Cloudflare confirmé ; **test iPhone réel en attente** : chargement live Open-Meteo via Safari/PWA, sélection de ville, consentement/refus GPS, gestion hors ligne/cache, changement de thème, sections réorganisables, réduction d'animations. **FORGE #53 reste ouvert.**
+
 ## Cortex V0.1.5 — Multi-contacts et recherche dans les rendez-vous (16/11/2026)
 
 - **GitHub** : `Leomgl/Cortex-app`, commit `b868b67a167aa72c35bd71ab4a7b9d53d4f52571` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43791287814).
