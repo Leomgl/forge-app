@@ -77,7 +77,7 @@ assert.match(html,/id="ticketDialog"/);
 assert.match(html,/id="completedIssues"/);
 assert.match(html,/id="forge-settings-search"/);
 assert.match(html,/id="forge-check-update"/);
-const displayedVersion=html.match(/FORGE <strong>(v\\d+\\.\\d+\\.\\d+)<\\/strong>/)?.[1];
+const displayedVersion=html.match(new RegExp("FORGE <strong>(v[0-9.]+)</strong>"))?.[1];
 assert.ok(displayedVersion,"Version FORGE absente de l'interface");
 assert.doesNotMatch(html,/id="tokenField"/);
 assert.match(app,/\/auth\/status/);
