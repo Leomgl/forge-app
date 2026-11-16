@@ -1,3 +1,13 @@
+## RITUELS V0.3.3 — cause racine écran Produits vide corrigée (16/11/2026)
+
+- **Incident constaté par capture iPhone** : l'app V0.3.1 affichait « Mes produits » et « Nouveau produit », mais aucune section ; icônes de la navigation basse également absentes. Le catalogue local n'était pas nécessairement vide.
+- **Diagnostic reproduit** sur navigateur avec IndexedDB préalablement peuplé : `Cannot access 'eventDescriptions' before initialization` puis `Cannot access 'CATALOGUE_GROUPS' before initialization`. Le shell était monté et la navigation initiale déclenchée **avant** l'initialisation des constantes top-level. La V0.3.2 (fallback des anciennes catégories) était une protection utile mais **ne réparait pas cette panne**.
+- **Vrai fix V0.3.3** : déplacement du montage `mountAppShell` et de la décoration des pictogrammes **après** toutes les constantes de l'app ; conservation du fallback des groupes hérités et de l'isolement des fiches malformées.
+- **Tests de régression réels** : [Chromium/WebKit 320/390px](https://github.com/Leomgl/rituels-app/actions/runs/43818039846) PASS, chargement avec journal et trousse préexistants, 12 produits dans des groupes locaux obsolètes, 12 fiches rendues après rechargement, stock Sport ajusté à 14 ml préservé, aucune erreur JavaScript, Trousse sans débordement. **33/33 tests métier** et [smoke public](https://github.com/Leomgl/rituels-app/actions/runs/43818102689) verts.
+- **Routine approuvée et appliquée** : matin Thirst Quencher → crème visage 24h → Beard Hydrator → anti-transpirant ; soir Thirst Quencher → crème visage. Huile barbe occasionnelle, non forcée dans le suivi quotidien. Une fiche Beard Hydrator éditée manuellement conserve ses choix.
+- **Publication** : [Rituels V0.3.3](https://rituels-app.q9pfwtztsc.workers.dev/), Cloudflare Worker `rituels-app`, version `b97b79fc-d237-4534-88df-2feac698465d` à 100 %, deployment `ed385e5e-083a-43e1-9917-6132a5030a33`. SW `rituels-v0.3.3`; toujours 0 binding/D1/cron/Push. LINK/Cortex inchangés, BLOCKS V0.3.3 SHA `700ae421a2c2d56536c3793afa9f6f807973e72a`.
+- **À valider par utilisateur** : installer la mise à jour, relancer l'app sans la supprimer, confirmer catégorie Produits, photos, navigation basse, Trousse et étapes matin/soir sur l'iPhone réel. Ticket [FORGE #54](https://github.com/Leomgl/forge-app/issues/54) encore ouvert.
+
 ## RITUELS V0.3.1 — régression iPhone, catalogue et soins barbe corrigés (16/11/2026)
 
 - **Version déployée** : [Rituels](https://rituels-app.q9pfwtztsc.workers.dev/) V0.3.1, Cloudflare Worker `rituels-app` version `6c4f3e19-45d3-4ed0-a305-06d5bc32ff7e`, deployment `7f395146-b182-4893-be6d-9240f2969bfa`, trafic **100 %**. Aucun nouveau binding, D1, cron ou Push.
