@@ -1,3 +1,14 @@
+## RITUELS V0.2.0 — fiche pilote Rituals 70 ml (16/11/2026)
+
+- **App** : https://rituels-app.q9pfwtztsc.workers.dev/ — Worker Cloudflare `rituels-app`, version `25ad32c5-3bb7-4e9a-9ef4-aa4d2f483ca7` à **100 %**, déploiement `92fcba1f-cb6d-40cd-aa3e-b33a09ab076c`. **0 D1 / nouveau binding / Push / cron**.
+- **Code** : [Leomgl/rituels-app](https://github.com/Leomgl/rituels-app) V0.2.0, 18 tests métier + vérifications de syntaxe [CI verte](https://github.com/Leomgl/rituels-app/actions/runs/43795078485), contrôle HTTP public [réussi](https://github.com/Leomgl/rituels-app/actions/runs/43795078471).
+- **Premier produit** : Rituals Sport Anti-Dryness Body Lotion, charbon actif, **70 ml** (SKU `1116311`) selon photographie fournie. **Packshot officiel** : `https://rituals.scene7.com/is/image/rituals/1116311-rituals-sport-body-lotion-70ml:3-by-4?fmt=webp-alpha&hei=1600&resMode=sharp2&wid=1200` (WebP, HTTP 200 confirmé). Fiche officielle `https://www.rituals.com/fr-fr/sport-anti-dryness-body-lotion-70ml-1116311.html`.
+- **Fiche produit** : visuel, nom, format, jauge **consommation du tube ouvert** (0–100 %), correction manuelle du volume restant, compteur compact `− / +` **tubes neufs en réserve** (sans achat ni dépense Cortex), accordéon discret « Conseils d’utilisation » et source Rituals. Usage manuel également conservé.
+- **Routine** : aperçu de la future carte avec nom, photo et conseil court, sans assigner matin ou soir avant décision de l'utilisateur ; pas de progression fictive dans le calendrier 7J.
+- **État initial** : tube 70/70 ml **estimé**, étiqueté « niveau initial à vérifier », réserve de tubes neufs `0` ; ajuste via la fiche, aucune quantité réelle déduite de la photo. Produit injecté une seule fois sur catalogue local vide ; si des produits préexistent, aucun écrasement et ajout pilote explicite possible.
+- **Architecture** : BLOCKS 0.3.3 verrouillé SHA `700ae421a2c2d56536c3793afa9f6f807973e72a`. Persistance IndexedDB V1 et contrats LINK/Cortex inchangés, connexion LINK toujours inactive. PWA `V0.2.0`, SW `rituels-v0.2.0`. Photo distante fournie par Rituals, disponibilité hors ligne de l'image non garantie avant chargement.
+- **Reste** : recette visuelle et tactile sur iPhone, validation de la fiche / du stock et de l'aperçu de routine ; définir ensemble le planning et les doses futures. [FORGE #54](https://github.com/Leomgl/forge-app/issues/54).
+
 ## RITUELS V0.1.2 — accueil épuré et jauge circulaire (16/11/2026)
 
 - **Publication** : Worker Cloudflare `rituels-app`, [PWA](https://rituels-app.q9pfwtztsc.workers.dev/), version `0e8fc780-6f1d-4376-9d06-42784a5d0406` à **100 %**, déploiement `51b3dac7-975b-46c5-852f-60474d6442c1`. Aucun nouveau binding, D1, cron, Worker ni ordonnanceur Push.
