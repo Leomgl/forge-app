@@ -1,3 +1,13 @@
+## RITUELS V0.1.0 — première PWA publiée (16/11/2026)
+
+- **Nom / ID** : Rituels / `rituels` ; routine skincare personnelle, produits, stocks et trousses pour week-ends.
+- **Repo GitHub** : [`Leomgl/rituels-app`](https://github.com/Leomgl/rituels-app) (privé), branche `main`, commit source `c053a7dde4f4ad8d72fcbfed42b7a8e12f1efdcf`.
+- **Hébergement** : Worker Cloudflare statique `rituels-app` ; URL `https://rituels-app.q9pfwtztsc.workers.dev/` ; version Cloudflare `039ff052-8b20-4584-a509-39e2dce9047d`, trafic 100 %, workers.dev activé ; **0 binding, 0 D1, 0 cron, 0 scheduler Push**.
+- **App** : `V0.1.0`, manifest / Service Worker indépendant, stockage IndexedDB local, sauvegarde JSON et import manuel, autonomie offline après mise en cache.
+- **BLOCKS** : V0.3.3 verrouillé SHA `700ae421a2c2d56536c3793afa9f6f807973e72a`; shell, settings, theme, density, pwa-update et CSS canoniques importés au build, sans copie de source dans le repo.
+- **LINK/Cortex** : pas de SDK actif, aucune permission accordée, aucune dépense/liaison trousse envoyée. Contrats futurs via LINK exclusivement : `rituels.purchase.recorded.v1`, `rituels.kit.linked.v1`, validation de permission/anti-doublons préalable.
+- **Recette** : six tests métier OK et CI GitHub verte ([exécution](https://github.com/Leomgl/rituels-app/actions/runs/43790514310)). Mise en ligne confirmée Cloudflare ; contrôle HTTP externe et recette tactile/installation iPhone à confirmer. Fiches produits officielles et éventuel branchement LINK à compléter ultérieurement. [FORGE #54](https://github.com/Leomgl/forge-app/issues/54).
+
 ## CORTEX V0.1.2 — consolidation de l'interface (16/11/2026)
 
 ## LINK live — V0.13.3 au 16/11/2026
@@ -35,6 +45,7 @@ Version du registre : **2026-11-15 / FORGE V0.10.2**.
 | LINK | LINK | Connexions chiffrées, permissions, notifications centralisées | `Leomgl/link-app` | Worker `link-app`, D1 `link-hub-db`, ordonnanceur DO |
 | FORGE | FORGE | Catalogue, tickets, décisions, interventions et documentation | `Leomgl/forge-app` | Worker `forge-hub` (OAuth) |
 | CORTEX | CORTEX | Gestionnaire personnel : agenda, rappels, notes, contacts, budget | `Leomgl/Cortex-app` | Worker `cortex-app` (statique, 0 binding, 0 D1) |
+| RITUELS | Rituels | Routines skincare, produits, stocks, trousses | `Leomgl/rituels-app` | Worker `rituels-app` (statique, 0 binding, 0 D1) |
 
 ## Règle d'enregistrement d'une nouvelle app
 
@@ -51,7 +62,7 @@ Version du registre : **2026-11-15 / FORGE V0.10.2**.
 
 **CORTEX V0.1.1** est la première PWA métier publiée en recette, non encore validée sur iPhone. URL : https://cortex-app.q9pfwtztsc.workers.dev/ ; repo `Leomgl/Cortex-app`, [ticket #53](https://github.com/Leomgl/forge-app/issues/53). Les données sont locales dans IndexedDB, sauvegardables par export JSON. L'app importe BLOCKS V0.3.3 (SHA `700ae421a2c2d56536c3793afa9f6f807973e72a`) et SDK LINK commit `97f7ed86525351421a25eb204ae29c14f60a6443` ; l'édition inter-app est en attente du contrat chiffré, tout comme la recette Push.
 
-**Aucune autre application métier n'est validée à ce stade.** Ne pas inscrire d'autres noms avant notre travail commun de cadrage.
+**CORTEX et RITUELS sont les deux PWA métiers publiées en recette ; aucune recette physique iPhone de RITUELS n'est encore validée.**
 
 [Architecture commune](ARCHITECTURE-BLOCKS.md) · [Spécification Laboratoire](LABORATORY.md).
 
