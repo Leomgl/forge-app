@@ -1,5 +1,10 @@
 # Registre de la nouvelle génération
 
+## Livraison LINK — V0.13.1 (16/11/2026)
+
+**LINK V0.13.1 est déployé à 100 %** sur le Worker existant `link-app` : [PR #9 fusionnée](https://github.com/Leomgl/link-app/pull/9), [FORGE #52](https://github.com/Leomgl/forge-app/issues/52), version Cloudflare `f2ae0fa5-2ff8-43d5-8b3c-c5a334f2e71f` (déploiement `6ab8ad55-d75d-4ae0-81d6-f98f46dc9123`). Interface uniquement : accueil réseau, fiches Apps/Relations, Réglages universels de BLOCKS V0.3.3 importés au build et verrouillés (commit `92c79f8bd26be85ecdf50260090d7ee5f80355ae`, hashes SHA-256). Les 25 bindings, D1 et Durable Object sont conservés. **Test physique iPhone encore à valider** (Face ID, pairing, Push et affichage). La distribution automatique des PATCH BLOCKS vers LINK reste à intégrer à la Phase 4 et ne doit pas être confondue avec l'import versionné actuel.
+
+
 Version du registre : **2026-11-15 / FORGE V0.10.2**.
 
 | Identifiant | Produit | Fonction | Dépôt GitHub | Cloudflare |
