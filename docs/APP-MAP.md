@@ -1,3 +1,12 @@
+## RITUELS V0.2.1 — curseur restant et validation de routine (16/11/2026)
+
+- **Publication** : https://rituels-app.q9pfwtztsc.workers.dev/ — Worker Cloudflare `rituels-app` version `5ab038a1-ceca-4238-a62d-bdb87824bc33` à **100 %**, déploiement `2801f7bd-f9a0-480b-8e5d-5bffdf88e4ab`. Zéro nouveau binding/D1/cron/Push.
+- **Fiche produit** : la jauge passive de consommation est remplacée par un **curseur natif tactile 0–100 % de quantité restante dans le tube ouvert**, avec actualisation instantanée de l'affichage puis enregistrement du niveau en ml à la fin du geste. Les boutons « Noter une utilisation », « Ajuster la jauge » et « Ouvrir un tube » ont été retirés : **« Modifier » est la seule action de fiche restante**. Le `− / +` de la réserve (tubes neufs) et les conseils repliables demeurent. L'édition de fiche permet toujours de corriger manuellement les niveaux et quantités.
+- **Routine** : chaque soin affiche un bouton réversible **✓ Valider / ✓ Fait** pour la date sélectionnée. Le produit pilote non encore assigné à matin/soir apparaît dans une **routine libre**, cochable sans décompter automatiquement le stock. Les coches libres influencent la roue de progression et les indicateurs du calendrier 7J ; les routines matin/soir existantes utilisent également le bouton tactile.
+- **Données** : schéma IndexedDB V1 conservé, historique et produits locaux inchangés, BLOCKS V0.3.3 commit `700ae421a2c2d56536c3793afa9f6f807973e72a` inchangé. LINK/Cortex toujours inactifs.
+- **Qualité** : 22 tests métier et contrôle syntaxe ; smoke HTTP public [réussi](https://github.com/Leomgl/rituels-app/actions/runs/43796281071). Version PWA `V0.2.1`, Service Worker `rituels-v0.2.1`. Test tactile iPhone et persistance après mise à jour encore à confirmer.
+- **Suivi** : [FORGE #54](https://github.com/Leomgl/forge-app/issues/54) et [repo GitHub](https://github.com/Leomgl/rituels-app).
+
 ## RITUELS V0.2.0 — fiche pilote Rituals 70 ml (16/11/2026)
 
 - **App** : https://rituels-app.q9pfwtztsc.workers.dev/ — Worker Cloudflare `rituels-app`, version `25ad32c5-3bb7-4e9a-9ef4-aa4d2f483ca7` à **100 %**, déploiement `92fcba1f-cb6d-40cd-aa3e-b33a09ab076c`. **0 D1 / nouveau binding / Push / cron**.
