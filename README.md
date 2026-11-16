@@ -1,3 +1,10 @@
+## Cortex V0.1.4 — Sélecteurs de date et d’heure natifs iOS (16/11/2026)
+
+- **GitHub** : `Leomgl/Cortex-app`, correctif final `a889cc901c1799ff4b3fdbbce7c0542fea0d2e16` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43790368408).
+- **Cloudflare** : `cortex-app`, deployment `8ddb90f9-b4c1-4fe4-a62b-b5943e598c99`, version `c9cffbcb-0552-41c5-bf83-c31b86fe259f` à **100 %** ; `bindings=[]`, sans D1.
+- **Évolution** : formulaire d'événement (Début et Fin) et de rappel (Échéance) avec deux champs natifs HTML `date` et `time` visibles et tactiles. Le picker système Safari/iOS s'ouvre en touchant le champ. Aucun `showPicker()` dépendant de Safari iOS. Fin et échéance restent facultatives via case d'activation. Conversion locale → ISO au moment de l'enregistrement préservée ; BLOCKS, LINK et logique du Budget inchangés.
+- **Tests** : nouveaux tests pour structure des inputs natifs, heures, dates et champ facultatif, CI réussie. **Recette iPhone réelle en attente** : vérifier ouverture des sélecteurs sous Safari/PWA, dates de début/fin, rappel sans date, modification d'événement existant et validation de notifications.
+
 ## Cortex V0.1.3 — Interface personnalisable (16/11/2026)
 
 - **GitHub** `Leomgl/Cortex-app` commit `02a197ecb569da60e9168fc0e617c4c4da17dd71` ; CI `43789449219` **success**.
