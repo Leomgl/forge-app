@@ -1,3 +1,7 @@
+## 16/11/2026 — naissance de CORTEX
+
+CORTEX est validé comme première PWA métier de nouvelle génération : le cerveau/cockpit personnel, quand LINK reste le moteur des identités, échanges, permissions et Push. Architecture cinq onglets (Accueil, Modules, deux raccourcis personnalisables, Réglages BLOCKS). Données locales IndexedDB, pas de D1, cloud Worker statique. BLOCKS canoniques importés au build et versionnés. Notifications confiées à LINK, avec modèle de rappel pass J-7/H-15 ; la réception/propagation de modifications d'autres apps via LINK exige un contrat E2EE et la recette iPhone, non disponibles au lancement. Suivi [FORGE #53](https://github.com/Leomgl/forge-app/issues/53).
+
 # Décisions — fondation du 15 novembre 2026
 
 ## Confirmées

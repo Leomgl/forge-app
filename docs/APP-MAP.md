@@ -6,6 +6,7 @@ Version du registre : **2026-11-15 / FORGE V0.10.1**.
 |---|---|---|---|---|
 | LINK | LINK | Connexions chiffrées, permissions, notifications centralisées | `Leomgl/link-app` | Worker `link-app`, D1 `link-hub-db`, ordonnanceur DO |
 | FORGE | FORGE | Catalogue, tickets, décisions, interventions et documentation | `Leomgl/forge-app` | Worker `forge-hub` (OAuth) |
+| CORTEX | CORTEX | Gestionnaire personnel : agenda, rappels, notes, contacts, budget | `Leomgl/Cortex-app` | Worker `cortex-app` (statique, 0 binding, 0 D1) |
 
 ## Règle d'enregistrement d'une nouvelle app
 
@@ -20,7 +21,9 @@ Version du registre : **2026-11-15 / FORGE V0.10.1**.
 
 **Laboratoire :** https://laboratoire-app.q9pfwtztsc.workers.dev/ ; Worker `laboratoire-app` (0 binding/D1). **Sources officielles :** `Leomgl/laboratoire-app` (PWA + build + tests + artefact) et `Leomgl/blocks-app` (modules ESM + styles CSS + tests). **BLOCKS est épinglé au commit** `b41d3fcf99c1d9dcfc0935db007e6678316c77f2` par `blocks.lock.json`, et assemblé dans `dist/worker.mjs`. L'ancien bootstrap FORGE n'est plus qu'une archive.
 
-**Aucune application métier n'est validée à ce stade.** Ne pas inscrire d'autres noms avant notre travail commun de cadrage.
+**CORTEX V0.1.1** est la première PWA métier publiée en recette, non encore validée sur iPhone. URL : https://cortex-app.q9pfwtztsc.workers.dev/ ; repo `Leomgl/Cortex-app`, [ticket #53](https://github.com/Leomgl/forge-app/issues/53). Les données sont locales dans IndexedDB, sauvegardables par export JSON. L'app importe BLOCKS V0.3.3 (SHA `700ae421a2c2d56536c3793afa9f6f807973e72a`) et SDK LINK commit `97f7ed86525351421a25eb204ae29c14f60a6443` ; l'édition inter-app est en attente du contrat chiffré, tout comme la recette Push.
+
+**Aucune autre application métier n'est validée à ce stade.** Ne pas inscrire d'autres noms avant notre travail commun de cadrage.
 
 [Architecture commune](ARCHITECTURE-BLOCKS.md) · [Spécification Laboratoire](LABORATORY.md).
 

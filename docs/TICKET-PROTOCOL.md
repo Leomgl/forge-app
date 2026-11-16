@@ -7,6 +7,7 @@ Le projet source de vérité est [GitHub Issues](https://github.com/Leomgl/forge
 Les projets disponibles sont :
 - `LINK` : noyau des synchronisations et notifications.
 - `FORGE` : gestion du suivi du développement.
+- `CORTEX` : première PWA métier (app manager), ticket #53, recette iPhone en attente. Publication des tickets via l'interface FORGE en attente de mise à jour coordonnée de l'allowlist OAuth du Worker.
 - `GENERAL` : idée ou chantier transversal **sans app spécifique**.
 
 Un nouveau nom d'app n'est autorisé qu'après définition et mise à jour coordonnée du catalogue FORGE et de l'allowlist du Worker OAuth.

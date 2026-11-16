@@ -1,3 +1,11 @@
+## CORTEX — première app métier en recette (16/11/2026)
+
+- **Repo** `Leomgl/Cortex-app`, URL `https://cortex-app.q9pfwtztsc.workers.dev/`, Worker `cortex-app`, Cloudflare 0 binding, 0 D1.
+- **BLOCKS** V0.3.3, SHA `700ae421a2c2d56536c3793afa9f6f807973e72a` verrouillé ; import au build de Réglages, Me notifier, thème, densité, shell et mise à jour. Pas de sources dupliquées.
+- **LINK** SDK navigateur commit `97f7ed86525351421a25eb204ae29c14f60a6443` ; pairing autorisé par propriétaire et intents opaques versionnées. LINK Worker/D1/DO et notifications inchangés. Synchronisation inter-app non livrée ; patchs externes en attente de contrat authentifié, chiffré et droits explicites. Push réel iPhone en attente de recette ; aucun second moteur.
+- **Données** IndexedDB local : agenda, rappels, notes, contacts, budget ; export/import JSON. Pas de synchronisation entre appareils.
+- **FORGE** : [#53](https://github.com/Leomgl/forge-app/issues/53). Ajouter CORTEX à la liste officielle des projets Forge (interface + Worker OAuth) dans un changement coordonné, sans redéployer le Worker en effaçant ses secrets.
+
 # Dépendances techniques — nouvelle génération
 
 ## Validation officielle — deux premiers modules de BLOCKS
