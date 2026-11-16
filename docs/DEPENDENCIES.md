@@ -1,5 +1,13 @@
 ## CORTEX — première app métier en recette (16/11/2026)
 
+## LINK V0.13.1 — Réglages BLOCKS et dashboard (16/11/2026)
+
+- **Production** : Worker existant `link-app`, version Cloudflare `f2ae0fa5-2ff8-43d5-8b3c-c5a334f2e71f` à 100 %. 25 bindings conservés ; D1 `HUB_DB` ID `d81d8dbe-1167-477e-a41b-8db74f5eec45` ; scheduler DO `LINK_NOTIFICATION_SCHEDULER` ID `4f150869ae0540349e38304e7f9ef398`.
+- **Code** : [LINK PR #9](https://github.com/Leomgl/link-app/pull/9) fusionnée (squash `6f12df51f618f39be13cddd75f01468168ebd7b5`), CI [verte](https://github.com/Leomgl/link-app/actions/runs/43785260051).
+- **BLOCKS** : V0.3.3 commit `92c79f8bd26be85ecdf50260090d7ee5f80355ae`, modules settings/theme/density/pwa-update/styles/palettes @1.0.0, imports canoniques au build, `blocks.lock.json` et vérifications SHA-256. **Propagation automatique des PATCH BLOCKS vers LINK non activée** : à faire dans #51.
+- **Règle** : cette release ne change ni les API, ni le pairing, ni la D1, ni le Push, ni les permissions. Seul le Worker UI assemblé et la liste de cache du Service Worker ont changé. Recette réelle iPhone à faire, suivi [#52](https://github.com/Leomgl/forge-app/issues/52).
+
+
 - **Repo** `Leomgl/Cortex-app`, URL `https://cortex-app.q9pfwtztsc.workers.dev/`, Worker `cortex-app`, Cloudflare 0 binding, 0 D1.
 - **BLOCKS** V0.3.3, SHA `700ae421a2c2d56536c3793afa9f6f807973e72a` verrouillé ; import au build de Réglages, Me notifier, thème, densité, shell et mise à jour. Pas de sources dupliquées.
 - **LINK** SDK navigateur commit `97f7ed86525351421a25eb204ae29c14f60a6443` ; pairing autorisé par propriétaire et intents opaques versionnées. LINK Worker/D1/DO et notifications inchangés. Synchronisation inter-app non livrée ; patchs externes en attente de contrat authentifié, chiffré et droits explicites. Push réel iPhone en attente de recette ; aucun second moteur.
