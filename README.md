@@ -1,3 +1,11 @@
+## Cortex V0.3.1 — Espacements ciblés Modules et raccourcis (16/11/2026)
+
+- **Github** : `Leomgl/Cortex-app`, commit final `1352450fc3a4030d14355ca2846dbeca77710bb1` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43798220687).
+- **Cloudflare** : Worker `cortex-app`, déploiement `7894e3d1-8a29-4f20-81e7-9d8aa99be0a2`, version `dae7925e-a797-4f35-ae6f-96d4c2b06172` à **100 %**, `bindings=[]`, aucune nouvelle ressource.
+- **UI uniquement** : CSS scoped `cx-page--compact` pour les trois onglets `modules`, `slot1`, `slot2` : réduire les espacements barre Cortex→titre, puis titre→première section. Règles locales uniquement, aucun changement sur Home, Réglages ni styles de la barre BLOCKS.
+- **Préservation des versions** : maintient BLOCKS `0.7.0` / SYNAPSE compact `0.5.0`, LINK `0.13.0`, météo et données. Cache SW V0.3.1 et artefacts statiques régénérés depuis les sources actuelles (pas l'ancienne compilation V0.1.6).
+- **Tests** : CI verte, Cloudflare validé. **Recette visuelle iPhone en attente**, issue FORGE #53 reste ouverte jusqu'à validation.
+
 ## Cortex V0.1.6 — Living Home & météo (16/11/2026)
 
 - **GitHub** : `Leomgl/Cortex-app`, commit `52e24db1444dd3f0f01e14827110090af5c64af9` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43792778723).
