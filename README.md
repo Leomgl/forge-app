@@ -68,6 +68,7 @@ La page de détail de ticket charge les commentaires et rend le Markdown en DOM 
 
 ## Liens techniques
 
+- **[Guide obligatoire de création d'une nouvelle app](docs/APP-CREATION-GUIDE.md)** — règles, intégration BLOCKS, LINK, versions et checklist
 - [Architecture BLOCKS · LABORATOIRE](docs/ARCHITECTURE-BLOCKS.md)
 - [Spécification LABORATOIRE](docs/LABORATORY.md)
 - [Guide de reprise IA](docs/AI-START-HERE.md)

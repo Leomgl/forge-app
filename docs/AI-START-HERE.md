@@ -1,5 +1,11 @@
 # FORGE — point d'entrée IA / nouvelle génération
 
+## Règle préalable à toute nouvelle app — lire le guide officiel
+
+**OBLIGATOIRE :** avant de créer un dépôt, un module ou une PWA métier, lire **[docs/APP-CREATION-GUIDE.md](APP-CREATION-GUIDE.md)** (pour un fichier situé dans \`docs/\`, utiliser le chemin relatif \`APP-CREATION-GUIDE.md\`). Règle absolue : **brancher/importer BLOCKS comme dépendance versionnée, jamais copier-coller ni forker ses sources dans les apps**. Versions par module et propagation automatique des correctifs : **FORGE #51 à développer**, pas encore en production. Cadrage, sécurité LINK, mises à jour et recette iPhone exigés avant validation d'une nouvelle app.
+
+
+
 ## Validation officielle — deux premiers modules de BLOCKS
 
 **Validation utilisateur officielle — 16 novembre 2026 : feuilles LABO 01 et 02 TERMINÉES.** L'utilisateur confirme que **tout est au vert** sur son iPhone. **Feuille 01 : Réglages universels VALIDÉS**, avec thèmes Graphite/Papier/Tabac/Minuit/Sauge, densités Compact/Normal/Spacieux, préférences persistantes, LINK dans Réglages, version, recherche et mise à jour. **Feuille 02 : Me notifier VALIDÉ**, avec RDV/pass/stock, rappels J/H/M, six échéances max et interface adaptable. **Les deux premiers modules sont prêts à être intégrés aux futures apps depuis BLOCKS V0.3.3**, coffre canonique non-PWA. LABO **V0.4.3** expose **deux badges « ✓ VALIDÉ »**, [CI verte](https://github.com/Leomgl/laboratoire-app/actions/runs/43780598930), version Cloudflare `7e0d3d94-8c68-4bfe-98f3-45f5da605aba` à 100 % ; code de modules inchangé. **FORGE #50 = Terminé**, tandis que #43/#44 restent les suivis évolutifs LABO et BLOCKS. LINK V0.13.0 et son moteur Push sont inchangés. **Ne pas confondre cette validation de modules avec un Push réel LABO (#47 non encore attesté) ou l'automatisation des rappels (#49 non développée).**
