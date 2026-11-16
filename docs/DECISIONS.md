@@ -1,5 +1,10 @@
 ## 16/11/2026 — naissance de CORTEX
 
+## 16/11/2026 — LINK V0.13.1 : interface BLOCKS, aucun changement métier
+
+Décision appliquée et publiée après autorisation utilisateur : remplacer les Réglages de LINK par le module canonique BLOCKS, afficher sur l'accueil les apps/relations/sessions/messages en attente issus des APIs propriétaire existantes, et rendre les fiches Apps lisibles avec permissions et liens. **Limiter le périmètre à la présentation**, avec Face ID préalable pour toute donnée privée et aucune permission automatique. BLOCKS V0.3.3 est verrouillé dans LINK par commit/SHA-256 ; les mises à jour automatiques inter-dépôts restent à raccorder séparément en Phase 4. Livraison Cloudflare version `f2ae0fa5-2ff8-43d5-8b3c-c5a334f2e71f` à 100 % ; 25 bindings/D1/DO préservés ; tests automatiques verts, recette physique iPhone en attente. Suivi [FORGE #52](https://github.com/Leomgl/forge-app/issues/52).
+
+
 CORTEX est validé comme première PWA métier de nouvelle génération : le cerveau/cockpit personnel, quand LINK reste le moteur des identités, échanges, permissions et Push. Architecture cinq onglets (Accueil, Modules, deux raccourcis personnalisables, Réglages BLOCKS). Données locales IndexedDB, pas de D1, cloud Worker statique. BLOCKS canoniques importés au build et versionnés. Notifications confiées à LINK, avec modèle de rappel pass J-7/H-15 ; la réception/propagation de modifications d'autres apps via LINK exige un contrat E2EE et la recette iPhone, non disponibles au lancement. Suivi [FORGE #53](https://github.com/Leomgl/forge-app/issues/53).
 
 # Décisions — fondation du 15 novembre 2026
