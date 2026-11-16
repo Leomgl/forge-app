@@ -1,3 +1,12 @@
+## Cortex V0.5.0 — Voyages : Agenda → séjour, documents et futur LINK (16/11/2026)
+
+- **Livraison Cortex** : [ouvrir l'application](https://cortex-app.q9pfwtztsc.workers.dev/) · commit `15a2f3b7419f6fec77be458b417b5766d12970ea` ; [CI réussie](https://github.com/Leomgl/Cortex-app/actions/runs/43832788666).
+- **Cloudflare** : Worker `cortex-app` deployment `df9bc1c8-d2f1-48c5-8c64-164ffd6ed449`, version `c01d082e-d716-4c50-a9e6-de1336f4a4db` à **100 %** ; aucune binding D1.
+- **Nouveau module Voyages** : sixième module « Voyages » dans le groupe Escapades ; accessible en raccourci 1/2. Case facultative « Enregistrer comme voyage / week-end » dans l'éditeur de rendez-vous Agenda. Voyage unique `kind=trip` lié par `eventId`, dates et invités conservés comme vérité Agenda.
+- **Fonctions** : destination, hébergement, trajet, référence réservation, notes, liens utiles, check-list, documents locaux PDF/images/texte/Word (4 × 650 Ko, 2,6 Mo/voyage), interface iPhone responsive. Sauvegardes JSON et import relevé à 30 Mo. Désactiver la case archive sans supprimer les préparatifs, réactivation les restaure.
+- **LINK** : zone « Objets via LINK » préparée et explicitement **non connectée**. Contrat inter-apps / permissions / sélecteur d'objets à construire dans [FORGE #61](https://github.com/Leomgl/forge-app/issues/61), sans modification actuelle des moteurs. BLOCKS V0.7.1 et LINK V0.13.0 épinglés et préservés.
+- **Tests** : automatisés au vert, Cloudflare confirmé. **Recette iPhone en attente** dans [FORGE #60](https://github.com/Leomgl/forge-app/issues/60). Le ticket maître Cortex [#53](https://github.com/Leomgl/forge-app/issues/53) reste ouvert.
+
 ## Cortex V0.4.2 — Budget vivant et navigation déroulante (16/11/2026)
 
 - **Livré** : [Cortex](https://cortex-app.q9pfwtztsc.workers.dev/) · GitHub `Leomgl/Cortex-app`, commit `7a3d780729a5a9ee1c8e6b557dbacfbf821be3b5` ([CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43803319859)).
