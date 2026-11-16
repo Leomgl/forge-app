@@ -6,7 +6,7 @@
 - **App** : `V0.1.0`, manifest / Service Worker indépendant, stockage IndexedDB local, sauvegarde JSON et import manuel, autonomie offline après mise en cache.
 - **BLOCKS** : V0.3.3 verrouillé SHA `700ae421a2c2d56536c3793afa9f6f807973e72a`; shell, settings, theme, density, pwa-update et CSS canoniques importés au build, sans copie de source dans le repo.
 - **LINK/Cortex** : pas de SDK actif, aucune permission accordée, aucune dépense/liaison trousse envoyée. Contrats futurs via LINK exclusivement : `rituels.purchase.recorded.v1`, `rituels.kit.linked.v1`, validation de permission/anti-doublons préalable.
-- **Recette** : six tests métier OK et CI GitHub verte ([exécution](https://github.com/Leomgl/rituels-app/actions/runs/43790514310)). Mise en ligne confirmée Cloudflare ; contrôle HTTP externe et recette tactile/installation iPhone à confirmer. Fiches produits officielles et éventuel branchement LINK à compléter ultérieurement. [FORGE #54](https://github.com/Leomgl/forge-app/issues/54).
+- **Recette** : six tests métier OK et CI GitHub verte ([exécution](https://github.com/Leomgl/rituels-app/actions/runs/43790514310)). Mise en ligne confirmée Cloudflare **et contrôle HTTP public réussi** ([GitHub Actions](https://github.com/Leomgl/rituels-app/actions/runs/43790849303)) ; recette tactile/installation iPhone à confirmer. Fiches produits officielles et éventuel branchement LINK à compléter ultérieurement. [FORGE #54](https://github.com/Leomgl/forge-app/issues/54).
 
 ## CORTEX V0.1.2 — consolidation de l'interface (16/11/2026)
 
