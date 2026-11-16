@@ -15,10 +15,12 @@ const context=vm.createContext({});
 new vm.Script(isolated,{filename:"app-unit.js"}).runInContext(context);
 const test=context.FORGE_TEST;
 
-assert.deepEqual(Array.from(test.apps,a=>a.id),["LINK","FORGE"]);
+assert.deepEqual(Array.from(test.apps,a=>a.id),["LINK","FORGE","CORTEX"]);
 assert.equal(test.NEW_ERA_FIRST_ISSUE,40);
 assert.ok(test.apps.some(a=>a.repo==="Leomgl/link-app"));
 assert.ok(test.apps.some(a=>a.repo==="Leomgl/forge-app"));
+assert.ok(test.apps.some(a=>a.repo==="Leomgl/Cortex-app"));
+assert.equal(test.currentEra({number:53,title:"[CORTEX][EVOLUTION] Première PWA",state:"open",body:'<!-- FORGE_META: {"project":"CORTEX","workflow":"doing"} -->'}),true);
 const before={number:39,title:"[GENERAL][EVOLUTION] Archive",state:"closed",updated_at:"2026-11-15T01:00:00Z",body:'<!-- FORGE_META: {"project":"GENERAL","workflow":"done"} -->'};
 const now={number:40,title:"[GENERAL][IDEE] Nouveau cycle",state:"open",updated_at:"2026-11-15T19:00:00Z",body:'<!-- FORGE_META: {"project":"GENERAL","workflow":"todo","priority":"normale"} -->'};
 const working={number:41,title:"[LINK][EVOLUTION] Contrat",state:"open",updated_at:"2026-11-15T19:01:00Z",body:'<!-- FORGE_META: {"project":"LINK","workflow":"doing","priority":"haute"} -->'};
