@@ -1,5 +1,10 @@
 # Historique des livraisons — nouveau cycle
 
+## LINK V0.13.2 — Face ID direct sur l'accueil (16/11/2026)
+
+Après retour utilisateur positif sur LINK V0.13.1, ajout d'un bouton Face ID en haut à droite de « Ton réseau », utilisant la même fonction `doLogin()` WebAuthn que Réglages et Apps. L'Accueil affiche « Déverrouillé » à réception de l'overview propriétaire ; aucune deuxième authentification ni permission implicite. Si la passkey n'est pas initialisée, ouverture des Réglages. **V0.13.2 déployée à 100 %** : Cloudflare Worker `link-app` version `f07d14df-d75a-4813-a1c0-c990423beab6` (déploiement `247f40dc-3141-46b8-91f4-ba431d2034e2`). [PR #10 fusionnée](https://github.com/Leomgl/link-app/pull/10) et [CI verte](https://github.com/Leomgl/link-app/actions/runs/43788388562). 25 bindings/D1/DO inchangés ; seuls les assets UI du Worker et le pré-cache PWA changent, pas le moteur Push. [FORGE #56](https://github.com/Leomgl/forge-app/issues/56) reste ouvert jusqu'au test du nouveau bouton sur iPhone.
+
+
 ## LINK V0.13.1 — Refonte d'interface livrée (16/11/2026)
 
 **Déployée à 100 %** dans le Worker LINK existant : version `f2ae0fa5-2ff8-43d5-8b3c-c5a334f2e71f` et déploiement `6ab8ad55-d75d-4ae0-81d6-f98f46dc9123`. [PR #9 fusionnée](https://github.com/Leomgl/link-app/pull/9), [CI #43785260051 verte](https://github.com/Leomgl/link-app/actions/runs/43785260051), [FORGE #52](https://github.com/Leomgl/forge-app/issues/52) en attente de recette physique iPhone. UI : Réglages BLOCKS canoniques (5 thèmes, 3 densités, recherche/À propos/mise à jour) ; Accueil Apps/sessions/relations/attentes ; Apps détaillées et contrats/grants en lecture propriétaire protégée Face ID. **Aucun changement des moteurs** : 25 bindings, D1, DO et Push inchangés ; seuls deux modules de code du Worker uploadés par-dessus les 27 autres modules serveur préservés (Worker UI et service worker shell). Distribution PATCH BLOCKS vers LINK non encore raccordée (Phase 4).
