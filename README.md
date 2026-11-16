@@ -1,3 +1,12 @@
+## Cortex V0.4.2 — Budget vivant et navigation déroulante (16/11/2026)
+
+- **Livré** : [Cortex](https://cortex-app.q9pfwtztsc.workers.dev/) · GitHub `Leomgl/Cortex-app`, commit `7a3d780729a5a9ee1c8e6b557dbacfbf821be3b5` ([CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43803319859)).
+- **Cloudflare** : Worker `cortex-app`, deployment `34c6743a-0c95-4717-97b6-985e273b2daa` ; version `9832b722-0335-41f5-aed8-b0ad1842066b` à **100 %** ; `bindings=[]`, aucune nouvelle base.
+- **Navigation Budget** : cinq rubriques dans un `details/summary` déroulant **à côté du sélecteur de mois**. Rubrique courante visible, pictogrammes, options tactiles, fermeture à la sélection ou clic à l'extérieur. Le mois et la rubrique choisis restent synchronisés lors des rendus.
+- **Accueil Budget** : la carte narrative **« Le fil de ton mois »** prend la priorité et raconte le mois via le **flux net prévisionnel (pas un solde bancaire)**, encaissements/sorties enregistrés, échéances restantes et barre de progression. Dépenses rapides immédiatement dessous ; trois derniers mouvements avec accès Journal ; échéances ; six indicateurs **3 × 2** conservés mais secondaires. Onglet Statistiques et ses graphiques inchangés.
+- **Non-régression** : pure refonte UI `budget-ui.mjs` et CSS de Budget ; moteur `budget-engine.mjs`, autres modules, BLOCKS 0.7.0, SYNAPSE et LINK 0.13.0 inchangés. Cache PWA `V0.4.2`, assets compilés synchronisés.
+- **Validation** : tests GitHub réussis, déploiement Cloudflare confirmé ; **recette visuelle et tactile iPhone en attente** : ouvrir/fermer le volet, changer de rubrique et de mois, largeur iPhone, cartes et activité, thèmes, prévisionnel négatif/vide. Suivi dans [FORGE #59](https://github.com/Leomgl/forge-app/issues/59).
+
 ## Cortex V0.4.1 — Budget compact, charges/prêts et statistiques (16/11/2026)
 
 - **GitHub** : `Leomgl/Cortex-app`, commit `0cdbce731bd7de5d15e3cee97df0585821a76d5f` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43801987756).
