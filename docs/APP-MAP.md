@@ -1,3 +1,13 @@
+## Situation actuelle — 16/11/2026 · LINK V0.14.0 / Rituels V0.4.0 / Cortex V0.5.4
+
+**Ce résumé est prioritaire sur les anciennes fiches historiques ci-dessous, conservées pour traçabilité.**
+
+- **LINK** : Worker `link-app` déployé à **100 %**, version Cloudflare `2a67b323-aca6-46cd-807d-fc531ff8b99f`, **25 bindings préservés** (D1 `HUB_DB`, moteur de notifications/DO inchangés). Volets par app source dans Relations. Contrats `rituels-cortex-kits / travel_kits` existant et `rituels-cortex-routine / routine_summary` proposé mais fermé tant que le propriétaire ne l'a pas préparé/autorisé.
+- **Rituels** : [PWA](https://rituels-app.q9pfwtztsc.workers.dev/) **V0.4.0**, Worker version `b73e65a2-dae5-40d8-87f2-615fce77bef6`, 100 %, 0 binding, catalogue et routines IndexedDB privés inchangés. BLOCKS notifications officiel `0.9.1` conservé. Projection de routine limitée au % du jour, Matin X/X, Soir X/X (libre inclus dans %), uniquement après autorisation LINK.
+- **Cortex** : [PWA](https://cortex-app.q9pfwtztsc.workers.dev/) **V0.5.4**, Worker version `3611b3c6-d015-4a00-a254-e3aca4208a02`, 100 %, 0 binding. Nouvelle carte Routine Rituels dans Accueil personnalisable ; lecture du statut du jour via LINK seulement. Aucun nom de soin reçu, aucun statut de la veille affiché comme « aujourd'hui ».
+- **Stockage** : migration additive `0007_routine_summary.sql` dans la **D1 LINK existante** (une ligne agrégée par source). Aucune nouvelle D1, Worker, cron, moteur Push ou abonnement.
+- **Recette à confirmer sur iPhone** : LINK → Relations → Rituels → Routine Rituels → Accueil Cortex : préparer puis autoriser sous Face ID ; ouvrir Rituels puis Cortex ; tester %/X-X et mise à jour après coche, ainsi que révocation. **Ne pas marquer comme validé physiquement avant confirmation.** Suivi [FORGE #67](https://github.com/Leomgl/forge-app/issues/67).
+
 ## RITUELS V0.3.3 — cause racine écran Produits vide corrigée (16/11/2026)
 
 - **Incident constaté par capture iPhone** : l'app V0.3.1 affichait « Mes produits » et « Nouveau produit », mais aucune section ; icônes de la navigation basse également absentes. Le catalogue local n'était pas nécessairement vide.

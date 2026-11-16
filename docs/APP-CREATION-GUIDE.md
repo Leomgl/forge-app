@@ -74,6 +74,17 @@ Une vraie app possède une **identité distincte** et s'associe à LINK depuis *
 
 Référence technique canonique : [LINK — APP_SYNC_CONTRACT](https://github.com/Leomgl/link-app/blob/main/docs/APP_SYNC_CONTRACT.md). Suivi [FORGE #61](https://github.com/Leomgl/forge-app/issues/61).
 
+### D ter — Présenter et contrôler les relations par application
+
+À partir de **LINK V0.14.0**, l'écran **Relations** expose **un volet par application source**, puis une ligne explicite **« Collection source → destination »** par contrat. Une application peut avoir plusieurs contrats vers la même destination, mais chacun possède **son scope et sa permission distincts** :
+
+- **Rituels → LINK → Voyages Cortex**, scope `travel_kits` : toutes les trousses de voyage disponibles. Le choix d'une trousse particulière dans un voyage est local à Cortex, pas une nouvelle autorisation réseau.
+- **Rituels → LINK → Accueil Cortex**, scope `routine_summary` : uniquement le jour civil local, le % de progression total, **Matin validés/total** et **Soir validés/total**. La progression totale est calculée par Rituels, **y compris les soins libres**, mais aucun nom de soin, historique, montant ou niveau de stock n'est transmis.
+
+Pour toute nouvelle relation, formaliser : identifiant du contrat, propriétaire/source, destinataire, scope, schéma d'échange **allowlisté**, provenance du calcul, actualisation, révocation, changement de date et affichage si données absentes. Déployer le récepteur **sans ouvrir le grant** ; laisser l'utilisateur préparer puis autoriser séparément depuis LINK avec Face ID. Les résumés stockés par LINK en clair (et non dans le hub E2EE) doivent rester minimaux, explicitement décrits. Un statut de la veille ne doit jamais être présenté comme le statut du jour ; l'envoi reste lié à l'activité de la PWA source, pas une tâche iOS garantie en arrière-plan.
+
+Référence de recette [FORGE #67](https://github.com/Leomgl/forge-app/issues/67). Ce sont **deux contrats spécifiques à deux ressources différentes**, pas encore un SDK générique de publication. L'UI groupée et le protocole d'autorisation sont, eux, à réutiliser.
+
 ### E — Tester avant tout déploiement
 
 - Build reproductible, validation des versions et du lock, CI verte, contrats d'import, aucune copie de modules.

@@ -1,3 +1,9 @@
+## Architecture actuelle — deux relations Rituels → Cortex via LINK (16/11/2026)
+
+Les applications ne s'appellent jamais directement. **LINK V0.14.0** centralise pairing, grants owner Face ID et agrégats autorisés. Routes source Rituels : `travel_kits` (collection de trousses vers Voyages Cortex) et `routine_summary` (compteurs du jour vers Accueil Cortex). Droits séparés et fermés par défaut. Le second contrat n'existait pas en D1 à la publication : l'utilisateur devra le préparer et autoriser lui-même. Rituels V0.4.0 et Cortex V0.5.4 consomment exclusivement les endpoints LINK existants/nouveaux ; pas de dépendance directe Rituels ↔ Cortex. BLOCKS et moteur Push non modifiés ; table `link_routine_snapshots` ajoutée à la même D1, pas d'infrastructure additionnelle.
+
+**Versions de référence de production** : LINK `2a67b323-aca6-46cd-807d-fc531ff8b99f`, Rituels `b73e65a2-dae5-40d8-87f2-615fce77bef6`, Cortex `3611b3c6-d015-4a00-a254-e3aca4208a02`, tous à 100 %. [FORGE #67](https://github.com/Leomgl/forge-app/issues/67). Les sections plus anciennes ci-dessous documentent les étapes précédentes, **pas** le statut présent.
+
 ## RITUELS V0.3.3 — cause racine écran Produits vide corrigée (16/11/2026)
 
 - **Incident constaté par capture iPhone** : l'app V0.3.1 affichait « Mes produits » et « Nouveau produit », mais aucune section ; icônes de la navigation basse également absentes. Le catalogue local n'était pas nécessairement vide.
