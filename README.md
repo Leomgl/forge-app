@@ -1,3 +1,11 @@
+## Cortex V0.1.3 — Interface personnalisable (16/11/2026)
+
+- **GitHub** `Leomgl/Cortex-app` commit `02a197ecb569da60e9168fc0e617c4c4da17dd71` ; CI `43789449219` **success**.
+- **Cloudflare** Worker `cortex-app`, déploiement `09d53200-aa04-4f22-92b9-f8d5e9520e29`, version `673ad695-b8d2-4057-ae46-fea19b387bed` **100 %**, `bindings=[]` (aucun D1 additionnel).
+- **Fonctions** : raccourcis 1/2 affichent immédiatement le nom du module choisi, sans sélecteur dans leur page ; les choix se pilotent via **Réglages BLOCKS → Personnalisation Cortex → Raccourcis** (extension locale `sections[].decorate`, sans modifier BLOCKS). Accueil en sections configurables : indicateurs, capture rapide, échéances, activité récente (masquée par défaut), ordre modifiable par poignée tactile ou flèches, visibilité et réinitialisation.
+- **Stockage** : réglages `cortex-slots-v1` migrés/normalisés sans perdre les choix antérieurs ; nouvel état `cortex-home-layout-v1` dans `localStorage`. **Pas de changement** dans BLOCKS V0.3.3, LINK V0.13.0, la logique Budget, les notifications ni la base locale.
+- **État** : tests automatiques au vert, déploiement confirmé. **Recette iPhone réelle en attente** : comportement tactile du déplacement, sous-menu réglages, persistance après fermeture, thèmes/densité et raccourcis. **FORGE #53 reste ouvert**.
+
 # FORGE — Development Memory · V0.10.2
 
 ## Validation officielle — deux premiers modules de BLOCKS
