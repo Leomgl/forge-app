@@ -5,7 +5,7 @@
 - **Cloudflare** : `rituels-app` version `039ff052-8b20-4584-a509-39e2dce9047d` déployée à 100 %, workers.dev activé, 0 binding / D1 / cron ; contenu intégralement statique.
 - **Données** : stockage propriétaire local IndexedDB et JSON exportable/importable ; pas de synchronisation multi-appareil ou de sauvegarde distante garantie. PWA hors ligne via cache versionné.
 - **LINK** : intention uniquement, SDK/identité/pairing/notifications non branchés à cette version. Les achats confirmés et liens de trousses vers Cortex nécessiteront contrats idempotents et permissions via LINK. Le Worker LINK et son ordonnanceur ne sont pas modifiés.
-- **Validation** : CI et publication confirmées ; fonctionnement tactile iPhone et contrôle HTTP public indépendant restent en recette (#54).
+- **Validation** : CI et publication confirmées ; contrôle HTTP public indépendant réussi ([Actions](https://github.com/Leomgl/rituels-app/actions/runs/43790849303)) ; fonctionnement tactile iPhone reste en recette (#54).
 
 ## CORTEX V0.1.2 — consolidation de l'interface (16/11/2026)
 
