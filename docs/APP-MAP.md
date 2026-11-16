@@ -1,3 +1,9 @@
+## ACTUEL — 16/11/2026 · PHARMA expérimental dans LABORATOIRE
+
+**PHARMA** est un **module BLOCKS réutilisable, pas une PWA installable distincte**. Son nom précédent ORDO est abandonné côté utilisateur. Démo interactive dans la **feuille 05 de LABORATOIRE V0.9.1** : https://laboratoire-app.q9pfwtztsc.workers.dev/ . Design compact type Rituels, prise à cocher, 7 jours, volets traitements/stocks/historique ; deux fiches fictives, stockage local de test. Module présent dans **BLOCKS 0.10.1** (module interne `ordo@0.2.0` pour compatibilité). Aucune nouvelle app, LINK inchangé, Cortex non connecté. **En attente de validation iPhone.** Ticket [FORGE #76](https://github.com/Leomgl/forge-app/issues/76).
+
+---
+
 ## Situation actuelle — 16/11/2026 · LINK V0.14.0 / Rituels V0.4.0 / Cortex V0.5.4
 
 **Ce résumé est prioritaire sur les anciennes fiches historiques ci-dessous, conservées pour traçabilité.**
