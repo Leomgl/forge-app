@@ -1,5 +1,12 @@
 ## CORTEX V0.1.2 — consolidation de l'interface (16/11/2026)
 
+## LINK V0.13.3 — Contrôle de version résistant au cache (16/11/2026)
+
+- **Live** : Worker `link-app`, Cloudflare version `f637f007-d717-4ade-a285-ada0be63647f` (#58) à 100 %. 25 bindings, D1 `HUB_DB` et DO `LINK_NOTIFICATION_SCHEDULER` conservés.
+- **Réparation LINK-only** : adaptateur `ui/settings-ui.mjs` fournit `/version.json?check=<version>` à l'orchestrateur BLOCKS inchangé ; SW ne pré-cache/intercepte plus `/version.json` ; Worker envoie `Cache-Control: no-store` pour ce manifeste. Cache PWA `link-shell-v0.13.3-ui`.
+- **Preuve** : [LINK PR #11](https://github.com/Leomgl/link-app/pull/11), [CI verte](https://github.com/Leomgl/link-app/actions/runs/43789586425), simulation d'un ancien manifeste en cache. Aucun code Push/API/DB métier modifié. Recette sur iPhone installée en attente ([FORGE #57](https://github.com/Leomgl/forge-app/issues/57)).
+
+
 ## LINK V0.13.2 — Raccourci Face ID sans nouvelle dépendance (16/11/2026)
 
 - Worker Cloudflare version `f07d14df-d75a-4813-a1c0-c990423beab6`, déployée à 100 %, avec les mêmes **25 bindings**, D1 `HUB_DB` et ordonnanceur DO `LINK_NOTIFICATION_SCHEDULER` que V0.13.1.
