@@ -1,5 +1,10 @@
 # Historique des livraisons — nouveau cycle
 
+## LINK V0.13.1 — Refonte d'interface livrée (16/11/2026)
+
+**Déployée à 100 %** dans le Worker LINK existant : version `f2ae0fa5-2ff8-43d5-8b3c-c5a334f2e71f` et déploiement `6ab8ad55-d75d-4ae0-81d6-f98f46dc9123`. [PR #9 fusionnée](https://github.com/Leomgl/link-app/pull/9), [CI #43785260051 verte](https://github.com/Leomgl/link-app/actions/runs/43785260051), [FORGE #52](https://github.com/Leomgl/forge-app/issues/52) en attente de recette physique iPhone. UI : Réglages BLOCKS canoniques (5 thèmes, 3 densités, recherche/À propos/mise à jour) ; Accueil Apps/sessions/relations/attentes ; Apps détaillées et contrats/grants en lecture propriétaire protégée Face ID. **Aucun changement des moteurs** : 25 bindings, D1, DO et Push inchangés ; seuls deux modules de code du Worker uploadés par-dessus les 27 autres modules serveur préservés (Worker UI et service worker shell). Distribution PATCH BLOCKS vers LINK non encore raccordée (Phase 4).
+
+
 ## Validation officielle — deux premiers modules de BLOCKS
 
 **Validation utilisateur officielle — 16 novembre 2026 : feuilles LABO 01 et 02 TERMINÉES.** L'utilisateur confirme que **tout est au vert** sur son iPhone. **Feuille 01 : Réglages universels VALIDÉS**, avec thèmes Graphite/Papier/Tabac/Minuit/Sauge, densités Compact/Normal/Spacieux, préférences persistantes, LINK dans Réglages, version, recherche et mise à jour. **Feuille 02 : Me notifier VALIDÉ**, avec RDV/pass/stock, rappels J/H/M, six échéances max et interface adaptable. **Les deux premiers modules sont prêts à être intégrés aux futures apps depuis BLOCKS V0.3.3**, coffre canonique non-PWA. LABO **V0.4.3** expose **deux badges « ✓ VALIDÉ »**, [CI verte](https://github.com/Leomgl/laboratoire-app/actions/runs/43780598930), version Cloudflare `7e0d3d94-8c68-4bfe-98f3-45f5da605aba` à 100 % ; code de modules inchangé. **FORGE #50 = Terminé**, tandis que #43/#44 restent les suivis évolutifs LABO et BLOCKS. LINK V0.13.0 et son moteur Push sont inchangés. **Ne pas confondre cette validation de modules avec un Push réel LABO (#47 non encore attesté) ou l'automatisation des rappels (#49 non développée).**
