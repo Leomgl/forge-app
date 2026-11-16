@@ -1,3 +1,7 @@
+## Mode collections autorisées — état 16/11/2026
+
+L'architecture canonique des relations inter-apps est **permission source → destination → catégorie**, pas autorisation par objet. Une relation LINK explicitement autorisée déclenche une synchronisation automatique de toute la collection correspondante à l'activité de l'app source. Exemple : toutes les trousses Rituels vers Cortex, mais pas les routines/stocks. Cortex rattache ensuite les références à ses voyages. Ancien consentement objet-par-objet révoqué lors du passage aux collections ; le propriétaire réautorise sous Face ID. La méthode pour future PWA est dans [APP-CREATION-GUIDE.md](./APP-CREATION-GUIDE.md), section D bis ; contrat technique dans [LINK](https://github.com/Leomgl/link-app/blob/main/docs/APP_SYNC_CONTRACT.md). La liaison et la relation de trousses ont été validées sur iPhone en V0.13.8 / V0.3.8 / V0.5.2 ; la nouvelle règle de partage global V0.13.9 / V0.3.9 / V0.5.3 reste à tester après la réautorisation.
+
 # M5 — Liaison LABORATOIRE ↔ LINK : code entrant et reprise
 
 ## Règle à appliquer dans toutes les futures apps — 16/11/2026

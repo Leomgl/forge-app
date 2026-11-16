@@ -1,3 +1,7 @@
+## 16/11/2026 — Relation LINK au niveau des collections, et non des objets
+
+**Décision validée :** le contrat est l'unité d'autorisation. Exemple : un seul consentement `rituels → cortex / travel_kits` publie toutes les trousses disponibles de Rituels ; Cortex n'attache qu'une référence à un voyage. Plus de `Partager cette trousse via LINK` ni de `linkShared` effectif. Révisions par instantané complet, actualisation sur activité, sans polling ni seconde D1. Le changement étant un élargissement du partage, l'ancien grant a été désactivé et son snapshot supprimé ; l'utilisateur devra réapprouver la relation élargie sous Face ID. Versions LINK V0.13.9, Rituels V0.3.9 et Cortex V0.5.3 publiées ; test physique de la nouvelle règle en attente. Principe à suivre pour toute future relation, mais les schémas/scopes doivent rester spécifiques par catégorie. [FORGE #61](https://github.com/Leomgl/forge-app/issues/61).
+
 ## 16/11/2026 — CORTEX : l'UI d'abord, LINK ensuite
 
 Priorité utilisateur : barre basse en icônes thématisées, modules groupés, calendrier et recherche, rappels Tous/Priorité/Date, contacts photos/4 favoris/index alphabétique. **Budget inchangé ; LINK reporté.** Aucun moteur LINK ou source BLOCKS modifié durant cette phase. CORTEX V0.1.2 publiée, recette iPhone en attente.

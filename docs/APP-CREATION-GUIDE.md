@@ -61,6 +61,19 @@ Une vraie app possède une **identité distincte** et s'associe à LINK depuis *
 - Les créations/modifications/annulations d'événements devront être traduites en intentions minimales vers LINK par un adaptateur de l'app, avec gestion des révisions, idempotence et reprise hors ligne, **après livraison du contrat d'automatisation** [FORGE #49](https://github.com/Leomgl/forge-app/issues/49). Ne pas prétendre cette automatisation déjà réalisée.
 - La connexion LABO↔LINK a été confirmée sur iPhone ; la **réception d'un Push de LABO** reste une recette distincte [FORGE #47](https://github.com/Leomgl/forge-app/issues/47).
 
+### D bis — Créer une relation LINK pour une collection entière
+
+**Règle validée le 16/11/2026 : on partage une collection selon un contrat, pas ses objets un par un.** Exemple éprouvé : `Rituels → LINK → Cortex / travel_kits`.
+
+1. Identifier **source, destination, catégorie de ressources, schéma minimal et portée de permission**. Inscrire le contrat spécifique dans LINK ; aucun droit par défaut et aucune permission « toutes les données de l'app ».
+2. Une fois le consentement Face ID accordé **à la relation**, l'app source publie automatiquement **toute la collection de cette catégorie**, y compris ajouts, éditions, suppressions. Ne jamais exiger un bouton « partager cet objet » pour chaque item. Le snapshot reste minimal (par ex. noms, quantités et états de préparation des trousses), sans données hors scope.
+3. La destination **découvre toutes les ressources autorisées**, puis l'utilisateur peut choisir d'en **associer une** à son propre objet métier (ex. une trousse à un voyage). Cette association locale n'est **pas** une deuxième autorisation de partage.
+4. La source demeure autorité ; références externes plutôt que copies durables dans l'app consommatrice. Reprise à l'ouverture, après changement de donnée, au retour au premier plan et du réseau, avec fingerprint pour réduire D1. Ne promettre aucun push de synchronisation quand iOS suspend l'app.
+5. Le changement d'une relation de **quelques objets choisis** à **tous les objets de la catégorie** **élargit le consentement** : révoquer l'ancien grant et demander une nouvelle confirmation dans LINK. Revocation fail-closed, anciennes données jamais exposées à la réautorisation sans un nouvel envoi.
+6. Chaque nouveau type d'objet (Garage/objets, Santé/traitements, etc.) exige une **portée dédiée**, un adaptateur source et un schéma allowlisté ; ce principe n'accorde jamais un accès général aux données privées. Le flux de trousses Rituels/Cortex est notre premier pilote, **pas encore un SDK universel disponible**.
+
+Référence technique canonique : [LINK — APP_SYNC_CONTRACT](https://github.com/Leomgl/link-app/blob/main/docs/APP_SYNC_CONTRACT.md). Suivi [FORGE #61](https://github.com/Leomgl/forge-app/issues/61).
+
 ### E — Tester avant tout déploiement
 
 - Build reproductible, validation des versions et du lock, CI verte, contrats d'import, aucune copie de modules.
