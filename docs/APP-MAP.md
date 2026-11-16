@@ -1,5 +1,10 @@
 ## CORTEX V0.1.2 — consolidation de l'interface (16/11/2026)
 
+## LINK live — V0.13.3 au 16/11/2026
+
+Le Worker `link-app` sert **LINK V0.13.3 à 100 %** (Cloudflare version `f637f007-d717-4ade-a285-ada0be63647f`). Ce patch corrige uniquement la vérification des mises à jour PWA anciennement susceptible d'être servie depuis un cache obsolète : manifeste réseau non pré-caché et URL anti-cache. **25 bindings D1/DO/Push préservés**, BLOCKS V0.3.3 inchangé, distribution des patchs BLOCKS restant un chantier distinct. Voir [FORGE #57](https://github.com/Leomgl/forge-app/issues/57). La recette de la nouvelle version dans la PWA iPhone reste à confirmer.
+
+
 ## LINK — Version live au 16/11/2026
 
 LINK `link-app` est désormais en **V0.13.2** (Worker Cloudflare version `f07d14df-d75a-4813-a1c0-c990423beab6`, 100 %). Le raccourci Face ID du hero « Ton réseau » rejoint les points d'accès existants dans Réglages et Apps ; **même session propriétaire WebAuthn**, aucune API nouvelle. BLOCKS V0.3.3 reste au même verrou de dépendances, distribution automatique toujours à raccorder dans [#51](https://github.com/Leomgl/forge-app/issues/51). D1, DO, Push et les 25 bindings conservés. Suivi [FORGE #56](https://github.com/Leomgl/forge-app/issues/56) ; confirmation tactile du raccourci iPhone en attente.
