@@ -1,4 +1,4 @@
-const CACHE="forge-v0.10.1-new-generation";
+const CACHE="forge-v0.10.2-new-generation";
 const ASSETS=["./","./index.html","./styles.css","./app.js","./ticket-detail.js","./manifest.webmanifest","./icon.svg","./icon-180.png"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ASSETS);}));self.skipWaiting();});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(keys){return Promise.all(keys.filter(function(k){return k.startsWith("forge-v")&&k!==CACHE;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});

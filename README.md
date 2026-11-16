@@ -1,4 +1,4 @@
-# FORGE — Development Memory · V0.10.1
+# FORGE — Development Memory · V0.10.2
 
 ## Validation officielle — deux premiers modules de BLOCKS
 
@@ -31,6 +31,10 @@
 FORGE est le cockpit de suivi des **nouvelles applications iPhone**. L'architecture conservée au 15 novembre 2026 compte exactement deux applications : [LINK](https://github.com/Leomgl/link-app) et [FORGE](https://github.com/Leomgl/forge-app).
 
 **Application :** https://forge-hub.q9pfwtztsc.workers.dev/
+
+## V0.10.2 — CORTEX dans le catalogue
+
+CORTEX V0.1.1 (Worker statique `cortex-app`) rejoint le catalogue visible FORGE ; le ticket de lancement et de recette est [#53](https://github.com/Leomgl/forge-app/issues/53). L'interface propose les nouveaux tickets CORTEX via le formulaire GitHub tant que l'allowlist de création OAuth du Worker n'est pas mise à jour. LINK/FORGE Workers et leurs bindings sont inchangés.
 
 ## V0.10.1 — nouvelle génération
 

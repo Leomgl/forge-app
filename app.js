@@ -1,4 +1,4 @@
-/* FORGE v0.10.1 — unified settings, modular cockpit and safe GitHub OAuth. */
+/* FORGE v0.10.2 — unified settings, modular cockpit and safe GitHub OAuth. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-current-issues-v3", DRAFT_KEY="forge-draft-v3";
@@ -7,7 +7,8 @@ var GATEWAY="https://forge-hub.q9pfwtztsc.workers.dev/";
 var SCOPE_TYPES={all:"Toutes les apps",multiple:"Plusieurs apps",newapp:"Nouvelle app",other:"Projet / réflexion générale"};
 var apps=[
  {id:"LINK",mark:"L",repo:"Leomgl/link-app",desc:"Noyau technique : communication, permissions, synchronisation et notifications communes."},
- {id:"FORGE",mark:"F",repo:"Leomgl/forge-app",desc:"Pilotage du rebuild, historique technique, tickets et évolutions."}
+ {id:"FORGE",mark:"F",repo:"Leomgl/forge-app",desc:"Pilotage du rebuild, historique technique, tickets et évolutions."},
+ {id:"CORTEX",mark:"C",repo:"Leomgl/Cortex-app",desc:"Manager personnel : agenda, rappels, notes, contacts et budget. PWA V0.1.1 en recette."}
 ];
 function id(n){return document.getElementById(n);}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -304,7 +305,7 @@ async function publish(){
  if(!d.tTitle.trim()||!d.tDescription.trim()){msg.textContent="Ajoute au minimum un titre et une description.";id(!d.tTitle.trim()?"tTitle":"tDescription").focus();return;}
  var title="["+d.tProject+"]["+d.tType.toUpperCase()+"] "+d.tTitle.trim();
  var body=issueBody(d),url=new URL("https://github.com/"+REPO+"/issues/new");
- if(auth.authenticated){
+ if(auth.authenticated&&d.tProject!=="CORTEX"){
   const btn=id("publish");btn.disabled=true;msg.textContent="Création du ticket dans GitHub…";
   try{
    const result=await writeApi("/api/issues",{title,body});
