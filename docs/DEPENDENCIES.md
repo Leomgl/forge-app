@@ -1,3 +1,12 @@
+## ACTUEL — PHARMA / LABO 16/11/2026
+
+- **BLOCKS** V0.10.1, source commit `f571ad11b4dc471f29e5b0b51c4b124857282f46`. Module public **PHARMA V0.2.0** (`mountPharma`), encore enregistré en interne comme `ordo@0.2.0` et stocké dans `src/ordo.mjs` / `src/ordo.css` pour la compatibilité des premiers tests. Contrat des données `blocks.ordo.v1` inchangé.
+- **LABO** V0.9.1, repo `Leomgl/laboratoire-app` commit `bc8c53c41f23cdbb0b96f1760fb9e6a148fee1b7`, version BLOCKS verrouillée dans `blocks.lock.json`. 25 assets en bundle, aucun stockage/Push distant.
+- **Cloudflare** : Worker existant `laboratoire-app` version `485f01a9-46d6-4075-9316-82cbdb73e62c`, déploiement `ac0f0d26-4a20-4551-834b-e941e2a1a5ba` à 100 %, 0 binding, date compatibilité inchangée. Tests CI [BLOCKS](https://github.com/Leomgl/blocks-app/actions/runs/43924347603) et [LABO](https://github.com/Leomgl/laboratoire-app/actions/runs/43924494594) verts.
+- **LINK et CORTEX : non modifiés.** Aucune permission médicale ou notification PHARMA encore programmée. Tests physiques sur iPhone attendus avant de déclarer le module stable, [FORGE #76](https://github.com/Leomgl/forge-app/issues/76).
+
+---
+
 ## Architecture actuelle — deux relations Rituels → Cortex via LINK (16/11/2026)
 
 Les applications ne s'appellent jamais directement. **LINK V0.14.0** centralise pairing, grants owner Face ID et agrégats autorisés. Routes source Rituels : `travel_kits` (collection de trousses vers Voyages Cortex) et `routine_summary` (compteurs du jour vers Accueil Cortex). Droits séparés et fermés par défaut. Le second contrat n'existait pas en D1 à la publication : l'utilisateur devra le préparer et autoriser lui-même. Rituels V0.4.0 et Cortex V0.5.4 consomment exclusivement les endpoints LINK existants/nouveaux ; pas de dépendance directe Rituels ↔ Cortex. BLOCKS et moteur Push non modifiés ; table `link_routine_snapshots` ajoutée à la même D1, pas d'infrastructure additionnelle.
