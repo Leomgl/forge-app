@@ -1,3 +1,14 @@
+## RITUELS V0.3.0 — catalogue personnel 12 produits (16/11/2026)
+
+- **App publique** : https://rituels-app.q9pfwtztsc.workers.dev/ — Worker Cloudflare `rituels-app` version `d0d97116-8a0b-487c-afa5-912772eddefc`, déploiement `104ac24b-4cb1-450f-9ede-19da2f600127`, trafic **100 %**, sans D1/binding/cron/Push.
+- **Source** : [Leomgl/rituels-app](https://github.com/Leomgl/rituels-app), version PWA **V0.3.0**, cache Service Worker `rituels-v0.3.0` ; BLOCKS **0.3.3** verrouillé commit `700ae421a2c2d56536c3793afa9f6f807973e72a`, LINK/Cortex inchangés et non activés.
+- **Contenu** : 12 produits au total, dont Sport Body Lotion 70 ml déjà présent. 11 ajouts : Thirst Quencher 20 ml ; Sakura Whipped Body Cream 50 ml ; Caffeine Shampoo 70 ml ; 24h Face Cream 20 ml ; After Shave Gel 100 ml ; Anti-Perspirant 50 ml ; Homme Shower Foam 50 ml ; Ayurveda Hand Balm 70 ml ; hydratant barbe (référence/volume inconnus) ; huile barbe (référence/volume inconnus) ; Silver Suede Travel 15 ml.
+- **Catalogue** : sections Visage, Barbe, Rasage, Corps & douche, Cheveux, Mains, Parfum. Fiches premium préservées : niveau restant curseur 0–100 % (si contenance connue), réserve −/+, conseils repliables, Modifier.
+- **Photos** : 8 URLs WebP du fabricant Rituals **contrôlées HTTP 200** [action temporaire terminée](https://github.com/Leomgl/rituels-app/actions/runs/43800246856) ; quatre visuels absents plutôt qu'associer un faux format (Sakura 50ml, Face Cream 20ml, barbe x2). Aucun fichier police ou image de marque dupliqué dans BLOCKS.
+- **Routine conseillée** : matin Thirst Quencher → 24h Face Cream, plus anti-transpirant ; soir Thirst Quencher → 24h Face Cream, fréquence libre à personnaliser. Body Lotion pilote reste en routine libre existante. Les produits non quotidiens restent hors suivi sauf activation dans Modifier. Une protection solaire n'est pas ajoutée à l'inventaire : non fournie dans les photos.
+- **Données** : `seedFullCatalogue` est idempotente et **strictement additive**, sans modification des fiches locales existantes, stocks ajustés, coches 7J, kits ou journal ; même IndexedDB V1. Marque et contenance barbe non inventées.
+- **Tests** : **28 tests métier** et CI [verte](https://github.com/Leomgl/rituels-app/actions/runs/43800488341), contrôle HTTP live V0.3.0 [vert](https://github.com/Leomgl/rituels-app/actions/runs/43800529613). Vérification tactile et conservation lors de la mise à jour iPhone toujours requises. Ticket : [FORGE #54](https://github.com/Leomgl/forge-app/issues/54).
+
 ## RITUELS V0.2.1 — curseur restant et validation de routine (16/11/2026)
 
 - **Publication** : https://rituels-app.q9pfwtztsc.workers.dev/ — Worker Cloudflare `rituels-app` version `5ab038a1-ceca-4238-a62d-bdb87824bc33` à **100 %**, déploiement `2801f7bd-f9a0-480b-8e5d-5bffdf88e4ab`. Zéro nouveau binding/D1/cron/Push.
