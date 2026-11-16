@@ -1,3 +1,13 @@
+## Cortex V0.4.1 — Budget compact, charges/prêts et statistiques (16/11/2026)
+
+- **GitHub** : `Leomgl/Cortex-app`, commit `0cdbce731bd7de5d15e3cee97df0585821a76d5f` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43801987756).
+- **Cloudflare** : Worker `cortex-app`, déploiement `f52c427e-e5e6-4d78-a1eb-b8d50c939d46`, version `8b23acbb-ed6b-4642-9281-aaba19e0ec5b` à **100 %** ; `bindings=[]`, sans nouvelle base D1.
+- **Navigation Budget** : 5 onglets seulement : Vue d'ensemble, Journal, Revenus, Charges & prêts, Statistiques. Dépenses rapides exclusivement sur Vue d'ensemble ; modifier ses boutons directement sous ceux-ci. Charges, abonnements et prêts regroupés dans l'onglet Charges & prêts avec leurs propres sous-sections et actions.
+- **Interface** : titres, tabs et blocs plus rapprochés *uniquement* lorsque Budget est affiché (Modules ou raccourci). Six indicateurs sur **2 rangées × 3 colonnes** sur iPhone et desktop.
+- **Statistiques** : 2 graphiques basés sur les mouvements réellement enregistrés (entrées/dépenses sur 6 mois et dépenses du mois par catégorie), six chiffres clés, totaux d'engagement et capital restant estimé. Les échéances non payées ne sont pas comptées comme sorties réelles.
+- **Non-régression** : moteurs historiques, prêts, abonnements, rémunérations, liens contact/agenda/rappel, SYNAPSE, BLOCKS 0.7.0 et LINK 0.13.0 inchangés. Tests automatisés verts. **Recette visuelle/tactile iPhone en attente**.
+- **Tickets** : [FORGE #59](https://github.com/Leomgl/forge-app/issues/59) pour le Budget ; [FORGE #53](https://github.com/Leomgl/forge-app/issues/53) pour Cortex.
+
 ## Cortex V0.4.0 — Budget et moteur financier versionné (16/11/2026)
 
 - **Recette dédiée** : [FORGE #59](https://github.com/Leomgl/forge-app/issues/59) (reste ouverte jusqu'à validation iPhone). **Cortex #53** reste ouverte.
