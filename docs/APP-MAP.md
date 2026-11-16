@@ -1,3 +1,9 @@
+## MISE À JOUR 16/11/2026 — PHARMA 0.2.1 stocks intégrés
+
+PHARMA (feuille 05 LABORATOIRE) réunit maintenant **traitements et stocks dans une seule fiche** : solde, seuil bas et réapprovisionnement. Plus de volet Stocks indépendant. BLOCKS `0.10.2` / `ordo@0.2.1` commit `4263e7905d1ee857a844524f1b39e4d9cab7f4c7` ; LABO `V0.9.2` commit `08e460530ee0193ef99d942f4cc8b3bac80c47ca` déployé à 100 % sur le Worker existant `laboratoire-app` (version `80efcc87-62e3-448d-9ce3-c4d858bfec06`). Aucune nouvelle base, Worker, autorisation LINK ou notification. Recette iPhone en attente, [FORGE #76](https://github.com/Leomgl/forge-app/issues/76).
+
+---
+
 ## ACTUEL — 16/11/2026 · PHARMA expérimental dans LABORATOIRE
 
 **PHARMA** est un **module BLOCKS réutilisable, pas une PWA installable distincte**. Son nom précédent ORDO est abandonné côté utilisateur. Démo interactive dans la **feuille 05 de LABORATOIRE V0.9.1** : https://laboratoire-app.q9pfwtztsc.workers.dev/ . Design compact type Rituels, prise à cocher, 7 jours, volets traitements/stocks/historique ; deux fiches fictives, stockage local de test. Module présent dans **BLOCKS 0.10.1** (module interne `ordo@0.2.0` pour compatibilité). Aucune nouvelle app, LINK inchangé, Cortex non connecté. **En attente de validation iPhone.** Ticket [FORGE #76](https://github.com/Leomgl/forge-app/issues/76).
