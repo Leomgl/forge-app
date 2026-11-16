@@ -1,5 +1,12 @@
 ## CORTEX V0.1.2 — consolidation de l'interface (16/11/2026)
 
+## LINK V0.13.2 — Raccourci Face ID sans nouvelle dépendance (16/11/2026)
+
+- Worker Cloudflare version `f07d14df-d75a-4813-a1c0-c990423beab6`, déployée à 100 %, avec les mêmes **25 bindings**, D1 `HUB_DB` et ordonnanceur DO `LINK_NOTIFICATION_SCHEDULER` que V0.13.1.
+- Bouton « Face ID » Accueil → événement UI `link:owner-unlock-request` → fonction WebAuthn propriétaire préexistante `doLogin()` → événement `link:overview` pour les métriques. Rien n'est exposé tant qu'une session owner authentifiée n'existe pas.
+- BLOCKS V0.3.3 inchangé ; PWA `link-shell-v0.13.2-ui` rafraîchie ; aucun nouveau Worker, secret, moteur Push, route ni droit. [PR LINK #10](https://github.com/Leomgl/link-app/pull/10), [FORGE #56](https://github.com/Leomgl/forge-app/issues/56).
+
+
 **PWA publiée** : https://cortex-app.q9pfwtztsc.workers.dev/ ; Cloudflare `cortex-app` version `37880540-cdbc-4a31-8a8b-dbb254f31b4c` à **100 %**, sans nouveau binding/D1. [CI CORTEX V0.1.2 verte](https://github.com/Leomgl/Cortex-app/actions/runs/43787564500). **Recette tactile iPhone en attente**.
 
 - Navigation : correction de la barre inférieure héritée de BLOCKS (transform/position), **5 icônes dynamiques** utilisant `currentColor` et les tokens d'apparence BLOCKS. Les raccourcis 1 et 2 suivent le module choisi.
