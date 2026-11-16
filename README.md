@@ -1,3 +1,11 @@
+## Cortex V0.1.5 — Multi-contacts et recherche dans les rendez-vous (16/11/2026)
+
+- **GitHub** : `Leomgl/Cortex-app`, commit `b868b67a167aa72c35bd71ab4a7b9d53d4f52571` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43791287814).
+- **Cloudflare** : Worker `cortex-app`, déploiement `b20f32fe-01ba-465f-b300-c0eff9beff22`, version `3f9c165a-060a-45bf-b088-6935e1f035b6` **100 %**, sans bindings (ni D1 supplémentaire).
+- **Fonctions** : Éditeur d'événement → Contacts associés : sélection multiple recherchable sans longue liste déroulante ; recherche par prénom/nom accent-insensible, entreprise, email ou téléphone ; favoris proposés, sélection sous forme de pastilles, retrait individuel, aucune duplication, affichage des noms dans les événements. La recherche de l'Agenda porte sur **tous** les participants.
+- **Compatibilité** : `contactIds[]` devient le champ canonique, `contactId` (premier ID) reste fourni en compatibilité. Anciennes fiches `contactId` importées dans le sélecteur sans migration irréversible ; enregistrement sous forme multi-contacts. Pas d'envoi d'invitations ni de nouveau moteur de synchronisation ; BLOCKS, LINK et Budget inchangés.
+- **Validation** : tests GitHub réussis ; **recette iPhone à confirmer** : recherche, multi-ajout, suppression, réouverture de fiche, recherche Agenda sur deuxième/troisième contact, anciens RDV.
+
 ## Cortex V0.1.4 — Sélecteurs de date et d’heure natifs iOS (16/11/2026)
 
 - **GitHub** : `Leomgl/Cortex-app`, correctif final `a889cc901c1799ff4b3fdbbce7c0542fea0d2e16` ; [CI verte](https://github.com/Leomgl/Cortex-app/actions/runs/43790368408).
