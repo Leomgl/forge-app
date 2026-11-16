@@ -1,3 +1,12 @@
+## RITUELS V0.1.0 — dépendances et publication (16/11/2026)
+
+- **Source** : `Leomgl/rituels-app@c053a7dde4f4ad8d72fcbfed42b7a8e12f1efdcf`, tests 6/6, CI verte. Build reproductible `scripts/build.mjs` utilisant un clone privé `Leomgl/blocks-app` au commit exactement verrouillé.
+- **BLOCKS** : 0.3.3 / `700ae421a2c2d56536c3793afa9f6f807973e72a` ; modules shell, settings, theme, density, pwa-update, blocks.css, palettes.css ; intégration compilée au Worker, aucune duplication source dans l'application. Distribution PATCH automatisée encore incomplète (#51).
+- **Cloudflare** : `rituels-app` version `039ff052-8b20-4584-a509-39e2dce9047d` déployée à 100 %, workers.dev activé, 0 binding / D1 / cron ; contenu intégralement statique.
+- **Données** : stockage propriétaire local IndexedDB et JSON exportable/importable ; pas de synchronisation multi-appareil ou de sauvegarde distante garantie. PWA hors ligne via cache versionné.
+- **LINK** : intention uniquement, SDK/identité/pairing/notifications non branchés à cette version. Les achats confirmés et liens de trousses vers Cortex nécessiteront contrats idempotents et permissions via LINK. Le Worker LINK et son ordonnanceur ne sont pas modifiés.
+- **Validation** : CI et publication confirmées ; fonctionnement tactile iPhone et contrôle HTTP public indépendant restent en recette (#54).
+
 ## CORTEX V0.1.2 — consolidation de l'interface (16/11/2026)
 
 ## LINK V0.13.3 — Contrôle de version résistant au cache (16/11/2026)
