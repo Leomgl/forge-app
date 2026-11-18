@@ -187,3 +187,6 @@ body.ticket-open{overflow:hidden}
 .forge-settings-select{display:grid;gap:9px;max-width:400px;color:#e9e9e4;font-size:12px;font-weight:700}
 .forge-settings-select select{min-height:45px;background:#111923;border:1px solid #59616e;color:#eef1f3;padding:10px 12px;border-radius:12px}
 @media(max-width:410px){.bottom-nav-item{font-size:9px}.bottom-nav-item svg{width:19px;height:19px}.forge-settings-group>summary{padding:15px 43px 15px 14px}.forge-settings-content{padding:14px}}
+
+/* Shared vector icon navigation. */
+.bottom-nav-item svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
