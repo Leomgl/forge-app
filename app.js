@@ -1,4 +1,4 @@
-/* FORGE v0.10.2 — unified settings, modular cockpit and safe GitHub OAuth. */
+/* FORGE v0.10.3 — unified settings, modular cockpit and safe GitHub OAuth. */
 (function () {
 "use strict";
 var REPO="Leomgl/forge-app", API="https://api.github.com/repos/"+REPO+"/issues", CACHE_KEY="forge-current-issues-v3", DRAFT_KEY="forge-draft-v3";
