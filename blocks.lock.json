@@ -1,0 +1,15 @@
+{
+  "name": "@leo/blocks-app",
+  "repository": "Leomgl/blocks-app",
+  "version": "0.18.0",
+  "commit": "f49408c373b9715b177e4ba606bcc678f0774c08",
+  "modules": {
+    "icons": "1.0.0"
+  },
+  "routes": {
+    "./blocks/icons.mjs": "src/icons.mjs"
+  },
+  "integrity": {
+    "./blocks/icons.mjs": "3dba7b3c28e364ca534b50a81a22039afb1341044873dd2deaadbc10e57ee505"
+  }
+}
