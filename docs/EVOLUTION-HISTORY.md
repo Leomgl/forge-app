@@ -1,5 +1,21 @@
 # Historique des livraisons — nouveau cycle
 
+## 18/11/2026 — STUDIO 0.3.0 validé et diffusé dans ALLURE / RACK
+
+Validation explicite utilisateur de la refonte compacte sur LABO : canevas 3:4 prioritaire et quatre onglets **Pièces · Élément · Calques · Fonds** (un panneau à la fois, sélection d'un élément → inspecteur). Transparence alpha par défaut, neuf fonds, `blocks.studio.v1`, annuler/rétablir, calques et compositions préexistantes conservés.
+
+- **BLOCKS** bibliothèque 0.17.0 / STUDIO 0.3.0, promotion validée au commit `961d6ad7bf5821228337e936a00e6e5f7d153ae0` sans modification du moteur.
+- **LABO** utilise déjà les mêmes sources STUDIO 0.3.0 via commit BLOCKS `f870b0296524d17bc05f5bad1ab299a0ebf2440f` ; la promotion metadata ne nécessite pas un redéploiement.
+- **ALLURE V0.1.7** : `Leomgl/vestiaire-app@e0875010dbb0e607ccd1a5ed17768925d96f6ac4` ; `blocks.lock.json` versionné, recompilation Worker, aucun changement aux données Fits ni aux miniatures. Backup `backup/allure-before-studio-compact-ui-2026-11-18`.
+- **RACK V0.5.4** : `Leomgl/airsoft-app@bb43d2b33f80cb11f37f3f763456937d6994799b` ; `studio.lock.json` versionné, uniquement les deux assets STUDIO remplacés, autres BLOCKS / variantes / classes / images inchangés. Backup `backup/rack-before-studio-compact-ui-2026-11-18`.
+- Workers Cloudflare `allure-app` et `rack-airsoft-concept` mis à jour ; leur contenu de production a été comparé et correspond exactement aux commits GitHub. Versions publiées V0.1.7 / V0.5.4 et caches SW incrémentés.
+- **Recette :** contrôles de source, contrat, assemblage et contenu Cloudflare satisfaisants ; vérification tactile post-publication sur iPhone encore à faire. GitHub Actions échoue sur ces repos avec des jobs sans étapes rapportées ; ne pas déclarer de CI verte (incident distinct de la promotion STUDIO).
+
+Suivi [FORGE #99](https://github.com/Leomgl/forge-app/issues/99). Pas de D1, permission LINK, Push, migration destructive ni nouveau service.
+
+---
+
+
 ## LINK V0.13.3 — Résolution du cache de mise à jour PWA (16/11/2026)
 
 **Déploiement à 100 %** sur le Worker LINK existant, version Cloudflare `f637f007-d717-4ade-a285-ada0be63647f`, déploiement `d02a7582-4dad-4fd6-a5e8-d1bcd9230060` ([PR #11 fusionnée](https://github.com/Leomgl/link-app/pull/11), [CI verte](https://github.com/Leomgl/link-app/actions/runs/43789586425), [FORGE #57](https://github.com/Leomgl/forge-app/issues/57)). Incident : le SW mettait `/version.json` en cache-first et pouvait masquer les versions nouvelles malgré `fetch(cache:no-store)`. LINK vérifie désormais une URL versionnée, ne pré-cache plus `/version.json`, et laisse cette route atteindre le réseau avec réponse `Cache-Control: no-store`. Test de non-interception SW ajouté. **BLOCKS canonique inchangé**, Hub, Face ID, D1, DO, permissions et logique Web Push préservés ; 25 bindings identiques. Recette réelle du bouton sur l'app iPhone installée en attente.

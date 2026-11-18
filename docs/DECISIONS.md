@@ -1,3 +1,9 @@
+## 18/11/2026 — STUDIO compact approuvé et adopté dans ALLURE et RACK
+
+Adopter le BLOCKS STUDIO 0.3.0 validé dans LABO sans fork par application ; verrouiller les deux assets `studio.mjs`/`studio.css` et conserver le contrat `blocks.studio.v1`, ses données et les adaptateurs métier. ALLURE V0.1.7 et RACK V0.5.4 sont publiés sur les Workers existants, avec sauvegardes Git et caches SW propres. Les fonds transparents ne doivent afficher le damier **que dans l'éditeur**, jamais dans les miniatures. FORGE #99 ; une vérification tactile post-livraison reste distincte de l'approbation du composant.
+
+---
+
 ## 16/11/2026 — Les relations sont groupées par app source ; second exemple minimal
 
 Décision : LINK → Relations affiche un volet par application ; chaque contrat à l'intérieur est libellé `ressource source → usage dans l'app cible`, avec permission indépendante. Après la relation des trousses, deuxième pilote : `rituels-cortex-routine / routine_summary` transmet **seulement le jour, le pourcentage global et les compteurs Matin X/X / Soir X/X**. Le % global vient de la vraie logique métier et inclut les soins libres. Aucune fiche produit, soin, journal ou dépense transmis. Consentement Face ID requis avant premier envoi. Cortex présente le statut dans une section d'accueil personnalisable ; pas de reprise d'un chiffre d'hier comme actuel. Deuxième catégorie spécifique, pas encore SDK inter-app universel. Versions LINK V0.14.0, Rituels V0.4.0, Cortex V0.5.4 déployées à 100 %, tests verts, recette physique iPhone en attente. [FORGE #67](https://github.com/Leomgl/forge-app/issues/67).

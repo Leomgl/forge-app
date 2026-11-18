@@ -1,3 +1,18 @@
+## 18/11/2026 — STUDIO 0.3.0 validé et diffusé dans ALLURE / RACK
+
+Validation explicite utilisateur de la refonte compacte sur LABO : canevas 3:4 prioritaire et quatre onglets **Pièces · Élément · Calques · Fonds** (un panneau à la fois, sélection d'un élément → inspecteur). Transparence alpha par défaut, neuf fonds, `blocks.studio.v1`, annuler/rétablir, calques et compositions préexistantes conservés.
+
+- **BLOCKS** bibliothèque 0.17.0 / STUDIO 0.3.0, promotion validée au commit `961d6ad7bf5821228337e936a00e6e5f7d153ae0` sans modification du moteur.
+- **LABO** utilise déjà les mêmes sources STUDIO 0.3.0 via commit BLOCKS `f870b0296524d17bc05f5bad1ab299a0ebf2440f` ; la promotion metadata ne nécessite pas un redéploiement.
+- **ALLURE V0.1.7** : `Leomgl/vestiaire-app@e0875010dbb0e607ccd1a5ed17768925d96f6ac4` ; `blocks.lock.json` versionné, recompilation Worker, aucun changement aux données Fits ni aux miniatures. Backup `backup/allure-before-studio-compact-ui-2026-11-18`.
+- **RACK V0.5.4** : `Leomgl/airsoft-app@bb43d2b33f80cb11f37f3f763456937d6994799b` ; `studio.lock.json` versionné, uniquement les deux assets STUDIO remplacés, autres BLOCKS / variantes / classes / images inchangés. Backup `backup/rack-before-studio-compact-ui-2026-11-18`.
+- Workers Cloudflare `allure-app` et `rack-airsoft-concept` mis à jour ; leur contenu de production a été comparé et correspond exactement aux commits GitHub. Versions publiées V0.1.7 / V0.5.4 et caches SW incrémentés.
+- **Recette :** contrôles de source, contrat, assemblage et contenu Cloudflare satisfaisants ; vérification tactile post-publication sur iPhone encore à faire. GitHub Actions échoue sur ces repos avec des jobs sans étapes rapportées ; ne pas déclarer de CI verte (incident distinct de la promotion STUDIO).
+
+Suivi [FORGE #99](https://github.com/Leomgl/forge-app/issues/99). Pas de D1, permission LINK, Push, migration destructive ni nouveau service.
+
+---
+
 ## SYNAPSE officiellement VALIDÉ — 16/11/2026
 
 L'utilisateur confirme l'approbation définitive de **SYNAPSE** déjà intégré dans **CORTEX**. Capture compacte AUTO / RDV / RAPPEL / NOTE / DÉPENSE, confirmation obligatoire, parser local et contrat `blocks.capture.v1` conservés. **BLOCKS 0.12.0 / SYNAPSE 1.0.0**, commit `f6ca7eb09c5a8d2490777ce491c987dce8071947` ; qualification de stabilité sans modification du code de capture. Cortex utilise déjà la même fonctionnalité via le module `synapse@0.5.0` épinglé dans son ancien lock : **pas de redéploiement Cortex nécessaire ni effectué**. **LABORATOIRE V0.9.4** commit `0c9e01accb18e1ae0212848dcb26c9de7b663211`, cinq feuilles **01 / 02 / 03 / 04 / 05 ✓ VALIDÉES**, plus de prototype en attente. Worker LABO existant `laboratoire-app` à **100 %**, version `f4a3d90e-4bd9-4479-a949-6aa235ea1b3d`, zéro binding supplémentaire. [FORGE #58 clôturé](https://github.com/Leomgl/forge-app/issues/58). Aucun changement des données Cortex, de LINK, ni du moteur Push.
